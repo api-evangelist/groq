@@ -15,22 +15,58 @@ tags:
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for Groq. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+description: >-
+  GroqCloud enforces per-account rate limits on synchronous inference
+  expressed as RPM (requests per minute), RPD (requests per day), TPM
+  (tokens per minute), TPD (tokens per day), and audio-specific
+  ASH/ASD (audio seconds per hour/day). Limits vary by model and
+  account spend tier and are visible in the GroqCloud console. Specific
+  per-model values are not reconciled in this artifact.
+notes: >-
+  Verify per-model limits in the GroqCloud console rate-limits page on
+  reconciliation; values change as users move between free, paid, and
+  enterprise tiers.
 sources:
-- https://groq.com/
+- https://console.groq.com/docs/rate-limits
+- https://groq.com/pricing
 responseCodes:
   throttled: 429
 limits:
-- name: Default
+- name: Requests Per Minute (RPM)
   scope: account
-  metric: varies
+  metric: requests
   limit: see provider documentation
-  notes: Pending reconciliation.
+  notes: Per-model RPM, varies by tier and model.
+- name: Requests Per Day (RPD)
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Per-model RPD, varies by tier and model.
+- name: Tokens Per Minute (TPM)
+  scope: account
+  metric: tokens
+  limit: see provider documentation
+  notes: Per-model TPM, varies by tier and model.
+- name: Tokens Per Day (TPD)
+  scope: account
+  metric: tokens
+  limit: see provider documentation
+  notes: Per-model TPD, varies by tier and model.
+- name: Audio Seconds Per Hour / Day (ASH / ASD)
+  scope: account
+  metric: audio_seconds
+  limit: see provider documentation
+  notes: Applies to STT/TTS endpoints; varies by model.
+- name: Batch API
+  scope: account
+  metric: jobs
+  limit: separate from sync limits
+  notes: Batch jobs queue and run with 50% discount; do not consume sync RPM/TPM directly.
 policies:
+- name: Tiered Limits
+  description: Limits raise as accounts move from free to paid usage and via Enterprise agreements.
 - name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  description: Clients should implement exponential backoff with jitter and honor Retry-After.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

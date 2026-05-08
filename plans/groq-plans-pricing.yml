@@ -5,7 +5,7 @@ provider: Groq
 providerId: groq
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - LLM
@@ -13,30 +13,185 @@ tags:
 - LPU
 - Low Latency
 - Plans
-description: Placeholder plans/pricing artifact for Groq. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+description: >-
+  GroqCloud uses a transparent pay-as-you-go pricing model with linear,
+  predictable per-token rates per model. Audio is billed per 1M characters
+  (TTS) or per hour transcribed (STT). Tools are priced per call or per
+  compute hour. The Batch API offers a 50% discount; Prompt Caching offers a
+  50% discount on cached input tokens. There are no formal Free / Developer /
+  Enterprise tiers; users start with free access and pay for usage.
+notes: >-
+  Representative model rates as published on the Groq pricing page; check
+  the page for the current full model catalog and rates.
 sources:
-- https://groq.com/
+- https://groq.com/pricing
+- https://console.groq.com/docs
 plans:
-- id: groq-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers (Free / Pro / Enterprise / pay-as-you-go,
-    etc.) once pricing is reconciled.
+- id: groq-pay-as-you-go
+  name: Pay-as-you-go
+  type: usage
+  description: >-
+    Token-, character-, and call-metered usage across all GroqCloud APIs
+    with no monthly minimum.
   entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
+  - label: Llama 3.1 8B Instant
+    name: llama_3_1_8b
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: $0.05 input / $0.08 output per 1M
+    userMultiplied: false
+  - label: GPT OSS 20B
+    name: gpt_oss_20b
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: $0.075 input / $0.30 output per 1M
+    userMultiplied: false
+  - label: Llama 3.3 70B Versatile
+    name: llama_3_3_70b
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: $0.59 input / $0.79 output per 1M
+    userMultiplied: false
+  - label: GPT OSS 120B
+    name: gpt_oss_120b
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: $0.15 input / $0.60 output per 1M
+    userMultiplied: false
+  - label: TTS (Orpheus family)
+    name: tts
+    type: usage
+    metric: characters
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: $22-$40 per 1M characters
+    userMultiplied: false
+  - label: STT (Whisper family)
+    name: stt
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.04-$0.111 per hour transcribed
+    userMultiplied: false
+  - label: Web Search Tool
+    name: tool_web_search
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000
+    price: $5-$8 per 1,000 requests
+    userMultiplied: false
+  - label: Code Execution Tool
+    name: tool_code_execution
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.18 per hour
+    userMultiplied: false
+  - label: Prompt Caching
+    name: prompt_caching
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: 50% off the standard input rate on cached tokens
+    userMultiplied: false
+  elements:
+  - name: Chat Completions
+  - name: Vision
+  - name: Reasoning
+  - name: Speech-to-Text
+  - name: Text-to-Speech
+  - name: Content Moderation
+  - name: Tools
+  - name: LoRA Inference
+- id: groq-batch
+  name: Batch API
+  type: usage
+  description: >-
+    Asynchronous batch inference at 50% off synchronous rates.
+  entries:
+  - label: Batch Tokens
+    name: batch_tokens
+    type: usage
+    metric: tokens
     limit: -1
     timeFrame: usage
     geo: global
-    unit: 1
-    price: see https://groq.com/
+    unit: 1000000
+    price: 50% off synchronous rates
     userMultiplied: false
   elements:
-  - name: Pending Reconciliation
+  - name: Batch Chat Completions
+- id: groq-flex
+  name: Flex Processing
+  type: usage
+  description: >-
+    Flexible service tier offering higher throughput at relaxed latency
+    targets at reduced cost vs. standard.
+  entries:
+  - label: Flex Tokens
+    name: flex_tokens
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1000000
+    price: see Groq pricing page (discounted vs. standard)
+    userMultiplied: false
+  elements:
+  - name: Chat Completions (Flex tier)
+- id: groq-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Volume commitments, on-prem / private deployments (GroqRack /
+    GroqCloud Enterprise), dedicated support and negotiated terms.
+    Contact Groq sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: GroqRack
+  - name: GroqCloud Enterprise
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

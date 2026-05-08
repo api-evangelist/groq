@@ -5,7 +5,7 @@ provider: Groq
 providerId: groq
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - LLM
@@ -15,11 +15,17 @@ tags:
 - FinOps
 - Cost Management
 - FOCUS
-description: FOCUS-aligned FinOps placeholder for Groq. Pipeline will replace with the provider's
-  real billing-model details once researched.
-notes: Initial scaffold — billing model has not yet been reconciled.
+description: >-
+  FinOps view of GroqCloud spend. Groq bills usage-based per-token rates for
+  chat / vision / reasoning per model, per-million-character rates for TTS,
+  per-hour transcription rates for STT, per-call or per-hour rates for tools,
+  and a 50% Batch discount. Prompt Caching gives 50% off cached input tokens.
+notes: >-
+  Per-model rates are subject to change; verify against the Groq pricing page
+  during reconciliation.
 sources:
-- https://groq.com/
+- https://groq.com/pricing
+- https://console.groq.com/docs
 - https://focus.finops.org/focus-specification/v1-3/
 alignedWith:
   framework: FinOps Foundation Framework
@@ -28,9 +34,9 @@ alignedWith:
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 publisherName: Groq
-serviceCategory: AI
+serviceCategory: AI and Machine Learning
 billingModel:
-  pricingCategory: To Be Reconciled
+  pricingCategory: Usage-Based
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
@@ -38,30 +44,89 @@ billingModel:
   - Purchase
   - Adjustment
 focusColumns:
-  ServiceName: Groq
-  ServiceCategory: AI
+  ServiceName: GroqCloud
+  ServiceCategory: AI and Machine Learning
   ProviderName: Groq
   PublisherName: Groq
   InvoiceIssuerName: Groq
   BillingCurrency: USD
   ChargeCategory: Usage
+  PricingCategory: Usage-Based
 meters:
-- name: api_usage
-  description: Catch-all meter pending reconciliation against the provider's published metering.
-  unit: varies
+- name: input_tokens
+  description: Tokens sent in chat / vision / reasoning requests, billed per 1M tokens per model.
+  unit: tokens
   aggregation: sum
   dimensions:
   - account
-  - resource
+  - model
+  - api
+- name: cached_input_tokens
+  description: Cached-input tokens billed at 50% of the standard input rate.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: output_tokens
+  description: Tokens generated, billed per 1M tokens per model.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+  - api
+- name: tts_characters
+  description: TTS characters synthesized, billed per 1M characters per voice/model.
+  unit: characters
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: stt_audio_hours
+  description: Audio hours transcribed, billed per hour per Whisper variant.
+  unit: hours
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: tool_invocations
+  description: Tool calls (web search, Wolfram) priced per 1,000 invocations.
+  unit: invocations
+  aggregation: sum
+  dimensions:
+  - account
+  - tool
+- name: tool_compute_hours
+  description: Tool compute hours (e.g., Code Execution at $0.18/hr).
+  unit: hours
+  aggregation: sum
+  dimensions:
+  - account
+  - tool
+- name: batch_tokens
+  description: Tokens consumed via the Batch API at 50% discount.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: flex_tokens
+  description: Tokens consumed via Flex Processing tier at relaxed-latency discount.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
 principles:
 - name: Visibility
-  description: Pull provider invoices or usage exports until a self-serve usage feed is documented.
+  description: Pull GroqCloud usage and billing exports; inspect per-model token burn.
 - name: Allocation
-  description: Tag invoice line items to consuming business units in your FinOps store.
+  description: Tag API keys per workload/team; map to internal cost centers.
 - name: Optimization
-  description: Levers depend on the provider's billing model; review at renewal once reconciled.
+  description: Use Batch (-50%) for non-realtime jobs; enable Prompt Caching; route lower-quality work to Flex; pick smaller open-source models when sufficient.
 - name: Accountability
-  description: Assign a contract owner to review billing against negotiated terms.
+  description: Assign owners per project/key; review token spend monthly against budget.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

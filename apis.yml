@@ -3,7 +3,7 @@ url: https://raw.githubusercontent.com/api-evangelist/groq/refs/heads/main/apis.
 name: Groq
 x-type: company
 description: >-
-  Groq builds custom Language Processing Unit (LPU) silicon optimized for low-latency LLM inference. The GroqCloud API serves popular open models (Llama, Mixtral, Gemma) at industry-leading tokens-per-second.
+  Groq builds custom Language Processing Unit (LPU) silicon optimized for low-latency LLM inference. The GroqCloud API serves popular open models (Llama, GPT OSS, Whisper, Orpheus) at industry-leading tokens-per-second with an OpenAI-compatible interface.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - AI
@@ -14,10 +14,190 @@ tags:
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: groq:groq-chat-completions-api
+    name: Groq Chat Completions API
+    tags:
+      - Chat
+      - Completions
+      - LLM
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/api-reference
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/text-chat
+        type: Documentation
+      - url: https://console.groq.com/docs/api-reference#chat
+        type: API Reference
+    description: >-
+      OpenAI-compatible chat completions across Llama, GPT OSS, Mixtral, Gemma, and Whisper-family models running on Groq LPU silicon, with streaming, tool use, and structured outputs.
+  - aid: groq:groq-reasoning-api
+    name: Groq Reasoning API
+    tags:
+      - Reasoning
+      - Chain of Thought
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/reasoning
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/reasoning
+        type: Documentation
+    description: >-
+      Reasoning-capable models with explicit chain-of-thought support, surfaced through the chat completions endpoint.
+  - aid: groq:groq-vision-api
+    name: Groq Vision API
+    tags:
+      - Vision
+      - OCR
+      - Multimodal
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/vision
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/vision
+        type: Documentation
+    description: >-
+      Image and document understanding plus OCR via vision-capable chat models.
+  - aid: groq:groq-speech-to-text-api
+    name: Groq Speech-to-Text API
+    tags:
+      - Speech to Text
+      - Transcription
+      - Whisper
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/speech-to-text
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/speech-to-text
+        type: Documentation
+    description: >-
+      OpenAI-compatible audio transcription endpoint serving Whisper-family models on LPU hardware.
+  - aid: groq:groq-text-to-speech-api
+    name: Groq Text-to-Speech API
+    tags:
+      - Text to Speech
+      - Audio
+      - Orpheus
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/text-to-speech
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/text-to-speech
+        type: Documentation
+    description: >-
+      Speech synthesis using Orpheus and other TTS models, billed per million characters.
+  - aid: groq:groq-content-moderation-api
+    name: Groq Content Moderation API
+    tags:
+      - Moderation
+      - Safety
+      - Llama Guard
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/content-moderation
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/content-moderation
+        type: Documentation
+    description: >-
+      Safety classifier endpoint (Llama Guard) for input/output policy compliance.
+  - aid: groq:groq-batch-api
+    name: Groq Batch API
+    tags:
+      - Batch
+      - Async
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/batch
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/batch
+        type: Documentation
+    description: >-
+      Asynchronous batch inference at 50% off synchronous rates for non-realtime workloads.
+  - aid: groq:groq-flex-processing-api
+    name: Groq Flex Processing API
+    tags:
+      - Flex
+      - Service Tier
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/flex-processing
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/flex-processing
+        type: Documentation
+    description: >-
+      Flexible service tier offering higher throughput at relaxed latency targets for cost-sensitive workloads.
+  - aid: groq:groq-files-api
+    name: Groq Files API
+    tags:
+      - Files
+      - Storage
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/api-reference#files
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/api-reference#files
+        type: API Reference
+    description: >-
+      Upload and manage files for batch inputs and other workflows.
+  - aid: groq:groq-models-api
+    name: Groq Models API
+    tags:
+      - Models
+      - Catalog
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/api-reference#models
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/api-reference#models
+        type: API Reference
+    description: >-
+      Lists models available on GroqCloud with metadata, context length, and pricing tags.
+  - aid: groq:groq-tools-api
+    name: Groq Tools API
+    tags:
+      - Tools
+      - Web Search
+      - Code Execution
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/tools
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/tools
+        type: Documentation
+    description: >-
+      Built-in tools - Web Search, Browser Automation, Code Execution, Wolfram Alpha - invocable from chat completions and billed per call or per hour.
+  - aid: groq:groq-lora-inference-api
+    name: Groq LoRA Inference API
+    tags:
+      - LoRA
+      - Custom Models
+      - Fine-Tuning
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/lora
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/lora
+        type: Documentation
+    description: >-
+      Serves customer LoRA adapters on top of supported base models for low-latency custom inference.
+  - aid: groq:groq-prompt-caching-api
+    name: Groq Prompt Caching
+    tags:
+      - Prompt Caching
+      - Optimization
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://console.groq.com/docs/prompt-caching
+    baseURL: https://api.groq.com/openai/v1
+    properties:
+      - url: https://console.groq.com/docs/prompt-caching
+        type: Documentation
+    description: >-
+      Automatic prompt caching with a 50% discount on cached input tokens and no extra caching fee.
 common:
   - type: Website
     url: https://groq.com/
+  - type: Documentation
+    url: https://console.groq.com/docs
   - type: Plans
     url: plans/groq-plans-pricing.yml
   - type: RateLimits
