@@ -29,6 +29,8 @@ apis:
         type: Documentation
       - url: https://console.groq.com/docs/api-reference#chat
         type: API Reference
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       OpenAI-compatible chat completions across Llama, GPT OSS, Mixtral, Gemma, and Whisper-family models running on Groq LPU silicon, with streaming, tool use, and structured outputs.
   - aid: groq:groq-reasoning-api
@@ -42,6 +44,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/reasoning
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Reasoning-capable models with explicit chain-of-thought support, surfaced through the chat completions endpoint.
   - aid: groq:groq-vision-api
@@ -56,6 +60,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/vision
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Image and document understanding plus OCR via vision-capable chat models.
   - aid: groq:groq-speech-to-text-api
@@ -70,6 +76,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/speech-to-text
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       OpenAI-compatible audio transcription endpoint serving Whisper-family models on LPU hardware.
   - aid: groq:groq-text-to-speech-api
@@ -84,6 +92,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/text-to-speech
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Speech synthesis using Orpheus and other TTS models, billed per million characters.
   - aid: groq:groq-content-moderation-api
@@ -98,6 +108,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/content-moderation
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Safety classifier endpoint (Llama Guard) for input/output policy compliance.
   - aid: groq:groq-batch-api
@@ -111,6 +123,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/batch
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Asynchronous batch inference at 50% off synchronous rates for non-realtime workloads.
   - aid: groq:groq-flex-processing-api
@@ -124,6 +138,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/flex-processing
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Flexible service tier offering higher throughput at relaxed latency targets for cost-sensitive workloads.
   - aid: groq:groq-files-api
@@ -137,6 +153,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/api-reference#files
         type: API Reference
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Upload and manage files for batch inputs and other workflows.
   - aid: groq:groq-models-api
@@ -150,6 +168,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/api-reference#models
         type: API Reference
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Lists models available on GroqCloud with metadata, context length, and pricing tags.
   - aid: groq:groq-tools-api
@@ -164,6 +184,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/tools
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Built-in tools - Web Search, Browser Automation, Code Execution, Wolfram Alpha - invocable from chat completions and billed per call or per hour.
   - aid: groq:groq-lora-inference-api
@@ -178,6 +200,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/lora
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Serves customer LoRA adapters on top of supported base models for low-latency custom inference.
   - aid: groq:groq-prompt-caching-api
@@ -191,6 +215,8 @@ apis:
     properties:
       - url: https://console.groq.com/docs/prompt-caching
         type: Documentation
+      - url: openapi/groq-openapi.yml
+        type: OpenAPI
     description: >-
       Automatic prompt caching with a 50% discount on cached input tokens and no extra caching fee.
 common:
