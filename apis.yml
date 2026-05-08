@@ -1,0 +1,29 @@
+aid: groq
+url: https://raw.githubusercontent.com/api-evangelist/groq/refs/heads/main/apis.yml
+name: Groq
+x-type: company
+description: >-
+  Groq builds custom Language Processing Unit (LPU) silicon optimized for low-latency LLM inference. The GroqCloud API serves popular open models (Llama, Mixtral, Gemma) at industry-leading tokens-per-second.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI
+  - LLM
+  - Inference
+  - LPU
+  - Low Latency
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://groq.com/
+  - type: Plans
+    url: plans/groq-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/groq-rate-limits.yml
+  - type: FinOps
+    url: finops/groq-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
