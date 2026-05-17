@@ -1,7 +1,7 @@
 aid: groq
 url: https://raw.githubusercontent.com/api-evangelist/groq/refs/heads/main/apis.yml
 name: Groq
-x-type: company
+kind: company
 description: >-
   Groq builds custom Language Processing Unit (LPU) silicon optimized for low-latency LLM inference. The GroqCloud API serves popular open models (Llama, GPT OSS, Whisper, Orpheus) at industry-leading tokens-per-second with an OpenAI-compatible interface.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -28,7 +28,7 @@ apis:
       - url: https://console.groq.com/docs/text-chat
         type: Documentation
       - url: https://console.groq.com/docs/api-reference#chat
-        type: API Reference
+        type: APIReference
       - url: openapi/groq-openapi.yml
         type: OpenAPI
     description: >-
@@ -152,7 +152,7 @@ apis:
     baseURL: https://api.groq.com/openai/v1
     properties:
       - url: https://console.groq.com/docs/api-reference#files
-        type: API Reference
+        type: APIReference
       - url: openapi/groq-openapi.yml
         type: OpenAPI
     description: >-
@@ -167,7 +167,7 @@ apis:
     baseURL: https://api.groq.com/openai/v1
     properties:
       - url: https://console.groq.com/docs/api-reference#models
-        type: API Reference
+        type: APIReference
       - url: openapi/groq-openapi.yml
         type: OpenAPI
     description: >-
