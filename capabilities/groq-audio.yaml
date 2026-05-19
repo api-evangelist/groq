@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GroqCloud API — Audio
+  description: 'GroqCloud API — Audio. 3 operations. Lead operation: Generates audio from the input text.. Self-contained
+    Naftiko capability covering one Groq business surface.'
+  tags:
+  - Groq
+  - Audio
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GROQ_API_KEY: GROQ_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: groq-audio
+    baseUri: https://api.groq.com
+    description: GroqCloud API — Audio business capability. Self-contained, no shared references.
+    resources:
+    - name: openai-v1-audio-speech
+      path: /openai/v1/audio/speech
+      operations:
+      - name: createspeech
+        method: POST
+        description: Generates audio from the input text.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: openai-v1-audio-transcriptions
+      path: /openai/v1/audio/transcriptions
+      operations:
+      - name: createtranscription
+        method: POST
+        description: Transcribes audio into the input language.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: openai-v1-audio-translations
+      path: /openai/v1/audio/translations
+      operations:
+      - name: createtranslation
+        method: POST
+        description: Translates audio into English.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GROQ_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: groq-audio-rest
+    port: 8080
+    description: REST adapter for GroqCloud API — Audio. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/openai/v1/audio/speech
+      name: openai-v1-audio-speech
+      description: REST surface for openai-v1-audio-speech.
+      operations:
+      - method: POST
+        name: createspeech
+        description: Generates audio from the input text.
+        call: groq-audio.createspeech
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/openai/v1/audio/transcriptions
+      name: openai-v1-audio-transcriptions
+      description: REST surface for openai-v1-audio-transcriptions.
+      operations:
+      - method: POST
+        name: createtranscription
+        description: Transcribes audio into the input language.
+        call: groq-audio.createtranscription
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/openai/v1/audio/translations
+      name: openai-v1-audio-translations
+      description: REST surface for openai-v1-audio-translations.
+      operations:
+      - method: POST
+        name: createtranslation
+        description: Translates audio into English.
+        call: groq-audio.createtranslation
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: groq-audio-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GroqCloud API — Audio. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: generates-audio-input-text
+      description: Generates audio from the input text.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: groq-audio.createspeech
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: transcribes-audio-input-language
+      description: Transcribes audio into the input language.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: groq-audio.createtranscription
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: translates-audio-english
+      description: Translates audio into English.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: groq-audio.createtranslation
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

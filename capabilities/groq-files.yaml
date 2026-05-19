@@ -1,0 +1,224 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GroqCloud API — Files
+  description: 'GroqCloud API — Files. 5 operations. Lead operation: Returns a list of files.. Self-contained Naftiko capability
+    covering one Groq business surface.'
+  tags:
+  - Groq
+  - Files
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GROQ_API_KEY: GROQ_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: groq-files
+    baseUri: https://api.groq.com
+    description: GroqCloud API — Files business capability. Self-contained, no shared references.
+    resources:
+    - name: openai-v1-files
+      path: /openai/v1/files
+      operations:
+      - name: listfiles
+        method: GET
+        description: Returns a list of files.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: uploadfile
+        method: POST
+        description: Upload a file that can be used across various endpoints.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: openai-v1-files-file_id
+      path: /openai/v1/files/{file_id}
+      operations:
+      - name: deletefile
+        method: DELETE
+        description: Delete a file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: file_id
+          in: path
+          type: string
+          description: The ID of the file to use for this request.
+          required: true
+      - name: retrievefile
+        method: GET
+        description: Returns information about a file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: file_id
+          in: path
+          type: string
+          description: The file to retrieve
+          required: true
+    - name: openai-v1-files-file_id-content
+      path: /openai/v1/files/{file_id}/content
+      operations:
+      - name: downloadfile
+        method: GET
+        description: Returns the contents of the specified file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: file_id
+          in: path
+          type: string
+          description: The ID of the file to use for this request.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GROQ_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: groq-files-rest
+    port: 8080
+    description: REST adapter for GroqCloud API — Files. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/openai/v1/files
+      name: openai-v1-files
+      description: REST surface for openai-v1-files.
+      operations:
+      - method: GET
+        name: listfiles
+        description: Returns a list of files.
+        call: groq-files.listfiles
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: uploadfile
+        description: Upload a file that can be used across various endpoints.
+        call: groq-files.uploadfile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/openai/v1/files/{file-id}
+      name: openai-v1-files-file-id
+      description: REST surface for openai-v1-files-file_id.
+      operations:
+      - method: DELETE
+        name: deletefile
+        description: Delete a file.
+        call: groq-files.deletefile
+        with:
+          file_id: rest.file_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: retrievefile
+        description: Returns information about a file.
+        call: groq-files.retrievefile
+        with:
+          file_id: rest.file_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/openai/v1/files/{file-id}/content
+      name: openai-v1-files-file-id-content
+      description: REST surface for openai-v1-files-file_id-content.
+      operations:
+      - method: GET
+        name: downloadfile
+        description: Returns the contents of the specified file.
+        call: groq-files.downloadfile
+        with:
+          file_id: rest.file_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: groq-files-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GroqCloud API — Files. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: returns-list-files
+      description: Returns a list of files.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: groq-files.listfiles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-file-that-can-be
+      description: Upload a file that can be used across various endpoints.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: groq-files.uploadfile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-file
+      description: Delete a file.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: groq-files.deletefile
+      with:
+        file_id: tools.file_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-information-about-file
+      description: Returns information about a file.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: groq-files.retrievefile
+      with:
+        file_id: tools.file_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-contents-specified-file
+      description: Returns the contents of the specified file.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: groq-files.downloadfile
+      with:
+        file_id: tools.file_id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,193 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GroqCloud API — Fine Tuning
+  description: 'GroqCloud API — Fine Tuning. 4 operations. Lead operation: Lists all previously created fine tunings. This
+    endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.. Self-contained Naftiko capability
+    covering one Groq business surface.'
+  tags:
+  - Groq
+  - Fine Tuning
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GROQ_API_KEY: GROQ_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: groq-fine-tuning
+    baseUri: https://api.groq.com
+    description: GroqCloud API — Fine Tuning business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-fine_tunings
+      path: /v1/fine_tunings
+      operations:
+      - name: listfinetunings
+        method: GET
+        description: Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createfinetuning
+        method: POST
+        description: Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-fine_tunings-id
+      path: /v1/fine_tunings/{id}
+      operations:
+      - name: deletefinetuning
+        method: DELETE
+        description: Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: getfinetuning
+        method: GET
+        description: Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GROQ_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: groq-fine-tuning-rest
+    port: 8080
+    description: REST adapter for GroqCloud API — Fine Tuning. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/fine-tunings
+      name: v1-fine-tunings
+      description: REST surface for v1-fine_tunings.
+      operations:
+      - method: GET
+        name: listfinetunings
+        description: Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        call: groq-fine-tuning.listfinetunings
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createfinetuning
+        description: Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        call: groq-fine-tuning.createfinetuning
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fine-tunings/{id}
+      name: v1-fine-tunings-id
+      description: REST surface for v1-fine_tunings-id.
+      operations:
+      - method: DELETE
+        name: deletefinetuning
+        description: Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        call: groq-fine-tuning.deletefinetuning
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getfinetuning
+        description: Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+          for more information.
+        call: groq-fine-tuning.getfinetuning
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: groq-fine-tuning-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GroqCloud API — Fine Tuning. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: lists-all-previously-created-fine
+      description: Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+        for more information.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: groq-fine-tuning.listfinetunings
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-new-fine-tuning-already
+      description: Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+        for more information.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: groq-fine-tuning.createfinetuning
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-existing-fine-tuning-id
+      description: Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+        for more information.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: groq-fine-tuning.deletefinetuning
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieves-existing-fine-tuning-id
+      description: Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact)
+        for more information.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: groq-fine-tuning.getfinetuning
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
