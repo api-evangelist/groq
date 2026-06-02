@@ -1,0 +1,80 @@
+aid: groq
+name: Groq
+review:
+  question: Does Groq expose a documented public WebSocket API?
+  answer: false
+  date: '2026-05-29'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: true
+  asyncapiScopeNote: |
+    Per updated API Evangelist scope (2026-05-29), HTTP Server-Sent Events
+    (SSE) is in-scope for AsyncAPI modeling. An AsyncAPI 2.6 document was
+    created at asyncapi/groq-asyncapi.yml describing the chat completion
+    SSE stream (POST /chat/completions with stream=true). No WebSocket
+    surface was modeled because none is documented.
+findings:
+  summary: |
+    Groq does not publish a documented public WebSocket API. The GroqCloud
+    platform is OpenAI-compatible and exposes only REST (HTTPS) endpoints
+    under https://api.groq.com/openai/v1. Streaming for chat completions is
+    delivered as HTTP Server-Sent Events (SSE) via the `stream: true`
+    parameter on the REST endpoint; SSE is a one-way HTTP streaming
+    transport and is not WebSocket. No realtime, bidirectional, or audio
+    streaming WebSocket (ws:// or wss://) endpoint is documented for
+    speech-to-text, text-to-speech, or chat.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.groq.com/openai/v1
+      documented: true
+    - protocol: SSE
+      scheme: https
+      note: Server-Sent Events delivered over the same REST chat completions endpoint when stream=true. Not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Groq's API reference, speech-to-text, text-to-speech, or any other product page as of the review date.
+  endpointsConfirmedRest:
+    - POST https://api.groq.com/openai/v1/chat/completions
+    - POST https://api.groq.com/openai/v1/responses
+    - POST https://api.groq.com/openai/v1/audio/transcriptions
+    - POST https://api.groq.com/openai/v1/audio/translations
+    - POST https://api.groq.com/openai/v1/audio/speech
+    - GET  https://api.groq.com/openai/v1/models
+    - GET  https://api.groq.com/openai/v1/models/{model}
+    - POST https://api.groq.com/openai/v1/batches
+    - GET  https://api.groq.com/openai/v1/batches
+    - GET  https://api.groq.com/openai/v1/batches/{batch_id}
+    - POST https://api.groq.com/openai/v1/batches/{batch_id}/cancel
+    - POST https://api.groq.com/openai/v1/files
+    - GET  https://api.groq.com/openai/v1/files
+    - GET  https://api.groq.com/openai/v1/files/{file_id}
+    - GET  https://api.groq.com/openai/v1/files/{file_id}/content
+    - DELETE https://api.groq.com/openai/v1/files/{file_id}
+    - GET  https://api.groq.com/v1/fine_tunings
+    - POST https://api.groq.com/v1/fine_tunings
+    - GET  https://api.groq.com/v1/fine_tunings/{id}
+    - DELETE https://api.groq.com/v1/fine_tunings/{id}
+sources:
+  - url: https://console.groq.com/docs/
+    type: Documentation
+    note: Overview lists REST base URL https://api.groq.com/openai/v1; no WebSocket mentioned.
+  - url: https://console.groq.com/docs/api-reference
+    type: APIReference
+    note: All documented endpoints are HTTPS REST.
+  - url: https://console.groq.com/docs/speech-to-text
+    type: Documentation
+    note: Speech-to-text uses POST to /audio/transcriptions and /audio/translations; no WebSocket streaming.
+  - url: https://console.groq.com/docs/text-chat
+    type: Documentation
+    note: Chat streaming uses stream=true delivering data-only Server-Sent Events over HTTPS, not WebSocket.
+actions:
+  asyncapiPath: asyncapi/groq-asyncapi.yml
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Under the updated 2026-05-29 scope
+    that allows SSE in AsyncAPI, an AsyncAPI 2.6 document was authored for
+    the chat completion SSE stream, with HTTP+SSE transport documented
+    explicitly throughout the spec (server protocol, channel bindings,
+    info.x-transport-notes) so SSE is never misrepresented as WebSocket.

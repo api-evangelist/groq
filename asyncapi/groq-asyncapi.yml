@@ -1,0 +1,496 @@
+asyncapi: '2.6.0'
+id: 'urn:com:groq:openai:v1:chat-completions:sse'
+info:
+  title: Groq Chat Completions Streaming (HTTP + SSE)
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 description of Groq's **chat completion streaming** surface.
+
+    Groq does not publish a WebSocket API. The only asynchronous / event-style
+    transport documented at https://console.groq.com/docs/text-chat and
+    https://console.groq.com/docs/api-reference is **HTTP Server-Sent Events
+    (SSE)** delivered over the same REST endpoint (`POST /chat/completions`)
+    when the request body sets `stream: true`. SSE is a one-way, server-to-client
+    HTTP streaming channel; it is **not** WebSocket.
+
+    From the official Groq docs (text-chat, streaming section): "Tokens will be
+    sent as data-only server-sent events as they become available, with the
+    stream terminated by a `data: [DONE]` message."
+
+    This AsyncAPI document models only the streamed events emitted by Groq's
+    SSE response. The request body itself (model, messages, tools, etc.) is
+    modeled in the companion OpenAPI document at `openapi/groq-openapi.yml`.
+
+    Speech-to-text (`/audio/transcriptions`, `/audio/translations`) and
+    text-to-speech (`/audio/speech`) are **not** streamed via SSE per Groq's
+    docs as of 2026-05-29; they return single HTTP responses and are therefore
+    not modeled here.
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+    url: https://apievangelist.com
+  license:
+    name: API documentation - Groq Terms of Service
+    url: https://groq.com/terms-of-use/
+  x-transport-notes:
+    transport: HTTP Server-Sent Events (SSE)
+    protocol: https
+    direction: server-to-client (one-way)
+    mediaType: text/event-stream
+    triggeredBy: 'POST https://api.groq.com/openai/v1/chat/completions with request body { "stream": true }'
+    terminator: 'data: [DONE]'
+    notWebSocket: true
+    source: https://console.groq.com/docs/text-chat
+defaultContentType: text/event-stream
+servers:
+  groqcloud:
+    url: api.groq.com/openai/v1
+    protocol: https
+    description: |
+      Groq's OpenAI-compatible REST base. Chat completion streaming is delivered
+      as HTTP Server-Sent Events over this base when `stream: true` is set on
+      the JSON request body. AsyncAPI 2.6 does not define a dedicated SSE
+      protocol identifier; `https` is used here and the SSE transport is
+      documented in `info.x-transport-notes` and on each channel.
+    security:
+      - bearerAuth: []
+channels:
+  /chat/completions:
+    description: |
+      Chat completion SSE stream. The client opens this channel by issuing
+      `POST /chat/completions` with `Content-Type: application/json`,
+      `Accept: text/event-stream` (implied), and a JSON body containing
+      `stream: true`. The server responds with `Content-Type: text/event-stream`
+      and emits a sequence of `data:` lines, each carrying one JSON-serialized
+      `chat.completion.chunk` object, followed by a final `data: [DONE]` line.
+
+      If the request also sets `stream_options.include_usage: true`, an
+      additional chunk is streamed before `data: [DONE]` whose `choices` is
+      an empty array and whose top-level `x_groq.usage` contains end-of-stream
+      token usage statistics.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+      x-sse:
+        mediaType: text/event-stream
+        eventField: 'data'
+        terminator: '[DONE]'
+    subscribe:
+      operationId: streamChatCompletionChunks
+      summary: Subscribe to streamed chat completion chunks (SSE).
+      description: |
+        After `POST /chat/completions` is issued with `stream: true`, the server
+        emits an ordered sequence of SSE `data:` events. Each `data:` line
+        either carries a JSON-serialized `ChatCompletionChunk` or the literal
+        sentinel `[DONE]` marking end of stream.
+      bindings:
+        http:
+          type: response
+          bindingVersion: '0.3.0'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/ChatCompletionChunk'
+          - $ref: '#/components/messages/ChatCompletionUsageChunk'
+          - $ref: '#/components/messages/StreamDone'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Groq API key'
+      description: |
+        Standard Groq bearer token. Set the `Authorization: Bearer <GROQ_API_KEY>`
+        header on the `POST /chat/completions` request that opens the SSE stream.
+  messages:
+    ChatCompletionChunk:
+      name: ChatCompletionChunk
+      title: Streamed chat completion chunk
+      summary: |
+        A single SSE `data:` event carrying one JSON `chat.completion.chunk`
+        object. Many of these are emitted per request, in order.
+      contentType: application/json
+      description: |
+        Sent as `data: {json}\n\n` on the SSE stream. The JSON object's
+        `object` field is always the literal string `chat.completion.chunk`.
+        Fields are taken verbatim from Groq's published chat completion
+        chunk schema.
+      payload:
+        $ref: '#/components/schemas/ChatCompletionChunk'
+      examples:
+        - name: openingChunk
+          summary: First chunk - establishes role
+          payload:
+            id: chatcmpl-abc123
+            object: chat.completion.chunk
+            created: 1748524800
+            model: llama-3.3-70b-versatile
+            system_fingerprint: fp_groq_lpu
+            choices:
+              - index: 0
+                delta:
+                  role: assistant
+                  content: ''
+                logprobs: null
+                finish_reason: null
+            x_groq:
+              id: req_01jbd6g2qdfw2adyrt2az8hz4w
+        - name: contentChunk
+          summary: Token delta
+          payload:
+            id: chatcmpl-abc123
+            object: chat.completion.chunk
+            created: 1748524800
+            model: llama-3.3-70b-versatile
+            choices:
+              - index: 0
+                delta:
+                  content: 'Hello'
+                logprobs: null
+                finish_reason: null
+        - name: finalChunk
+          summary: Final chunk - finish_reason set
+          payload:
+            id: chatcmpl-abc123
+            object: chat.completion.chunk
+            created: 1748524800
+            model: llama-3.3-70b-versatile
+            choices:
+              - index: 0
+                delta: {}
+                logprobs: null
+                finish_reason: stop
+    ChatCompletionUsageChunk:
+      name: ChatCompletionUsageChunk
+      title: End-of-stream usage chunk
+      summary: |
+        Optional chunk emitted only when the request body sets
+        `stream_options.include_usage: true`. Streamed immediately before
+        `data: [DONE]`.
+      contentType: application/json
+      description: |
+        Per Groq's `ChatCompletionStreamOptions.include_usage` description:
+        "If set, an additional chunk will be streamed before the
+        `data: [DONE]` message. The `usage` field on this chunk shows the
+        token usage statistics for the entire request, and the `choices`
+        field will always be an empty array."
+      payload:
+        $ref: '#/components/schemas/ChatCompletionChunk'
+      examples:
+        - name: usageChunk
+          summary: Usage chunk
+          payload:
+            id: chatcmpl-abc123
+            object: chat.completion.chunk
+            created: 1748524800
+            model: llama-3.3-70b-versatile
+            choices: []
+            x_groq:
+              id: req_01jbd6g2qdfw2adyrt2az8hz4w
+              usage:
+                queue_time: 0.0123
+                prompt_time: 0.0456
+                completion_time: 0.0789
+                total_time: 0.1368
+                prompt_tokens: 42
+                completion_tokens: 17
+                total_tokens: 59
+    StreamDone:
+      name: StreamDone
+      title: Stream terminator
+      summary: |
+        The literal SSE event `data: [DONE]` that marks end of stream. Not
+        JSON; the payload is the string `[DONE]`.
+      contentType: text/plain
+      description: |
+        Per the official docs (text-chat, streaming section): "the stream
+        terminated by a `data: [DONE]` message". Clients must stop reading
+        the stream when this sentinel is observed.
+      payload:
+        $ref: '#/components/schemas/StreamDoneSentinel'
+      examples:
+        - name: done
+          summary: End-of-stream sentinel
+          payload: '[DONE]'
+  schemas:
+    StreamDoneSentinel:
+      type: string
+      enum:
+        - '[DONE]'
+      description: |
+        End-of-stream sentinel. The full SSE line is `data: [DONE]`. The
+        payload value modeled here is the string literal `[DONE]`.
+    ChatCompletionChunk:
+      type: object
+      description: |
+        Represents a streamed chunk of a chat completion response, as
+        defined by Groq's `CreateChatCompletionStreamResponse` schema.
+      required:
+        - choices
+        - created
+        - id
+        - model
+        - object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the chat completion. Each chunk has the same ID.
+        choices:
+          type: array
+          description: |
+            A list of chat completion choices. Can contain more than one
+            element if `n` is greater than 1. Will be an empty array on the
+            optional end-of-stream usage chunk emitted when
+            `stream_options.include_usage` is true.
+          items:
+            $ref: '#/components/schemas/ChatCompletionChunkChoice'
+        created:
+          type: integer
+          description: Unix timestamp (seconds) of when the chat completion was created. Each chunk has the same timestamp.
+        model:
+          type: string
+          description: The model used to generate the completion.
+        system_fingerprint:
+          type: string
+          description: |
+            Fingerprint of the backend configuration the model runs with. Can
+            be used together with the `seed` request parameter to detect
+            backend changes that may affect determinism.
+        object:
+          type: string
+          enum:
+            - chat.completion.chunk
+          description: The object type, which is always `chat.completion.chunk`.
+        x_groq:
+          $ref: '#/components/schemas/XGroq'
+    ChatCompletionChunkChoice:
+      type: object
+      required:
+        - delta
+        - finish_reason
+        - index
+      properties:
+        index:
+          type: integer
+          description: The index of the choice in the list of choices.
+        delta:
+          $ref: '#/components/schemas/ChatCompletionStreamResponseDelta'
+        logprobs:
+          type: object
+          nullable: true
+          description: Log probability information for the choice, if requested.
+        finish_reason:
+          type: string
+          nullable: true
+          enum:
+            - stop
+            - length
+            - tool_calls
+            - function_call
+          description: |
+            Reason the model stopped generating tokens. `stop` for natural
+            stop or a provided stop sequence; `length` if `max_tokens` was
+            reached; `tool_calls` if the model called a tool;
+            `function_call` (deprecated) if the model called a function.
+            Null on all chunks except the final content chunk.
+    ChatCompletionStreamResponseDelta:
+      type: object
+      description: A chat completion delta generated by streamed model responses.
+      properties:
+        role:
+          type: string
+          enum:
+            - system
+            - user
+            - assistant
+            - tool
+          description: |
+            Role of the author of this message. Typically only emitted on
+            the first chunk of a choice.
+        content:
+          type: string
+          nullable: true
+          description: The contents of the chunk message (token slice).
+        reasoning:
+          type: string
+          nullable: true
+          description: |
+            The model's reasoning for a response. Only available for models
+            that support reasoning when request parameter `reasoning_format`
+            is `parsed`.
+        tool_calls:
+          type: array
+          description: |
+            Streaming tool-call fragments. Each item carries a delta of a
+            single tool call indexed by `index`.
+          items:
+            $ref: '#/components/schemas/ChatCompletionMessageToolCallChunk'
+        function_call:
+          type: object
+          deprecated: true
+          description: |
+            Deprecated and replaced by `tool_calls`. Name and arguments
+            fragments for a function call the model is invoking.
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+            arguments:
+              type: string
+              description: |
+                JSON-encoded arguments to call the function with, as
+                generated by the model. May be invalid JSON; validate
+                before use.
+        executed_tools:
+          type: array
+          description: |
+            List of tools that were executed during the chat completion for
+            compound AI systems.
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              type:
+                type: string
+              arguments:
+                type: string
+              output:
+                type: string
+                nullable: true
+            required:
+              - index
+              - type
+              - arguments
+        annotations:
+          type: array
+          description: Citations and references for content in the message.
+          items:
+            type: object
+    ChatCompletionMessageToolCallChunk:
+      type: object
+      required:
+        - index
+      properties:
+        index:
+          type: integer
+          description: Index of the tool call within the choice's tool_calls array.
+        id:
+          type: string
+          description: The ID of the tool call.
+        type:
+          type: string
+          enum:
+            - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+            arguments:
+              type: string
+              description: |
+                JSON-encoded arguments fragment. The full argument string is
+                assembled by concatenating `function.arguments` across
+                successive chunks with the same `index`. May be invalid JSON
+                in intermediate states; validate after assembly.
+    XGroq:
+      type: object
+      description: |
+        Groq-specific metadata for streaming responses. Different fields
+        appear in different chunks.
+      properties:
+        id:
+          type: string
+          nullable: true
+          description: |
+            Groq request ID for support correlation. Sent only in the first
+            and final chunks.
+        seed:
+          type: integer
+          nullable: true
+          description: The seed used for the request. Sent in the final chunk.
+        usage:
+          $ref: '#/components/schemas/CompletionUsage'
+        usage_breakdown:
+          type: object
+          nullable: true
+          description: |
+            Detailed usage breakdown by model when multiple models are used
+            in the request for compound AI systems. Only sent in the final
+            chunk.
+          properties:
+            models:
+              type: array
+              items:
+                type: object
+                required:
+                  - model
+                  - usage
+                properties:
+                  model:
+                    type: string
+                  usage:
+                    $ref: '#/components/schemas/CompletionUsage'
+          required:
+            - models
+        error:
+          type: string
+          nullable: true
+          description: Error string indicating why a stream was stopped early.
+    CompletionUsage:
+      type: object
+      nullable: true
+      description: |
+        Usage statistics for the completion request. Sent on the final chunk
+        (or on the optional dedicated usage chunk when
+        `stream_options.include_usage` is true). Null on intermediate chunks.
+      required:
+        - prompt_tokens
+        - completion_tokens
+        - total_tokens
+      properties:
+        queue_time:
+          type: number
+          description: Time the request spent queued (seconds).
+        prompt_time:
+          type: number
+          description: Time spent processing input tokens (seconds).
+        completion_time:
+          type: number
+          description: Time spent generating tokens (seconds).
+        total_time:
+          type: number
+          description: Completion time and prompt time combined (seconds).
+        prompt_tokens:
+          type: integer
+          description: Number of tokens in the prompt.
+        completion_tokens:
+          type: integer
+          description: Number of tokens in the generated completion.
+        total_tokens:
+          type: integer
+          description: Total tokens used in the request (prompt + completion).
+        prompt_tokens_details:
+          type: object
+          nullable: true
+          description: Breakdown of tokens in the prompt.
+          required:
+            - cached_tokens
+          properties:
+            cached_tokens:
+              type: integer
+              description: Number of tokens that were cached and reused.
+        completion_tokens_details:
+          type: object
+          nullable: true
+          description: Breakdown of tokens in the completion.
+          required:
+            - reasoning_tokens
+          properties:
+            reasoning_tokens:
+              type: integer
+              description: Number of tokens used for reasoning (for reasoning models).
