@@ -1,0 +1,876 @@
+"""
+Groq GraphQL Schema
+Conceptual schema derived from the Groq REST API (GroqCloud).
+Covers chat completions, audio, vision, batch processing, files, models,
+tools, LoRA inference, prompt caching, content moderation, and TTS.
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar JSON
+scalar DateTime
+scalar Upload
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum MessageRole {
+  SYSTEM
+  USER
+  ASSISTANT
+  TOOL
+  FUNCTION
+}
+
+enum FinishReason {
+  STOP
+  LENGTH
+  TOOL_CALLS
+  CONTENT_FILTER
+  FUNCTION_CALL
+  NULL
+}
+
+enum ServiceTier {
+  AUTO
+  DEFAULT
+  FLEX
+}
+
+enum BatchStatus {
+  VALIDATING
+  FAILED
+  IN_PROGRESS
+  FINALIZING
+  COMPLETED
+  EXPIRED
+  CANCELLING
+  CANCELLED
+}
+
+enum FileStatus {
+  UPLOADED
+  PROCESSED
+  PENDING
+  ERROR
+}
+
+enum FilePurpose {
+  BATCH
+  FINE_TUNE
+  ASSISTANTS
+}
+
+enum ToolType {
+  FUNCTION
+  WEB_SEARCH
+  BROWSER_AUTOMATION
+  CODE_EXECUTION
+  WOLFRAM_ALPHA
+}
+
+enum ToolChoiceMode {
+  NONE
+  AUTO
+  REQUIRED
+}
+
+enum AudioFormat {
+  MP3
+  MP4
+  MPEG
+  MPGA
+  M4A
+  OGG
+  OGA
+  WAV
+  WEBM
+  FLAC
+}
+
+enum TranscriptionResponseFormat {
+  JSON
+  TEXT
+  SRT
+  VERBOSE_JSON
+  VTT
+}
+
+enum TTSVoice {
+  ALLOY
+  ECHO
+  FABLE
+  ONYX
+  NOVA
+  SHIMMER
+  ORPHEUS_TARA
+  ORPHEUS_LEAH
+  ORPHEUS_JESS
+  ORPHEUS_LEO
+  ORPHEUS_DAN
+  ORPHEUS_MIA
+  ORPHEUS_ZAC
+  ORPHEUS_ZOE
+}
+
+enum TTSFormat {
+  MP3
+  OPUS
+  AAC
+  FLAC
+  WAV
+  PCM
+}
+
+enum ModelStatus {
+  ACTIVE
+  DEPRECATED
+  PREVIEW
+}
+
+enum ModelFamily {
+  LLAMA
+  MIXTRAL
+  GEMMA
+  WHISPER
+  ORPHEUS
+  GPT_OSS
+  LLAMA_GUARD
+}
+
+enum ModerationCategory {
+  HATE
+  HATE_THREATENING
+  SELF_HARM
+  SEXUAL
+  SEXUAL_MINORS
+  VIOLENCE
+  VIOLENCE_GRAPHIC
+  HARASSMENT
+  DANGEROUS_CONTENT
+}
+
+enum BatchEndpoint {
+  CHAT_COMPLETIONS
+  EMBEDDINGS
+}
+
+enum ReasoningEffort {
+  LOW
+  DEFAULT
+  HIGH
+}
+
+enum ImageDetail {
+  AUTO
+  LOW
+  HIGH
+}
+
+# ─────────────────────────────────────────────
+# Core Entity Types
+# ─────────────────────────────────────────────
+
+type Model {
+  id: ID!
+  object: String!
+  created: DateTime!
+  ownedBy: String!
+  active: Boolean!
+  contextWindow: Int!
+  publicApps: JSON
+  status: ModelStatus!
+  family: ModelFamily
+  maxTokens: Int
+  supportsVision: Boolean!
+  supportsTools: Boolean!
+  supportsStreaming: Boolean!
+  supportsReasoning: Boolean!
+  deprecated: Boolean!
+  deprecatedAt: DateTime
+}
+
+type ModelConnection {
+  object: String!
+  data: [Model!]!
+  totalCount: Int!
+}
+
+type ChatMessage {
+  role: MessageRole!
+  content: String
+  name: String
+  toolCallId: String
+  toolCalls: [ToolCall!]
+  refusal: String
+  reasoningContent: String
+}
+
+type ToolCall {
+  id: ID!
+  type: ToolType!
+  function: FunctionCall
+}
+
+type FunctionCall {
+  name: String!
+  arguments: String!
+}
+
+type CompletionUsage {
+  promptTokens: Int!
+  completionTokens: Int!
+  totalTokens: Int!
+  promptTokensDetails: PromptTokensDetails
+  completionTokensDetails: CompletionTokensDetails
+  queueTime: Float
+  promptTime: Float
+  completionTime: Float
+  totalTime: Float
+}
+
+type PromptTokensDetails {
+  cachedTokens: Int!
+  audioTokens: Int
+}
+
+type CompletionTokensDetails {
+  reasoningTokens: Int!
+  audioTokens: Int
+  acceptedPredictionTokens: Int
+  rejectedPredictionTokens: Int
+}
+
+type ChatCompletionChoice {
+  index: Int!
+  message: ChatMessage!
+  logprobs: LogprobsResult
+  finishReason: FinishReason!
+}
+
+type LogprobsResult {
+  content: [TokenLogprob!]
+  refusal: [TokenLogprob!]
+}
+
+type TokenLogprob {
+  token: String!
+  logprob: Float!
+  bytes: [Int!]
+  topLogprobs: [TopLogprob!]!
+}
+
+type TopLogprob {
+  token: String!
+  logprob: Float!
+  bytes: [Int!]
+}
+
+type ChatCompletion {
+  id: ID!
+  object: String!
+  created: DateTime!
+  model: String!
+  choices: [ChatCompletionChoice!]!
+  usage: CompletionUsage!
+  systemFingerprint: String
+  serviceTier: ServiceTier
+  xGroq: XGroqMetadata
+}
+
+type XGroqMetadata {
+  id: String!
+  usage: CompletionUsage
+}
+
+type ChatCompletionChunk {
+  id: ID!
+  object: String!
+  created: DateTime!
+  model: String!
+  choices: [ChatCompletionChunkChoice!]!
+  usage: CompletionUsage
+  systemFingerprint: String
+  serviceTier: ServiceTier
+  xGroq: XGroqMetadata
+}
+
+type ChatCompletionChunkChoice {
+  index: Int!
+  delta: ChatMessageDelta!
+  logprobs: LogprobsResult
+  finishReason: FinishReason
+}
+
+type ChatMessageDelta {
+  role: MessageRole
+  content: String
+  toolCalls: [ToolCallDelta!]
+  refusal: String
+  reasoningContent: String
+}
+
+type ToolCallDelta {
+  index: Int!
+  id: String
+  type: ToolType
+  function: FunctionCallDelta
+}
+
+type FunctionCallDelta {
+  name: String
+  arguments: String
+}
+
+type AudioTranscription {
+  task: String
+  language: String
+  duration: Float
+  text: String!
+  words: [TranscribedWord!]
+  segments: [TranscribedSegment!]
+  xGroq: XGroqMetadata
+}
+
+type TranscribedWord {
+  word: String!
+  start: Float!
+  end: Float!
+}
+
+type TranscribedSegment {
+  id: Int!
+  seek: Int!
+  start: Float!
+  end: Float!
+  text: String!
+  tokens: [Int!]!
+  temperature: Float!
+  avgLogprob: Float!
+  compressionRatio: Float!
+  noSpeechProb: Float!
+}
+
+type File {
+  id: ID!
+  object: String!
+  bytes: Int!
+  createdAt: DateTime!
+  filename: String!
+  purpose: FilePurpose!
+  status: FileStatus!
+  statusDetails: String
+}
+
+type FileConnection {
+  object: String!
+  data: [File!]!
+  totalCount: Int!
+}
+
+type FileDeleted {
+  id: ID!
+  object: String!
+  deleted: Boolean!
+}
+
+type Batch {
+  id: ID!
+  object: String!
+  endpoint: String!
+  errors: BatchErrors
+  inputFileId: String!
+  completionWindow: String!
+  status: BatchStatus!
+  outputFileId: String
+  errorFileId: String
+  createdAt: DateTime!
+  inProgressAt: DateTime
+  expiresAt: DateTime
+  finalizingAt: DateTime
+  completedAt: DateTime
+  failedAt: DateTime
+  expiredAt: DateTime
+  cancellingAt: DateTime
+  cancelledAt: DateTime
+  requestCounts: BatchRequestCounts!
+  metadata: JSON
+}
+
+type BatchErrors {
+  object: String
+  data: [BatchError!]
+}
+
+type BatchError {
+  code: String
+  message: String
+  param: String
+  line: Int
+}
+
+type BatchRequestCounts {
+  total: Int!
+  completed: Int!
+  failed: Int!
+}
+
+type BatchConnection {
+  object: String!
+  data: [Batch!]!
+  hasMore: Boolean!
+  firstId: String
+  lastId: String
+}
+
+type ModerationResult {
+  id: ID!
+  model: String!
+  results: [ModerationResultItem!]!
+}
+
+type ModerationResultItem {
+  flagged: Boolean!
+  categories: ModerationCategories!
+  categoryScores: ModerationCategoryScores!
+}
+
+type ModerationCategories {
+  hate: Boolean!
+  hateThreatening: Boolean!
+  selfHarm: Boolean!
+  sexual: Boolean!
+  sexualMinors: Boolean!
+  violence: Boolean!
+  violenceGraphic: Boolean!
+  harassment: Boolean!
+  dangerousContent: Boolean!
+}
+
+type ModerationCategoryScores {
+  hate: Float!
+  hateThreatening: Float!
+  selfHarm: Float!
+  sexual: Float!
+  sexualMinors: Float!
+  violence: Float!
+  violenceGraphic: Float!
+  harassment: Float!
+  dangerousContent: Float!
+}
+
+type LoRAAdapter {
+  id: ID!
+  name: String!
+  baseModel: String!
+  status: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  description: String
+  parameters: Int
+  rank: Int
+  alpha: Float
+  targetModules: [String!]
+}
+
+type LoRAAdapterConnection {
+  data: [LoRAAdapter!]!
+  totalCount: Int!
+  hasMore: Boolean!
+}
+
+type PromptCacheEntry {
+  id: ID!
+  model: String!
+  createdAt: DateTime!
+  expiresAt: DateTime!
+  tokenCount: Int!
+  hitCount: Int!
+  lastHitAt: DateTime
+}
+
+type PromptCacheStats {
+  totalEntries: Int!
+  totalCachedTokens: Int!
+  totalHits: Int!
+  estimatedSavings: Float!
+}
+
+type UsageRecord {
+  date: String!
+  model: String!
+  inputTokens: Int!
+  outputTokens: Int!
+  cachedInputTokens: Int!
+  totalTokens: Int!
+  requestCount: Int!
+  cost: Float!
+}
+
+type UsageSummary {
+  startDate: String!
+  endDate: String!
+  totalInputTokens: Int!
+  totalOutputTokens: Int!
+  totalCachedTokens: Int!
+  totalTokens: Int!
+  totalRequests: Int!
+  totalCost: Float!
+  records: [UsageRecord!]!
+}
+
+type RateLimit {
+  requestsPerMinute: Int!
+  requestsPerDay: Int!
+  tokensPerMinute: Int!
+  tokensPerDay: Int!
+  model: String!
+}
+
+type APIError {
+  message: String!
+  type: String!
+  param: String
+  code: String
+}
+
+type DeleteResult {
+  id: ID!
+  object: String!
+  deleted: Boolean!
+}
+
+type AudioSpeechResult {
+  audioContent: String!
+  contentType: String!
+  durationSeconds: Float
+}
+
+type WebSearchResult {
+  query: String!
+  results: [WebSearchItem!]!
+  totalResults: Int!
+}
+
+type WebSearchItem {
+  title: String!
+  url: String!
+  snippet: String!
+  publishedAt: DateTime
+}
+
+type CodeExecutionResult {
+  stdout: String!
+  stderr: String!
+  exitCode: Int!
+  executionTimeMs: Int!
+  files: [ExecutionOutputFile!]
+}
+
+type ExecutionOutputFile {
+  name: String!
+  content: String!
+  mimeType: String!
+}
+
+# ─────────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────────
+
+input ChatMessageInput {
+  role: MessageRole!
+  content: String
+  name: String
+  toolCallId: String
+  toolCalls: [ToolCallInput!]
+}
+
+input ToolCallInput {
+  id: ID!
+  type: ToolType!
+  function: FunctionCallInput!
+}
+
+input FunctionCallInput {
+  name: String!
+  arguments: String!
+}
+
+input FunctionDefinitionInput {
+  name: String!
+  description: String
+  parameters: JSON!
+  strict: Boolean
+}
+
+input ToolDefinitionInput {
+  type: ToolType!
+  function: FunctionDefinitionInput
+}
+
+input ToolChoiceInput {
+  type: ToolChoiceMode
+  function: ToolChoiceFunctionInput
+}
+
+input ToolChoiceFunctionInput {
+  name: String!
+}
+
+input ResponseFormatInput {
+  type: String!
+  jsonSchema: JSON
+}
+
+input LogprobsInput {
+  logprobs: Boolean
+  topLogprobs: Int
+}
+
+input StreamOptionsInput {
+  includeUsage: Boolean!
+}
+
+input ReasoningInput {
+  effort: ReasoningEffort
+  maxTokens: Int
+}
+
+input ImageUrlInput {
+  url: String!
+  detail: ImageDetail
+}
+
+input ContentPartInput {
+  type: String!
+  text: String
+  imageUrl: ImageUrlInput
+}
+
+input ChatCompletionInput {
+  model: String!
+  messages: [ChatMessageInput!]!
+  maxTokens: Int
+  maxCompletionTokens: Int
+  temperature: Float
+  topP: Float
+  n: Int
+  stream: Boolean
+  streamOptions: StreamOptionsInput
+  stop: [String!]
+  presencePenalty: Float
+  frequencyPenalty: Float
+  logitBias: JSON
+  logprobs: Boolean
+  topLogprobs: Int
+  user: String
+  tools: [ToolDefinitionInput!]
+  toolChoice: ToolChoiceInput
+  parallelToolCalls: Boolean
+  responseFormat: ResponseFormatInput
+  seed: Int
+  serviceTier: ServiceTier
+  reasoning: ReasoningInput
+  store: Boolean
+  metadata: JSON
+}
+
+input AudioTranscriptionInput {
+  file: Upload!
+  model: String!
+  language: String
+  prompt: String
+  responseFormat: TranscriptionResponseFormat
+  temperature: Float
+  timestampGranularities: [String!]
+}
+
+input AudioSpeechInput {
+  model: String!
+  input: String!
+  voice: TTSVoice!
+  responseFormat: TTSFormat
+  speed: Float
+}
+
+input BatchCreateInput {
+  inputFileId: String!
+  endpoint: BatchEndpoint!
+  completionWindow: String!
+  metadata: JSON
+}
+
+input BatchListInput {
+  after: String
+  limit: Int
+}
+
+input FileUploadInput {
+  file: Upload!
+  purpose: FilePurpose!
+}
+
+input ModerationInput {
+  input: String!
+  model: String
+}
+
+input LoRAAdapterCreateInput {
+  name: String!
+  baseModel: String!
+  description: String
+  rank: Int
+  alpha: Float
+  targetModules: [String!]
+}
+
+input UsageQueryInput {
+  startDate: String!
+  endDate: String!
+  model: String
+  groupBy: String
+}
+
+input WebSearchInput {
+  query: String!
+  numResults: Int
+  language: String
+  country: String
+}
+
+input CodeExecutionInput {
+  code: String!
+  language: String!
+  timeoutSeconds: Int
+  files: [CodeExecutionFileInput!]
+}
+
+input CodeExecutionFileInput {
+  name: String!
+  content: String!
+}
+
+input ModelFilterInput {
+  family: ModelFamily
+  supportsVision: Boolean
+  supportsTools: Boolean
+  supportsReasoning: Boolean
+  active: Boolean
+}
+
+input PaginationInput {
+  limit: Int
+  after: String
+  before: String
+}
+
+# ─────────────────────────────────────────────
+# Query Root
+# ─────────────────────────────────────────────
+
+type Query {
+  "List all available models on GroqCloud."
+  models(filter: ModelFilterInput): ModelConnection!
+
+  "Retrieve a specific model by ID."
+  model(id: ID!): Model
+
+  "List uploaded files."
+  files(purpose: FilePurpose, pagination: PaginationInput): FileConnection!
+
+  "Retrieve a specific file by ID."
+  file(id: ID!): File
+
+  "Retrieve file content by file ID."
+  fileContent(id: ID!): String
+
+  "List batch jobs."
+  batches(pagination: BatchListInput): BatchConnection!
+
+  "Retrieve a specific batch job by ID."
+  batch(id: ID!): Batch
+
+  "List LoRA adapters."
+  loraAdapters(pagination: PaginationInput): LoRAAdapterConnection!
+
+  "Retrieve a specific LoRA adapter by ID."
+  loraAdapter(id: ID!): LoRAAdapter
+
+  "Get prompt cache statistics for the account."
+  promptCacheStats: PromptCacheStats!
+
+  "List prompt cache entries."
+  promptCacheEntries(model: String, pagination: PaginationInput): [PromptCacheEntry!]!
+
+  "Get usage summary for a date range."
+  usageSummary(query: UsageQueryInput!): UsageSummary!
+
+  "Get rate limits for a specific model."
+  rateLimits(model: String!): RateLimit!
+
+  "Get all rate limits across models."
+  allRateLimits: [RateLimit!]!
+}
+
+# ─────────────────────────────────────────────
+# Mutation Root
+# ─────────────────────────────────────────────
+
+type Mutation {
+  "Create a chat completion (non-streaming)."
+  createChatCompletion(input: ChatCompletionInput!): ChatCompletion!
+
+  "Transcribe audio to text."
+  transcribeAudio(input: AudioTranscriptionInput!): AudioTranscription!
+
+  "Translate audio to English text."
+  translateAudio(input: AudioTranscriptionInput!): AudioTranscription!
+
+  "Generate speech from text."
+  createSpeech(input: AudioSpeechInput!): AudioSpeechResult!
+
+  "Check content for policy violations."
+  moderateContent(input: ModerationInput!): ModerationResult!
+
+  "Upload a file to GroqCloud."
+  uploadFile(input: FileUploadInput!): File!
+
+  "Delete a file from GroqCloud."
+  deleteFile(id: ID!): FileDeleted!
+
+  "Create a new batch job."
+  createBatch(input: BatchCreateInput!): Batch!
+
+  "Cancel an in-progress batch job."
+  cancelBatch(id: ID!): Batch!
+
+  "Run a web search using the Groq built-in tool."
+  webSearch(input: WebSearchInput!): WebSearchResult!
+
+  "Execute code using the Groq built-in code execution tool."
+  executeCode(input: CodeExecutionInput!): CodeExecutionResult!
+
+  "Register a LoRA adapter for inference."
+  createLoRAAdapter(input: LoRAAdapterCreateInput!): LoRAAdapter!
+
+  "Delete a LoRA adapter."
+  deleteLoRAAdapter(id: ID!): DeleteResult!
+}
+
+# ─────────────────────────────────────────────
+# Subscription Root
+# ─────────────────────────────────────────────
+
+type Subscription {
+  "Stream chat completion tokens as they are generated."
+  chatCompletionStream(input: ChatCompletionInput!): ChatCompletionChunk!
+
+  "Stream batch job status updates."
+  batchStatusUpdated(batchId: ID!): Batch!
+
+  "Stream file processing status updates."
+  fileStatusUpdated(fileId: ID!): File!
+}
