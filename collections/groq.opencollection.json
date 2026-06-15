@@ -1,0 +1,451 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GroqCloud API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generates audio from the input text.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/audio/speech",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates audio from the input text."
+        },
+        {
+          "info": {
+            "name": "Transcribes audio into the input language.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Transcribes audio into the input language."
+        },
+        {
+          "info": {
+            "name": "Translates audio into English.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/audio/translations",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Translates audio into English."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List your organization's batches.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/batches"
+          },
+          "docs": "List your organization's batches."
+        },
+        {
+          "info": {
+            "name": "Creates and executes a batch from an uploaded file of requests. [Learn more](/docs/batch).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/batches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates and executes a batch from an uploaded file of requests. [Learn more](/docs/batch)."
+        },
+        {
+          "info": {
+            "name": "Retrieves a batch.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/batches/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the batch to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a batch."
+        },
+        {
+          "info": {
+            "name": "Cancels a batch.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/batches/:batch_id/cancel",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the batch to cancel."
+              }
+            ]
+          },
+          "docs": "Cancels a batch."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Chat",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates a model response for the given chat conversation.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a model response for the given chat conversation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Embeddings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates an embedding vector representing the input text.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/embeddings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an embedding vector representing the input text."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of files.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/files"
+          },
+          "docs": "Returns a list of files."
+        },
+        {
+          "info": {
+            "name": "Upload a file that can be used across various endpoints.\n\nThe Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).\n\nPlease contact us if you need to increase these storage limits.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/files",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a file that can be used across various endpoints.\n\nThe Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).\n\nPlease contact us if you need to increase these storage limits.\n"
+        },
+        {
+          "info": {
+            "name": "Returns information about a file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns information about a file."
+        },
+        {
+          "info": {
+            "name": "Delete a file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.groq.com/openai/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file to use for this request."
+              }
+            ]
+          },
+          "docs": "Delete a file."
+        },
+        {
+          "info": {
+            "name": "Returns the contents of the specified file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/files/:file_id/content",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file to use for this request."
+              }
+            ]
+          },
+          "docs": "Returns the contents of the specified file."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Fine Tuning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/v1/fine_tunings"
+          },
+          "docs": "Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        },
+        {
+          "info": {
+            "name": "Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/v1/fine_tunings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/v1/fine_tunings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        },
+        {
+          "info": {
+            "name": "Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.groq.com/v1/fine_tunings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all available [models](https://console.groq.com/docs/models).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/models"
+          },
+          "docs": "get all available models"
+        },
+        {
+          "info": {
+            "name": "Get detailed information about a [model](https://console.groq.com/docs/models).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/models/:model",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "path",
+                "description": "The model to get"
+              }
+            ]
+          },
+          "docs": "Get a specific model"
+        },
+        {
+          "info": {
+            "name": "Delete model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.groq.com/openai/v1/models/:model",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "path",
+                "description": "The model to delete"
+              }
+            ]
+          },
+          "docs": "Delete a model"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reranking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reranks documents based on their relevance to a query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/reranking",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Given a query and a list of documents, returns the documents ranked by their relevance to the query.\nThe documents are scored and sorted in descending order of relevance.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates a model response for the given input.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a model response for the given input."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

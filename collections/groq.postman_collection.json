@@ -1,0 +1,2341 @@
+{
+  "item": [
+    {
+      "id": "e2e499a5-2fcf-47e6-ae8c-56ed7b23286d",
+      "name": "Audio",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ab38fa7c-f9b9-456e-a517-f89204ad0d06",
+          "name": "Generates audio from the input text.",
+          "request": {
+            "name": "Generates audio from the input text.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "speech"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "audio/wav"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"voice\": \"<string>\",\n  \"response_format\": \"mp3\",\n  \"sample_rate\": 48000,\n  \"speed\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a8eddb3-1b01-414e-9972-b5a8311c780d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "audio",
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "audio/wav"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"The quick brown fox jumped over the lazy dog\",\n  \"voice\": \"Fritz-PlayAI\",\n  \"response_format\": \"mp3\",\n  \"sample_rate\": 48000,\n  \"speed\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "chunked",
+                  "key": "Transfer-Encoding",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "audio/wav"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0bde27cb-9b20-4217-99a0-b57c3475dd9d",
+          "name": "Transcribes audio into the input language.",
+          "request": {
+            "name": "Transcribes audio into the input language.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "transcriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            }
+          },
+          "response": [
+            {
+              "id": "deb9653f-d3ea-434b-bf8f-84b47ffcac74",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "audio",
+                    "transcriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"text\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e00d6b8a-42bc-41de-8b30-bfa62e986a93",
+          "name": "Translates audio into English.",
+          "request": {
+            "name": "Translates audio into English.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "translations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            }
+          },
+          "response": [
+            {
+              "id": "3d9f42fa-43f5-4452-ba13-5de8cb0c52dc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "audio",
+                    "translations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"text\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f084ddd4-a766-46cd-ae61-58cc2ffd2bfb",
+      "name": "Batch",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b8888bc-d2ce-4d75-9f3d-f2c0ae5e8274",
+          "name": "Creates and executes a batch from an uploaded file of requests. [Learn more](/docs/batch).",
+          "request": {
+            "name": "Creates and executes a batch from an uploaded file of requests. [Learn more](/docs/batch).",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input_file_id\": \"<string>\",\n  \"endpoint\": \"<string>\",\n  \"completion_window\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8dfef776-8cf6-481a-b708-fa6438b62696",
+              "name": "Batch created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input_file_id\": \"<string>\",\n  \"endpoint\": \"<string>\",\n  \"completion_window\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"batch\",\n  \"endpoint\": \"string\",\n  \"input_file_id\": \"string\",\n  \"completion_window\": \"string\",\n  \"status\": \"expired\",\n  \"created_at\": 3257,\n  \"errors\": {\n    \"object\": \"string\",\n    \"data\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"param\": \"string\",\n        \"line\": 869\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"param\": \"string\",\n        \"line\": 6204\n      }\n    ]\n  },\n  \"output_file_id\": \"string\",\n  \"error_file_id\": \"string\",\n  \"in_progress_at\": 6782,\n  \"expires_at\": 5147,\n  \"finalizing_at\": 8394,\n  \"completed_at\": 1132,\n  \"failed_at\": 350,\n  \"expired_at\": 5646,\n  \"cancelling_at\": 2274,\n  \"cancelled_at\": 2536,\n  \"request_counts\": {\n    \"total\": 1132,\n    \"completed\": 8493,\n    \"failed\": 5541\n  },\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "529b48ad-0f63-4677-946d-7e654fb1595b",
+          "name": "List your organization's batches.",
+          "request": {
+            "name": "List your organization's batches.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e8448da9-4ccf-459e-a16b-2383b0b74723",
+              "name": "Batch listed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"batch\",\n      \"endpoint\": \"string\",\n      \"input_file_id\": \"string\",\n      \"completion_window\": \"string\",\n      \"status\": \"expired\",\n      \"created_at\": 8547,\n      \"errors\": {\n        \"object\": \"string\",\n        \"data\": [\n          {\n            \"code\": \"string\",\n            \"message\": \"string\",\n            \"param\": \"string\",\n            \"line\": 460\n          },\n          {\n            \"code\": \"string\",\n            \"message\": \"string\",\n            \"param\": \"string\",\n            \"line\": 9242\n          }\n        ]\n      },\n      \"output_file_id\": \"string\",\n      \"error_file_id\": \"string\",\n      \"in_progress_at\": 3006,\n      \"expires_at\": 9403,\n      \"finalizing_at\": 4874,\n      \"completed_at\": 5755,\n      \"failed_at\": 9515,\n      \"expired_at\": 5962,\n      \"cancelling_at\": 6799,\n      \"cancelled_at\": 2912,\n      \"request_counts\": {\n        \"total\": 4038,\n        \"completed\": 7901,\n        \"failed\": 8293\n      },\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"batch\",\n      \"endpoint\": \"string\",\n      \"input_file_id\": \"string\",\n      \"completion_window\": \"string\",\n      \"status\": \"in_progress\",\n      \"created_at\": 2788,\n      \"errors\": {\n        \"object\": \"string\",\n        \"data\": [\n          {\n            \"code\": \"string\",\n            \"message\": \"string\",\n            \"param\": \"string\",\n            \"line\": 3298\n          },\n          {\n            \"code\": \"string\",\n            \"message\": \"string\",\n            \"param\": \"string\",\n            \"line\": 7753\n          }\n        ]\n      },\n      \"output_file_id\": \"string\",\n      \"error_file_id\": \"string\",\n      \"in_progress_at\": 4798,\n      \"expires_at\": 7624,\n      \"finalizing_at\": 410,\n      \"completed_at\": 6793,\n      \"failed_at\": 6125,\n      \"expired_at\": 2663,\n      \"cancelling_at\": 6979,\n      \"cancelled_at\": 2084,\n      \"request_counts\": {\n        \"total\": 8167,\n        \"completed\": 5313,\n        \"failed\": 6094\n      },\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cce0538a-a2cb-4e28-9ae4-e4b343a2aa89",
+          "name": "Retrieves a batch.",
+          "request": {
+            "name": "Retrieves a batch.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "batches",
+                ":batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The ID of the batch to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ec02cea-77fd-40ad-a862-5c4d997f7860",
+              "name": "Batch retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The ID of the batch to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"batch\",\n  \"endpoint\": \"string\",\n  \"input_file_id\": \"string\",\n  \"completion_window\": \"string\",\n  \"status\": \"cancelled\",\n  \"created_at\": 2114,\n  \"errors\": {\n    \"object\": \"string\",\n    \"data\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"param\": \"string\",\n        \"line\": 1750\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"param\": \"string\",\n        \"line\": 4476\n      }\n    ]\n  },\n  \"output_file_id\": \"string\",\n  \"error_file_id\": \"string\",\n  \"in_progress_at\": 7856,\n  \"expires_at\": 3284,\n  \"finalizing_at\": 1174,\n  \"completed_at\": 3899,\n  \"failed_at\": 3794,\n  \"expired_at\": 2873,\n  \"cancelling_at\": 421,\n  \"cancelled_at\": 8415,\n  \"request_counts\": {\n    \"total\": 5402,\n    \"completed\": 8848,\n    \"failed\": 5378\n  },\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb5c3ac9-01ef-4126-af1e-dd8c2dc831b4",
+          "name": "Cancels a batch.",
+          "request": {
+            "name": "Cancels a batch.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "batches",
+                ":batch_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The ID of the batch to cancel."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0ba25e7-bacc-409e-9355-95277dc74f99",
+              "name": "Batch cancelled successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "batches",
+                    ":batch_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The ID of the batch to cancel."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"batch\",\n  \"endpoint\": \"string\",\n  \"input_file_id\": \"string\",\n  \"completion_window\": \"string\",\n  \"status\": \"cancelled\",\n  \"created_at\": 2114,\n  \"errors\": {\n    \"object\": \"string\",\n    \"data\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"param\": \"string\",\n        \"line\": 1750\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"param\": \"string\",\n        \"line\": 4476\n      }\n    ]\n  },\n  \"output_file_id\": \"string\",\n  \"error_file_id\": \"string\",\n  \"in_progress_at\": 7856,\n  \"expires_at\": 3284,\n  \"finalizing_at\": 1174,\n  \"completed_at\": 3899,\n  \"failed_at\": 3794,\n  \"expired_at\": 2873,\n  \"cancelling_at\": 421,\n  \"cancelled_at\": 8415,\n  \"request_counts\": {\n    \"total\": 5402,\n    \"completed\": 8848,\n    \"failed\": 5378\n  },\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "46c5e991-887a-4d7f-a315-1466e8f7275d",
+      "name": "Chat",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a333c87-3084-46fd-bf3b-5dc2e6706ec6",
+          "name": "Creates a model response for the given chat conversation.",
+          "request": {
+            "name": "Creates a model response for the given chat conversation.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "chat",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"disable_tool_validation\": false,\n  \"frequency_penalty\": 0,\n  \"include_reasoning\": \"<boolean>\",\n  \"logit_bias\": null,\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"n\": 1,\n  \"presence_penalty\": 0,\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"seed\": \"<integer>\",\n  \"service_tier\": \"<string>\",\n  \"stop\": \"<string>\",\n  \"reasoning_effort\": null,\n  \"reasoning_format\": null,\n  \"stream\": false,\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 4332.1619246801\n        },\n        \"strict\": false\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": 7697.605447399258,\n          \"key_1\": 8790.857520957015,\n          \"key_2\": 4287,\n          \"key_3\": 1689.9258394222861\n        },\n        \"strict\": false\n      }\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"parallel_tool_calls\": true,\n  \"user\": \"<string>\",\n  \"function_call\": \"<string>\",\n  \"functions\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": true\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 6528.783849351568,\n        \"key_2\": 6710.335906581781\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 6077,\n        \"key_2\": 6626.978965966895,\n        \"key_3\": true,\n        \"key_4\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 9670.674040870386,\n        \"key_1\": 7674.153001997871\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 4345,\n        \"key_1\": 2054,\n        \"key_2\": 1101,\n        \"key_3\": 8668.21306628461\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 226,\n        \"key_2\": 9777\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 8039,\n        \"key_1\": 2124,\n        \"key_2\": 134\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 6265.510817774452\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 1806.0016258294997,\n        \"key_1\": true,\n        \"key_2\": true,\n        \"key_3\": 6248\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": false\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 2359\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 4592,\n        \"key_1\": 9316,\n        \"key_2\": true\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 822,\n        \"key_2\": 6051.668001877687\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 8966\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 3103.1493701761783,\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 2937.733878254746,\n        \"key_2\": \"string\",\n        \"key_3\": 7689.314475228024\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 6860,\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 7281.24206935697,\n        \"key_1\": 7427\n      }\n    }\n  ],\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  },\n  \"store\": \"<boolean>\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"search_settings\": {\n    \"include_domains\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"exclude_domains\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"include_images\": \"<boolean>\",\n    \"country\": \"<string>\"\n  },\n  \"compound_custom\": {\n    \"models\": {\n      \"reasoning_model\": \"<string>\",\n      \"answering_model\": \"<string>\"\n    },\n    \"tools\": {\n      \"enabled_tools\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"wolfram_settings\": {\n        \"authorization\": \"<string>\"\n      }\n    }\n  },\n  \"documents\": [\n    {\n      \"source\": {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      \"id\": \"<string>\"\n    },\n    {\n      \"source\": {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      \"id\": \"<string>\"\n    }\n  ],\n  \"citation_options\": \"enabled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7d22079-5904-421f-9760-60193a0ca83b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"disable_tool_validation\": false,\n  \"frequency_penalty\": 0,\n  \"include_reasoning\": \"<boolean>\",\n  \"logit_bias\": null,\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"n\": 1,\n  \"presence_penalty\": 0,\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"seed\": \"<integer>\",\n  \"service_tier\": \"<string>\",\n  \"stop\": \"\\n\",\n  \"reasoning_effort\": null,\n  \"reasoning_format\": null,\n  \"stream\": false,\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 6129.979410839427\n        },\n        \"strict\": false\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": 4801,\n          \"key_2\": \"string\"\n        },\n        \"strict\": false\n      }\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"parallel_tool_calls\": true,\n  \"user\": \"<string>\",\n  \"function_call\": \"<string>\",\n  \"functions\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 9373\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": false,\n        \"key_1\": false\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 5439\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 7589.549945121144,\n        \"key_1\": 6623.1634886815045\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 613.2330954932363,\n        \"key_1\": 6823,\n        \"key_2\": 3069.7578612849775\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true,\n        \"key_1\": 4552.761547512724\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 9641.575958460295,\n        \"key_1\": \"string\",\n        \"key_2\": 4239.225716707939\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 3687\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 2423\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true,\n        \"key_1\": 8793,\n        \"key_2\": 9868\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 625.0503584563039,\n        \"key_1\": true\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": false,\n        \"key_1\": \"string\",\n        \"key_2\": 738\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 4892,\n        \"key_1\": \"string\",\n        \"key_2\": 9693.854686277522\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 2087\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 9990.54701192702,\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 7151.496696570907\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 6199,\n        \"key_1\": \"string\"\n      }\n    }\n  ],\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  },\n  \"store\": \"<boolean>\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"search_settings\": {\n    \"include_domains\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"exclude_domains\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"include_images\": \"<boolean>\",\n    \"country\": \"<string>\"\n  },\n  \"compound_custom\": {\n    \"models\": {\n      \"reasoning_model\": \"<string>\",\n      \"answering_model\": \"<string>\"\n    },\n    \"tools\": {\n      \"enabled_tools\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"wolfram_settings\": {\n        \"authorization\": \"<string>\"\n      }\n    }\n  },\n  \"documents\": [\n    {\n      \"source\": {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      \"id\": \"<string>\"\n    },\n    {\n      \"source\": {\n        \"type\": \"<string>\",\n        \"text\": \"<string>\"\n      },\n      \"id\": \"<string>\"\n    }\n  ],\n  \"citation_options\": \"enabled\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"choices\": [\n    {\n      \"finish_reason\": \"function_call\",\n      \"index\": 886,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"string\",\n        \"reasoning\": \"string\",\n        \"tool_calls\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"executed_tools\": [\n          {\n            \"index\": 2012,\n            \"type\": \"string\",\n            \"arguments\": \"string\",\n            \"output\": \"string\",\n            \"search_results\": {\n              \"results\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"images\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            \"code_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"browser_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"index\": 169,\n            \"type\": \"string\",\n            \"arguments\": \"string\",\n            \"output\": \"string\",\n            \"search_results\": {\n              \"results\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"images\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            \"code_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"browser_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"function_call\": {\n          \"name\": \"string\",\n          \"arguments\": \"string\"\n        },\n        \"annotations\": [\n          {\n            \"type\": \"function_citation\",\n            \"document_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"document_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"function_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool_call_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"type\": \"function_citation\",\n            \"document_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"document_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"function_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool_call_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"logprobs\": {\n        \"content\": [\n          {\n            \"token\": \"string\",\n            \"logprob\": 357.31363685278626,\n            \"bytes\": [\n              2834,\n              5587\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"string\",\n                \"logprob\": 3804.8605908434174,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              },\n              {\n                \"token\": \"string\",\n                \"logprob\": 9470.229643534263,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              }\n            ]\n          },\n          {\n            \"token\": \"string\",\n            \"logprob\": 2926.2526861247275,\n            \"bytes\": [\n              5504,\n              5556\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"string\",\n                \"logprob\": 6296.874486838984,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              },\n              {\n                \"token\": \"string\",\n                \"logprob\": 5506.9917639064915,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              }\n            ]\n          }\n        ]\n      }\n    },\n    {\n      \"finish_reason\": \"function_call\",\n      \"index\": 325,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"string\",\n        \"reasoning\": \"string\",\n        \"tool_calls\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"executed_tools\": [\n          {\n            \"index\": 5883,\n            \"type\": \"string\",\n            \"arguments\": \"string\",\n            \"output\": \"string\",\n            \"search_results\": {\n              \"results\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"images\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            \"code_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"browser_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"index\": 5188,\n            \"type\": \"string\",\n            \"arguments\": \"string\",\n            \"output\": \"string\",\n            \"search_results\": {\n              \"results\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"images\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            \"code_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"browser_results\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"function_call\": {\n          \"name\": \"string\",\n          \"arguments\": \"string\"\n        },\n        \"annotations\": [\n          {\n            \"type\": \"document_citation\",\n            \"document_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"document_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"function_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool_call_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"type\": \"document_citation\",\n            \"document_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"document_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"function_citation\": {\n              \"start_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_index\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool_call_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"logprobs\": {\n        \"content\": [\n          {\n            \"token\": \"string\",\n            \"logprob\": 5498.496032194736,\n            \"bytes\": [\n              8913,\n              3203\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"string\",\n                \"logprob\": 4953.90891109214,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              },\n              {\n                \"token\": \"string\",\n                \"logprob\": 5359.393122042656,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              }\n            ]\n          },\n          {\n            \"token\": \"string\",\n            \"logprob\": 4502.498706710265,\n            \"bytes\": [\n              9862,\n              3426\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"string\",\n                \"logprob\": 6742.757410445718,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              },\n              {\n                \"token\": \"string\",\n                \"logprob\": 9687.624806850097,\n                \"bytes\": [\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  },\n                  {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                ]\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"created\": 4691,\n  \"id\": \"string\",\n  \"model\": \"string\",\n  \"object\": \"chat.completion\",\n  \"system_fingerprint\": \"string\",\n  \"usage\": {\n    \"prompt_tokens\": 5216,\n    \"completion_tokens\": 9460,\n    \"total_tokens\": 3079,\n    \"queue_time\": 3079.662022498233,\n    \"completion_time\": 4151.2184717836035,\n    \"prompt_time\": 2937.7620078428613,\n    \"total_time\": 1355.3341027865617,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 9803\n    },\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 3366\n    }\n  },\n  \"usage_breakdown\": {\n    \"models\": [\n      {\n        \"model\": \"string\",\n        \"usage\": {\n          \"prompt_tokens\": 5881,\n          \"completion_tokens\": 7582,\n          \"total_tokens\": 6771,\n          \"queue_time\": 9263.90453529925,\n          \"completion_time\": 9156.410867566858,\n          \"prompt_time\": 4229.532115528952,\n          \"total_time\": 4500.644389744499,\n          \"prompt_tokens_details\": {\n            \"cached_tokens\": 8939\n          },\n          \"completion_tokens_details\": {\n            \"reasoning_tokens\": 8778\n          }\n        }\n      },\n      {\n        \"model\": \"string\",\n        \"usage\": {\n          \"prompt_tokens\": 1707,\n          \"completion_tokens\": 5269,\n          \"total_tokens\": 4755,\n          \"queue_time\": 6565.533696445448,\n          \"completion_time\": 9040.475454155818,\n          \"prompt_time\": 665.5736477253827,\n          \"total_time\": 4330.94597663151,\n          \"prompt_tokens_details\": {\n            \"cached_tokens\": 9989\n          },\n          \"completion_tokens_details\": {\n            \"reasoning_tokens\": 2375\n          }\n        }\n      }\n    ]\n  },\n  \"service_tier\": null,\n  \"mcp_list_tools\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"server_label\": \"string\",\n      \"tools\": [\n        {\n          \"annotations\": {},\n          \"description\": \"string\",\n          \"input_schema\": {\n            \"key_0\": 9520\n          },\n          \"name\": \"string\"\n        },\n        {\n          \"annotations\": {},\n          \"description\": \"string\",\n          \"input_schema\": {\n            \"key_0\": \"string\",\n            \"key_1\": 5142,\n            \"key_2\": \"string\"\n          },\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"server_label\": \"string\",\n      \"tools\": [\n        {\n          \"annotations\": {},\n          \"description\": \"string\",\n          \"input_schema\": {\n            \"key_0\": 8507,\n            \"key_1\": \"string\"\n          },\n          \"name\": \"string\"\n        },\n        {\n          \"annotations\": {},\n          \"description\": \"string\",\n          \"input_schema\": {\n            \"key_0\": 9811\n          },\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"x_groq\": {\n    \"id\": \"string\",\n    \"seed\": 2181,\n    \"usage\": {\n      \"sram_cached_tokens\": 5823,\n      \"dram_cached_tokens\": 8603\n    },\n    \"debug\": {\n      \"input_token_ids\": [\n        4013,\n        1807\n      ],\n      \"input_tokens\": [\n        \"string\",\n        \"string\"\n      ],\n      \"output_token_ids\": [\n        7532,\n        8920\n      ],\n      \"output_tokens\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "aee27e25-8529-4f41-92a7-cc8ec251f90a",
+      "name": "Embeddings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a48d6208-20c6-4859-bf3d-2c2ba8c6a656",
+          "name": "Creates an embedding vector representing the input text.",
+          "request": {
+            "name": "Creates an embedding vector representing the input text.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "embeddings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"\",\n  \"encoding_format\": \"float\",\n  \"user\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f267e605-ea75-4f0e-968e-838ceaaf16a6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "embeddings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"This is a test.\",\n  \"encoding_format\": \"float\",\n  \"user\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"model\": \"string\",\n  \"data\": [\n    {\n      \"index\": 9829,\n      \"object\": \"embedding\",\n      \"embedding\": [\n        4686.622811856812,\n        9364.282520010913\n      ]\n    },\n    {\n      \"index\": 1587,\n      \"object\": \"embedding\",\n      \"embedding\": [\n        4850.877587295192,\n        1403.7231042633814\n      ]\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 4306,\n    \"total_tokens\": 6994\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "518faf4b-7e00-45eb-b131-33f370a92f94",
+      "name": "Files",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5b22b671-722e-491e-b39e-5d884fc7effb",
+          "name": "Returns a list of files.",
+          "request": {
+            "name": "Returns a list of files.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2139334-5a95-4591-8826-521903af4911",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"bytes\": 5947,\n      \"created_at\": 8241,\n      \"filename\": \"string\",\n      \"object\": \"file\",\n      \"purpose\": \"batch_output\"\n    },\n    {\n      \"id\": \"string\",\n      \"bytes\": 5733,\n      \"created_at\": 3899,\n      \"filename\": \"string\",\n      \"object\": \"file\",\n      \"purpose\": \"batch_output\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "057657c0-3ede-498c-af48-c57515394f83",
+          "name": "Upload a file that can be used across various endpoints.\n\nThe Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).\n\nPlease contact us if you need to increase these storage limits.\n",
+          "request": {
+            "name": "Upload a file that can be used across various endpoints.\n\nThe Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).\n\nPlease contact us if you need to increase these storage limits.\n",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "(Required) The File object (not file name) to be uploaded.\n"
+                },
+                {
+                  "key": "purpose",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The intended purpose of the uploaded file.\nUse \"batch\" for [Batch API](/docs/api-reference#batches).\n (This can only be one of batch)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cfd841ca-8134-4e74-bf98-ccf1ad6f1915",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The File object (not file name) to be uploaded.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The intended purpose of the uploaded file.\nUse \"batch\" for [Batch API](/docs/api-reference#batches).\n (This can only be one of batch)",
+                        "type": "text/plain"
+                      },
+                      "key": "purpose",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"bytes\": 1578,\n  \"created_at\": 4342,\n  \"filename\": \"string\",\n  \"object\": \"file\",\n  \"purpose\": \"batch\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ac0489af-2cf3-48d1-9c31-41df21260bfd",
+          "name": "Delete a file.",
+          "request": {
+            "name": "Delete a file.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "files",
+                ":file_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file_id",
+                  "description": "(Required) The ID of the file to use for this request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a36e7a2f-3a75-44cc-8c27-bb596d07b86b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files",
+                    ":file_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_id",
+                      "description": "(Required) The ID of the file to use for this request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"file\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f038344-c8cd-4fe8-a793-8a423a2f1c16",
+          "name": "Returns information about a file.",
+          "request": {
+            "name": "Returns information about a file.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "files",
+                ":file_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file_id",
+                  "description": "(Required) The file to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3aef154c-cd84-4040-a84e-bfd490f5c069",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files",
+                    ":file_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_id",
+                      "description": "(Required) The file to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"bytes\": 1578,\n  \"created_at\": 4342,\n  \"filename\": \"string\",\n  \"object\": \"file\",\n  \"purpose\": \"batch\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92cbe62c-dfa4-42a0-a69e-19d9970e18f2",
+          "name": "Returns the contents of the specified file.",
+          "request": {
+            "name": "Returns the contents of the specified file.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "files",
+                ":file_id",
+                "content"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file_id",
+                  "description": "(Required) The ID of the file to use for this request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a9278ec2-f730-4c2d-862f-84c0f63978e9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files",
+                    ":file_id",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_id",
+                      "description": "(Required) The ID of the file to use for this request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f470cb05-d7d9-4ea4-8624-3bd2b3118203",
+      "name": "Fine Tuning",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "12bbc83a-b878-4dca-be22-978b6d036634",
+          "name": "Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+          "request": {
+            "name": "Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "fine_tunings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7a41cf2-053c-47c9-8dc6-65089a7be377",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fine_tunings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"base_model\": \"string\",\n      \"created_at\": 6897.327473460427,\n      \"fine_tuned_model\": \"string\",\n      \"id\": \"string\",\n      \"input_file_id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"base_model\": \"string\",\n      \"created_at\": 9612.573969756344,\n      \"fine_tuned_model\": \"string\",\n      \"id\": \"string\",\n      \"input_file_id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  ],\n  \"object\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab8e539e-853d-4f14-b745-dacf7b8d8e0f",
+          "name": "Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+          "request": {
+            "name": "Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "fine_tunings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"base_model\": \"<string>\",\n  \"input_file_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1714bc13-331b-444c-9b34-fb9555cdf023",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fine_tunings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_model\": \"<string>\",\n  \"input_file_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"base_model\": \"string\",\n    \"created_at\": 5653.763084661746,\n    \"fine_tuned_model\": \"string\",\n    \"id\": \"string\",\n    \"input_file_id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"id\": \"string\",\n  \"object\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6bcc67c-de6b-4e05-a5d2-712eb00352e6",
+          "name": "Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+          "request": {
+            "name": "Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "fine_tunings",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "730e2c67-56ca-4d6c-b707-882d7b10521c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fine_tunings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deleted\": false,\n  \"id\": \"string\",\n  \"object\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be939673-387c-4bde-8a94-fff2c07412d6",
+          "name": "Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+          "request": {
+            "name": "Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "fine_tunings",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "afd57b9f-49c9-499e-b7c8-af5c812ed94f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fine_tunings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"base_model\": \"string\",\n    \"created_at\": 5653.763084661746,\n    \"fine_tuned_model\": \"string\",\n    \"id\": \"string\",\n    \"input_file_id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"id\": \"string\",\n  \"object\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "e7f2a583-2139-4c93-8116-12c8b9a665a9",
+      "name": "Models",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a5ab6e0-9b2c-40e0-ab33-98de915c17f7",
+          "name": "List all available [models](https://console.groq.com/docs/models).",
+          "request": {
+            "name": "List all available [models](https://console.groq.com/docs/models).",
+            "description": {
+              "content": "get all available models",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c847b011-30f9-4569-8299-23ef52783c81",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 8199,\n      \"owned_by\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 6917,\n      \"owned_by\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26f9a170-4755-484e-bf89-302bbf98fbc1",
+          "name": "Get detailed information about a [model](https://console.groq.com/docs/models).",
+          "request": {
+            "name": "Get detailed information about a [model](https://console.groq.com/docs/models).",
+            "description": {
+              "content": "Get a specific model",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "models",
+                ":model"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model",
+                  "description": "(Required) The model to get"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c48ff9e0-bd2c-4166-84c3-2cbc11986984",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "models",
+                    ":model"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model",
+                      "description": "(Required) The model to get"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 4503,\n  \"owned_by\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6c68a29-63f6-4d22-b892-599ee7b013c9",
+          "name": "Delete model",
+          "request": {
+            "name": "Delete model",
+            "description": {
+              "content": "Delete a model",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "models",
+                ":model"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model",
+                  "description": "(Required) The model to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f1635c9-68f0-438c-bdf1-f37a68fc02a2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "models",
+                    ":model"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model",
+                      "description": "(Required) The model to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"string\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "954106dc-3e3e-48bf-9367-434d2ca34880",
+      "name": "Reranking",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3691d29a-eec3-4932-b95b-5d560cd9b2a7",
+          "name": "Reranks documents based on their relevance to a query.",
+          "request": {
+            "name": "Reranks documents based on their relevance to a query.",
+            "description": {
+              "content": "Given a query and a list of documents, returns the documents ranked by their relevance to the query.\nThe documents are scored and sorted in descending order of relevance.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "reranking"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"<string>\",\n  \"docs\": [\n    \"<string>\"\n  ],\n  \"instruction\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e92ae49f-b76e-45e7-ba5a-01c7c66ffcd2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "reranking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"qwen3-reranker-4b\",\n  \"query\": \"artificial intelligence research\",\n  \"docs\": [\n    \"Machine learning is a subset of artificial intelligence\",\n    \"The weather forecast predicts rain tomorrow\",\n    \"Deep learning uses neural networks with multiple layers\"\n  ],\n  \"instruction\": \"Find the most relevant document about AI research\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"doc\": \"Machine learning is a subset of artificial intelligence\",\n      \"score\": 0.92\n    },\n    {\n      \"doc\": \"Machine learning is a subset of artificial intelligence\",\n      \"score\": 0.92\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "290ce1be-4212-401a-a867-ccc6f9c4d163",
+      "name": "Responses",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d3056b5-d226-486a-9bbd-ffd4716dfc21",
+          "name": "Creates a model response for the given input.",
+          "request": {
+            "name": "Creates a model response for the given input.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "responses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true,\n        \"key_1\": 6615,\n        \"key_2\": 3672\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": 171\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"<string>\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  },\n  \"parallel_tool_calls\": true,\n  \"store\": false,\n  \"stream\": false,\n  \"user\": \"<string>\",\n  \"service_tier\": \"auto\",\n  \"truncation\": \"disabled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "203f7bcb-9af8-4575-b2d8-9ac81d3cf9f8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": true,\n        \"key_2\": 1587,\n        \"key_3\": \"string\",\n        \"key_4\": 4750\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"<string>\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"parallel_tool_calls\": true,\n  \"store\": false,\n  \"stream\": false,\n  \"user\": \"user-1234\",\n  \"service_tier\": \"auto\",\n  \"truncation\": \"disabled\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"response\",\n  \"status\": \"failed\",\n  \"created_at\": 4358,\n  \"output\": [\n    {\n      \"type\": \"message\",\n      \"id\": \"string\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"status\": \"in_progress\"\n    },\n    {\n      \"type\": \"message\",\n      \"id\": \"string\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"status\": \"in_progress\"\n    }\n  ],\n  \"model\": \"string\",\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": false\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 9595.80909917156\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"truncation\": \"auto\",\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"temperature\": 8847.940498295064,\n  \"top_p\": 3033.099426314939,\n  \"service_tier\": \"auto\",\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"incomplete_details\": {\n    \"reason\": \"string\"\n  },\n  \"parallel_tool_calls\": true,\n  \"store\": false,\n  \"previous_response_id\": \"string\",\n  \"reasoning\": {\n    \"effort\": \"high\",\n    \"summary\": \"string\"\n  },\n  \"max_output_tokens\": 3496,\n  \"instructions\": \"string\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"<string>\"\n    }\n  },\n  \"user\": \"string\",\n  \"usage\": {\n    \"input_tokens\": 1232,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 7317,\n      \"reasoning_tokens\": 6407\n    },\n    \"output_tokens\": 782,\n    \"output_tokens_details\": {\n      \"cached_tokens\": 3711,\n      \"reasoning_tokens\": 9774\n    },\n    \"total_tokens\": 3935\n  },\n  \"background\": false,\n  \"top_logprobs\": 0,\n  \"max_tool_calls\": 1683\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.groq.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5351e0d3-d283-4104-bd01-a81e5c6ea779",
+    "name": "GroqCloud API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Specification of the Groq cloud API\n\nContact Support:\n Name: Groq Support\n Email: support@groq.com",
+      "type": "text/plain"
+    }
+  }
+}
