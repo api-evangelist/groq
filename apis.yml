@@ -224,6 +224,14 @@ apis:
   description: Automatic prompt caching with a 50% discount on cached input tokens
     and no extra caching fee.
 common:
+- type: TrustCenter
+  url: security/groq-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/groq-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/groq-domain-security.yml
+- type: Authentication
+  url: authentication/groq-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/groq
 - type: LinkedIn
@@ -238,6 +246,8 @@ common:
   url: rate-limits/groq-rate-limits.yml
 - type: FinOps
   url: finops/groq-finops.yml
+- url: https://groq.com/blog
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
