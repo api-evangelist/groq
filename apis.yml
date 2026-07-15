@@ -224,6 +224,8 @@ apis:
   description: Automatic prompt caching with a 50% discount on cached input tokens
     and no extra caching fee.
 common:
+- type: AgenticAccess
+  url: agentic-access/groq-agentic-access.yml
 - type: TrustCenter
   url: security/groq-trust-center.yml
 - type: VulnerabilityDisclosure
