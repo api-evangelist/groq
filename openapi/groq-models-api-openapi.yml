@@ -1,0 +1,251 @@
+openapi: 3.0.1
+info:
+  title: GroqCloud Audio Models API
+  description: Specification of the Groq cloud API
+  termsOfService: https://groq.com/terms-of-use/
+  contact:
+    name: Groq Support
+    email: support@groq.com
+  version: '2.1'
+servers:
+- url: https://api.groq.com
+security:
+- api_key: []
+tags:
+- name: Models
+paths:
+  /openai/v1/models:
+    get:
+      operationId: listModels
+      tags:
+      - Models
+      summary: List all available [models](https://console.groq.com/docs/models).
+      description: get all available models
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+      x-groq-metadata:
+        returns: A list of model objects.
+        examples:
+        - title: Default
+          request:
+            curl: 'curl https://api.groq.com/openai/v1/models \
+
+              -H "Authorization: Bearer $GROQ_API_KEY"
+
+              '
+            js: "import Groq from \"groq-sdk\";\n\nconst groq = new Groq({ apiKey: process.env.GROQ_API_KEY });\n\nasync function main() {\n  const models = await groq.models.list();\n  console.log(models);\n}\n\nmain();\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"GROQ_API_KEY\"),\n)\n\nmodels = client.models.list()\n\nprint(models)\n"
+          response: "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"gemma2-9b-it\",\n      \"object\": \"model\",\n      \"created\": 1693721698,\n      \"owned_by\": \"Google\",\n      \"active\": true,\n      \"context_window\": 8192,\n      \"public_apps\": null\n    },\n    {\n      \"id\": \"llama3-8b-8192\",\n      \"object\": \"model\",\n      \"created\": 1693721698,\n      \"owned_by\": \"Meta\",\n      \"active\": true,\n      \"context_window\": 8192,\n      \"public_apps\": null\n    },\n    {\n      \"id\": \"llama3-70b-8192\",\n      \"object\": \"model\",\n      \"created\": 1693721698,\n      \"owned_by\": \"Meta\",\n      \"active\": true,\n      \"context_window\": 8192,\n      \"public_apps\": null\n    },\n    {\n      \"id\": \"whisper-large-v3-turbo\",\n      \"object\": \"model\",\n      \"created\": 1728413088,\n      \"owned_by\": \"OpenAI\",\n      \"active\": true,\n      \"context_window\": 448,\n      \"public_apps\": null\n    },\n    {\n      \"id\": \"whisper-large-v3\",\n      \"object\": \"model\",\n      \"created\": 1693721698,\n      \"owned_by\": \"OpenAI\",\n      \"active\": true,\n      \"context_window\": 448,\n      \"public_apps\": null\n    },\n    {\n      \"id\": \"llama-guard-3-8b\",\n      \"object\": \"model\",\n      \"created\": 1693721698,\n      \"owned_by\": \"Meta\",\n      \"active\": true,\n      \"context_window\": 8192,\n      \"public_apps\": null\n    },\n    {\n      \"id\": \"distil-whisper-large-v3-en\",\n      \"object\": \"model\",\n      \"created\": 1693721698,\n      \"owned_by\": \"Hugging Face\",\n      \"active\": true,\n      \"context_window\": 448,\n      \"public_apps\": null\n    },\n    {\n      \"id\": \"llama-3.1-8b-instant\",\n      \"object\": \"model\",\n      \"created\": 1693721698,\n      \"owned_by\": \"Meta\",\n      \"active\": true,\n      \"context_window\": 131072,\n      \"public_apps\": null\n    }\n  ]\n}\n"
+  /openai/v1/models/{model}:
+    get:
+      operationId: retrieveModel
+      tags:
+      - Models
+      summary: Get detailed information about a [model](https://console.groq.com/docs/models).
+      description: Get a specific model
+      parameters:
+      - name: model
+        in: path
+        description: The model to get
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+      x-groq-metadata:
+        returns: A model object.
+        examples:
+        - title: Default
+          request:
+            curl: 'curl https://api.groq.com/openai/v1/models/llama-3.3-70b-versatile \
+
+              -H "Authorization: Bearer $GROQ_API_KEY"
+
+              '
+            js: "import Groq from \"groq-sdk\";\n\nconst groq = new Groq({ apiKey: process.env.GROQ_API_KEY });\n\nasync function main() {\n  const model = await groq.models.retrieve(\"llama-3.3-70b-versatile\");\n  console.log(model);\n}\n\nmain();\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"GROQ_API_KEY\"),\n)\n\nmodel = client.models.retrieve(\"llama-3.3-70b-versatile\")\n\nprint(model)\n"
+          response: "{\n  \"id\": \"llama3-8b-8192\",\n  \"object\": \"model\",\n  \"created\": 1693721698,\n  \"owned_by\": \"Meta\",\n  \"active\": true,\n  \"context_window\": 8192,\n  \"public_apps\": null,\n  \"max_completion_tokens\": 8192\n}\n"
+    delete:
+      operationId: deleteModel
+      tags:
+      - Models
+      summary: Delete model
+      description: Delete a model
+      parameters:
+      - in: path
+        name: model
+        description: The model to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteModelResponse'
+components:
+  schemas:
+    DeleteModelResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
+        object:
+          type: string
+      required:
+      - id
+      - object
+      - deleted
+    ListModelsResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+      required:
+      - object
+      - data
+    Model:
+      title: Model
+      description: Describes an OpenAI model offering that can be used with the API.
+      properties:
+        id:
+          type: string
+          description: The model identifier, which can be referenced in the API endpoints.
+        created:
+          type: integer
+          description: The Unix timestamp (in seconds) when the model was created.
+        object:
+          type: string
+          description: The object type, which is always "model".
+          enum:
+          - model
+        owned_by:
+          type: string
+          description: The organization that owns the model.
+      required:
+      - id
+      - object
+      - created
+      - owned_by
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: apiKey
+x-groq-metadata:
+  groups:
+  - id: chat
+    type: endpoints
+    title: Chat
+    description: ''
+    sections:
+    - type: endpoint
+      key: createChatCompletion
+      path: create
+  - id: responses
+    type: endpoints
+    title: Responses (beta)
+    description: ''
+    sections:
+    - type: endpoint
+      key: createResponse
+      path: create
+  - id: audio
+    type: endpoints
+    title: Audio
+    description: ''
+    sections:
+    - type: endpoint
+      key: createTranscription
+      path: transcription
+    - type: endpoint
+      key: createTranslation
+      path: translation
+    - type: endpoint
+      key: createSpeech
+      path: speech
+  - id: models
+    type: endpoints
+    title: Models
+    description: ''
+    sections:
+    - type: endpoint
+      key: listModels
+      path: list
+    - type: endpoint
+      key: retrieveModel
+      path: retrieve
+  - id: batches
+    type: endpoints
+    title: Batches
+    description: ''
+    sections:
+    - type: endpoint
+      key: createBatch
+      path: create
+    - type: endpoint
+      key: retrieveBatch
+      path: retrieve
+    - type: endpoint
+      key: listBatches
+      path: list
+    - type: endpoint
+      key: cancelBatch
+      path: cancel
+  - id: files
+    type: endpoints
+    title: Files
+    description: ''
+    sections:
+    - type: endpoint
+      key: uploadFile
+      path: upload
+    - type: endpoint
+      key: listFiles
+      path: list
+    - type: endpoint
+      key: deleteFile
+      path: delete
+    - type: endpoint
+      key: retrieveFile
+      path: retrieve
+    - type: endpoint
+      key: downloadFile
+      path: download
+  - id: fine-tuning
+    type: endpoints
+    title: Fine Tuning
+    description: ''
+    sections:
+    - type: endpoint
+      key: listFineTunings
+      path: list
+    - type: endpoint
+      key: createFineTuning
+      path: create
+    - type: endpoint
+      key: getFineTuning
+      path: get
+    - type: endpoint
+      key: deleteFineTuning
+      path: delete

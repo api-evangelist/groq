@@ -1,0 +1,229 @@
+openapi: 3.0.1
+info:
+  title: GroqCloud Audio Reranking API
+  description: Specification of the Groq cloud API
+  termsOfService: https://groq.com/terms-of-use/
+  contact:
+    name: Groq Support
+    email: support@groq.com
+  version: '2.1'
+servers:
+- url: https://api.groq.com
+security:
+- api_key: []
+tags:
+- name: Reranking
+paths:
+  /openai/v1/reranking:
+    post:
+      operationId: createReranking
+      tags:
+      - Reranking
+      summary: Reranks documents based on their relevance to a query.
+      description: 'Given a query and a list of documents, returns the documents ranked by their relevance to the query.
+
+        The documents are scored and sorted in descending order of relevance.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RerankingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RerankingResponse'
+      x-groq-metadata:
+        returns: "A list of documents sorted by relevance score in descending order. \nScores range from 0.0 to 1.0, where higher scores indicate greater relevance to the query.\n"
+        examples:
+        - title: Basic Reranking
+          request:
+            curl: "curl https://api.groq.com/openai/v1/reranking \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"qwen3-reranker-4b\",\n    \"query\": \"artificial intelligence\",\n    \"docs\": [\n      \"Machine learning is a subset of AI\",\n      \"The weather is nice today\",\n      \"Deep learning uses neural networks\"\n    ]\n  }'\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(api_key=os.environ.get(\"GROQ_API_KEY\"))\n\nreranking = client.reranking.create(\n    model=\"qwen3-reranker-4b\",\n    query=\"artificial intelligence\",\n    docs=[\n        \"Machine learning is a subset of AI\",\n        \"The weather is nice today\", \n        \"Deep learning uses neural networks\"\n    ]\n)\nprint(reranking.results)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'],\n});\n\nasync function main() {\n  const reranking = await client.reranking.create({\n    model: 'qwen3-reranker-4b',\n    query: 'artificial intelligence',\n    docs: [\n      'Machine learning is a subset of AI',\n      'The weather is nice today',\n      'Deep learning uses neural networks'\n    ]\n  });\n  console.log(reranking.results);\n}\nmain();\n"
+          response: "{\n  \"results\": [\n    {\n      \"doc\": \"Machine learning is a subset of AI\",\n      \"score\": 0.92\n    },\n    {\n      \"doc\": \"Deep learning uses neural networks\", \n      \"score\": 0.87\n    },\n    {\n      \"doc\": \"The weather is nice today\",\n      \"score\": 0.23\n    }\n  ]\n}\n"
+        - title: Reranking with Custom Instruction
+          request:
+            json: "{\n  \"model\": \"qwen3-reranker-4b\",\n  \"query\": \"climate change effects\",\n  \"docs\": [\n    \"Global warming causes sea level rise\",\n    \"Electric cars reduce emissions\",\n    \"Renewable energy is growing fast\"\n  ],\n  \"instruction\": \"Find documents specifically about environmental impacts\"\n}\n"
+          response: "{\n  \"results\": [\n    {\n      \"doc\": \"Global warming causes sea level rise\",\n      \"score\": 0.95\n    },\n    {\n      \"doc\": \"Electric cars reduce emissions\",\n      \"score\": 0.78\n    },\n    {\n      \"doc\": \"Renewable energy is growing fast\",\n      \"score\": 0.65\n    }\n  ]\n}\n"
+components:
+  schemas:
+    RerankingResult:
+      type: object
+      properties:
+        doc:
+          type: string
+          description: The original document text.
+          example: Machine learning is a subset of artificial intelligence
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: "Relevance score between 0.0 and 1.0, where higher scores indicate \ngreater relevance to the query.\n"
+          example: 0.92
+      required:
+      - doc
+      - score
+    RerankingRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        model:
+          description: 'ID of the reranking model to use.
+
+            '
+          example: qwen3-reranker-4b
+          type: string
+        query:
+          description: 'The search query to rank documents against.
+
+            '
+          example: artificial intelligence research
+          type: string
+        docs:
+          description: 'An array of documents to rank. Each document is a string containing the text content.
+
+            Maximum of 100 documents per request.
+
+            '
+          type: array
+          minItems: 1
+          maxItems: 100
+          items:
+            type: string
+            minLength: 1
+          example:
+          - Machine learning is a subset of artificial intelligence
+          - The weather forecast predicts rain tomorrow
+          - Deep learning uses neural networks with multiple layers
+        instruction:
+          description: "Optional instruction to guide the reranking process. If not provided, \na default instruction will be used.\n"
+          example: Find the most relevant document about AI research
+          type: string
+          nullable: true
+      required:
+      - model
+      - query
+      - docs
+    RerankingResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          description: 'List of documents sorted by relevance score in descending order.
+
+            Each result contains the original document text and its relevance score.
+
+            '
+          items:
+            $ref: '#/components/schemas/RerankingResult'
+      required:
+      - results
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: apiKey
+x-groq-metadata:
+  groups:
+  - id: chat
+    type: endpoints
+    title: Chat
+    description: ''
+    sections:
+    - type: endpoint
+      key: createChatCompletion
+      path: create
+  - id: responses
+    type: endpoints
+    title: Responses (beta)
+    description: ''
+    sections:
+    - type: endpoint
+      key: createResponse
+      path: create
+  - id: audio
+    type: endpoints
+    title: Audio
+    description: ''
+    sections:
+    - type: endpoint
+      key: createTranscription
+      path: transcription
+    - type: endpoint
+      key: createTranslation
+      path: translation
+    - type: endpoint
+      key: createSpeech
+      path: speech
+  - id: models
+    type: endpoints
+    title: Models
+    description: ''
+    sections:
+    - type: endpoint
+      key: listModels
+      path: list
+    - type: endpoint
+      key: retrieveModel
+      path: retrieve
+  - id: batches
+    type: endpoints
+    title: Batches
+    description: ''
+    sections:
+    - type: endpoint
+      key: createBatch
+      path: create
+    - type: endpoint
+      key: retrieveBatch
+      path: retrieve
+    - type: endpoint
+      key: listBatches
+      path: list
+    - type: endpoint
+      key: cancelBatch
+      path: cancel
+  - id: files
+    type: endpoints
+    title: Files
+    description: ''
+    sections:
+    - type: endpoint
+      key: uploadFile
+      path: upload
+    - type: endpoint
+      key: listFiles
+      path: list
+    - type: endpoint
+      key: deleteFile
+      path: delete
+    - type: endpoint
+      key: retrieveFile
+      path: retrieve
+    - type: endpoint
+      key: downloadFile
+      path: download
+  - id: fine-tuning
+    type: endpoints
+    title: Fine Tuning
+    description: ''
+    sections:
+    - type: endpoint
+      key: listFineTunings
+      path: list
+    - type: endpoint
+      key: createFineTuning
+      path: create
+    - type: endpoint
+      key: getFineTuning
+      path: get
+    - type: endpoint
+      key: deleteFineTuning
+      path: delete

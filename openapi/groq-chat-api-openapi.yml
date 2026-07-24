@@ -1,0 +1,1672 @@
+openapi: 3.0.1
+info:
+  title: GroqCloud Audio Chat API
+  description: Specification of the Groq cloud API
+  termsOfService: https://groq.com/terms-of-use/
+  contact:
+    name: Groq Support
+    email: support@groq.com
+  version: '2.1'
+servers:
+- url: https://api.groq.com
+security:
+- api_key: []
+tags:
+- name: Chat
+paths:
+  /openai/v1/chat/completions:
+    post:
+      operationId: createChatCompletion
+      tags:
+      - Chat
+      summary: Creates a model response for the given chat conversation.
+      requestBody:
+        required: true
+        description: The chat prompt and parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChatCompletionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateChatCompletionResponse'
+      x-groq-metadata:
+        returns: Returns a [chat completion](/docs/api-reference#chat-create) object, or a streamed sequence of [chat completion chunk](/docs/api-reference#chat-create) objects if the request is streamed.
+        examples:
+        - title: Default
+          request:
+            py: "import os\n\nfrom groq import Groq\n\nclient = Groq(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"GROQ_API_KEY\"),\n)\n\nchat_completion = client.chat.completions.create(\n    messages=[\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Explain the importance of fast language models\",\n        }\n    ],\n    model=\"llama-3.3-70b-versatile\",\n)\n\nprint(chat_completion.choices[0].message.content)\n"
+            js: "import Groq from \"groq-sdk\";\n\nconst groq = new Groq({ apiKey: process.env.GROQ_API_KEY });\n\nasync function main() {\n  const completion = await groq.chat.completions\n    .create({\n      messages: [\n        {\n          role: \"user\",\n          content: \"Explain the importance of fast language models\",\n        },\n      ],\n      model: \"llama-3.3-70b-versatile\",\n    })\n  console.log(completion.choices[0].message.content);\n}\n\nmain();\n"
+            curl: "curl https://api.groq.com/openai/v1/chat/completions -s \\\n-H \"Content-Type: application/json\" \\\n-H \"Authorization: Bearer $GROQ_API_KEY\" \\\n-d '{\n  \"model\": \"llama-3.3-70b-versatile\",\n  \"messages\": [{\n      \"role\": \"user\",\n      \"content\": \"Explain the importance of fast language models\"\n  }]\n}'\n"
+          response: "{\n  \"id\": \"chatcmpl-f51b2cd2-bef7-417e-964e-a08f0b513c22\",\n  \"object\": \"chat.completion\",\n  \"created\": 1730241104,\n  \"model\": \"openai/gpt-oss-20b\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"Fast language models have gained significant attention in recent years due to their ability to process and generate human-like text quickly and efficiently. The importance of fast language models can be understood from their potential applications and benefits:\\n\\n1. **Real-time Chatbots and Conversational Interfaces**: Fast language models enable the development of chatbots and conversational interfaces that can respond promptly to user queries, making them more engaging and useful.\\n2. **Sentiment Analysis and Opinion Mining**: Fast language models can quickly analyze text data to identify sentiments, opinions, and emotions, allowing for improved customer service, market research, and opinion mining.\\n3. **Language Translation and Localization**: Fast language models can quickly translate text between languages, facilitating global communication and enabling businesses to reach a broader audience.\\n4. **Text Summarization and Generation**: Fast language models can summarize long documents or even generate new text on a given topic, improving information retrieval and processing efficiency.\\n5. **Named Entity Recognition and Information Extraction**: Fast language models can rapidly recognize and extract specific entities, such as names, locations, and organizations, from unstructured text data.\\n6. **Recommendation Systems**: Fast language models can analyze large amounts of text data to personalize product recommendations, improve customer experience, and increase sales.\\n7. **Content Generation for Social Media**: Fast language models can quickly generate engaging content for social media platforms, helping businesses maintain a consistent online presence and increasing their online visibility.\\n8. **Sentiment Analysis for Stock Market Analysis**: Fast language models can quickly analyze social media posts, news articles, and other text data to identify sentiment trends, enabling financial analysts to make more informed investment decisions.\\n9. **Language Learning and Education**: Fast language models can provide instant feedback and adaptive language learning, making language education more effective and engaging.\\n10. **Domain-Specific Knowledge Extraction**: Fast language models can quickly extract relevant information from vast amounts of text data, enabling domain experts to focus on high-level decision-making rather than manual information gathering.\\n\\nThe benefits of fast language models include:\\n\\n* **Increased Efficiency**: Fast language models can process large amounts of text data quickly, reducing the time and effort required for tasks such as sentiment analysis, entity recognition, and text summarization.\\n* **Improved Accuracy**: Fast language models can analyze and learn from large datasets, leading to more accurate results and more informed decision-making.\\n* **Enhanced User Experience**: Fast language models can enable real-time interactions, personalized recommendations, and timely responses, improving the overall user experience.\\n* **Cost Savings**: Fast language models can automate many tasks, reducing the need for manual labor and minimizing costs associated with data processing and analysis.\\n\\nIn summary, fast language models have the potential to transform various industries and applications by providing fast, accurate, and efficient language processing capabilities.\"\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"queue_time\": 0.037493756,\n    \"prompt_tokens\": 18,\n    \"prompt_time\": 0.000680594,\n    \"completion_tokens\": 556,\n    \"completion_time\": 0.463333333,\n    \"total_tokens\": 574,\n    \"total_time\": 0.464013927\n  },\n  \"system_fingerprint\": \"fp_179b0f92c9\",\n  \"x_groq\": { \"id\": \"req_01jbd6g2qdfw2adyrt2az8hz4w\" }\n}\n"
+components:
+  schemas:
+    ChatCompletionRequestMessageContentPartImage:
+      type: object
+      title: Image content part
+      properties:
+        type:
+          type: string
+          enum:
+          - image_url
+          description: The type of the content part.
+        image_url:
+          type: object
+          properties:
+            url:
+              type: string
+              description: Either a URL of the image or the base64 encoded image data.
+              format: uri
+            detail:
+              type: string
+              description: Specifies the detail level of the image.
+              enum:
+              - auto
+              - low
+              - high
+              default: auto
+          required:
+          - url
+      required:
+      - type
+      - image_url
+    ChartElement:
+      type: object
+      properties:
+        label:
+          type: string
+          description: The label for this chart element
+        group:
+          type: string
+          description: The group this element belongs to
+        value:
+          type: number
+          description: The value for this element
+        points:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+          description: The points for this element
+        angle:
+          type: number
+          description: The angle for this element
+        radius:
+          type: number
+          description: The radius for this element
+        min:
+          type: number
+          description: The minimum value for this element
+        first_quartile:
+          type: number
+          description: The first quartile value for this element
+        median:
+          type: number
+          description: The median value for this element
+        third_quartile:
+          type: number
+          description: The third quartile value for this element
+        max:
+          type: number
+        outliers:
+          type: array
+          items:
+            type: number
+          description: The outliers for this element
+      required:
+      - label
+    ChatCompletionRequestMessageContentPartText:
+      type: object
+      title: Text content part
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          description: The type of the content part.
+        text:
+          type: string
+          description: The text content.
+      required:
+      - type
+      - text
+    BrowserResult:
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the browser window
+        title:
+          type: string
+          description: The title of the browser window
+        live_view_url:
+          type: string
+          description: The live view URL for the browser window
+        content:
+          type: string
+          description: The content of the browser result
+      required:
+      - url
+      - title
+      additionalProperties: false
+    ChatCompletionUsageBreakdown:
+      type: object
+      description: Usage statistics for compound AI completion requests.
+      properties:
+        models:
+          type: array
+          description: List of models used in the request and their individual usage statistics
+          items:
+            type: object
+            properties:
+              model:
+                type: string
+                description: The name/identifier of the model used
+              usage:
+                $ref: '#/components/schemas/CompletionUsage'
+            required:
+            - model
+            - usage
+      required:
+      - models
+    FunctionCitation:
+      type: object
+      description: A citation referencing the result of a function or tool call.
+      properties:
+        start_index:
+          type: integer
+          description: The character index in the message content where this citation begins.
+        end_index:
+          type: integer
+          description: The character index in the message content where this citation ends.
+        tool_call_id:
+          type: string
+          description: The ID of the tool call being cited, corresponding to a tool call made during the conversation.
+      required:
+      - start_index
+      - end_index
+      - tool_call_id
+      additionalProperties: false
+    ChatCompletionDocument:
+      type: object
+      title: Document
+      description: A document that can be referenced by the model while generating responses.
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          nullable: true
+          description: Optional unique identifier that can be used for citations in responses.
+        source:
+          $ref: '#/components/schemas/ChatCompletionDocumentSource'
+      required:
+      - source
+    ChatCompletionTokenLogprob:
+      type: object
+      properties:
+        token: &id001
+          description: The token.
+          type: string
+        logprob: &id002
+          description: The log probability of this token, if it is within the top 20 most likely tokens. Otherwise, the value `-9999.0` is used to signify that the token is very unlikely.
+          type: number
+        bytes: &id003
+          description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
+          type: array
+          items:
+            type: integer
+          nullable: true
+        top_logprobs:
+          description: List of the most likely tokens and their log probability, at this token position. In rare cases, there may be fewer than the number of requested `top_logprobs` returned.
+          type: array
+          items:
+            type: object
+            properties:
+              token: *id001
+              logprob: *id002
+              bytes: *id003
+            required:
+            - token
+            - logprob
+            - bytes
+      required:
+      - token
+      - logprob
+      - bytes
+      - top_logprobs
+    XGroqNonStreaming:
+      type: object
+      description: Groq-specific metadata for non-streaming chat completion responses.
+      properties:
+        id:
+          type: string
+          description: A groq request ID which can be used to refer to a specific request to groq support.
+        seed:
+          type: integer
+          nullable: true
+          description: The seed used for the request. See the seed property on CreateChatCompletionRequest for more details.
+        usage:
+          type: object
+          nullable: true
+          description: Additional Groq-specific usage metrics (hardware cache statistics).
+          properties:
+            sram_cached_tokens:
+              type: integer
+              description: Number of tokens served from SRAM cache.
+            dram_cached_tokens:
+              type: integer
+              description: Number of tokens served from DRAM cache.
+        debug:
+          allOf:
+          - $ref: '#/components/schemas/DebugData'
+          nullable: true
+      required:
+      - id
+    ResponseFormatText:
+      type: object
+      title: Text
+      description: 'Default response format. Used to generate text responses.
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of response format being defined. Always `text`.
+          enum:
+          - text
+          x-stainless-const: true
+      required:
+      - type
+    FunctionObject:
+      type: object
+      properties:
+        description:
+          type: string
+          description: A description of what the function does, used by the model to choose when and how to call the function.
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+        strict:
+          type: boolean
+          default: false
+          description: 'Whether to enable strict schema adherence when generating the output. If set to true, the model will always follow the exact schema defined in the `schema` field. Only a subset of JSON Schema is supported when `strict` is `true`.
+
+            '
+      required:
+      - name
+    ChatCompletionMessageToolCalls:
+      type: array
+      description: The tool calls generated by the model, such as function calls.
+      items:
+        $ref: '#/components/schemas/ChatCompletionMessageToolCall'
+    ChatCompletionDocumentSourceJSON:
+      type: object
+      title: JSON document source
+      description: A document whose contents are provided inline as JSON data.
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          enum:
+          - json
+          description: Identifies this document source as JSON data.
+        data:
+          type: object
+          description: The JSON payload associated with the document.
+          additionalProperties: true
+      required:
+      - type
+      - data
+    Chart:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of chart
+          enum:
+          - bar
+          - box_and_whisker
+          - line
+          - pie
+          - scatter
+          - superchart
+          - unknown
+        title:
+          type: string
+          description: The title of the chart
+        x_label:
+          type: string
+          description: The label for the x-axis
+        y_label:
+          type: string
+          description: The label for the y-axis
+        x_unit:
+          type: string
+          description: The unit for the x-axis
+        y_unit:
+          type: string
+          description: The unit for the y-axis
+        x_ticks:
+          type: array
+          items:
+            type: number
+          description: The tick values for the x-axis
+        y_ticks:
+          type: array
+          items:
+            type: number
+          description: The tick values for the y-axis
+        x_tick_labels:
+          type: array
+          items:
+            type: string
+          description: The labels for the x-axis ticks
+        y_tick_labels:
+          type: array
+          items:
+            type: string
+          description: The labels for the y-axis ticks
+        x_scale:
+          type: string
+          description: The scale type for the x-axis
+        y_scale:
+          type: string
+          description: The scale type for the y-axis
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChartElement'
+          description: The chart elements (data series, points, etc.)
+      required:
+      - type
+      - elements
+    ChatCompletionTool:
+      type: object
+      properties:
+        type:
+          anyOf:
+          - type: string
+            enum:
+            - function
+            - browser_search
+            - code_interpreter
+            description: The type of the tool. `function`, `browser_search`, and `code_interpreter` are supported.
+          - type: string
+        function:
+          $ref: '#/components/schemas/FunctionObject'
+      required:
+      - type
+    ChatCompletionRequestSystemMessage:
+      type: object
+      title: System message
+      additionalProperties: false
+      properties:
+        content:
+          title: System message content
+          description: The contents of the system message.
+          oneOf:
+          - type: string
+            title: Text content
+            description: The text contents of the message.
+          - type: array
+            title: Array of content parts
+            description: An array of content parts with a defined type, only `text` is supported for this message type.
+            items:
+              $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartText'
+            minItems: 1
+        role:
+          type: string
+          enum:
+          - system
+          - developer
+          description: The role of the messages author, in this case `system`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+      required:
+      - content
+      - role
+    ChatCompletionDocumentSource:
+      title: Document source
+      description: The source of the document. Only text and JSON sources are currently supported.
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionDocumentSourceText'
+      - $ref: '#/components/schemas/ChatCompletionDocumentSourceJSON'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/ChatCompletionDocumentSourceText'
+          json: '#/components/schemas/ChatCompletionDocumentSourceJSON'
+    ChatCompletionDocumentSourceText:
+      type: object
+      title: Text document source
+      description: A document whose contents are provided inline as text.
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          description: Identifies this document source as inline text.
+        text:
+          type: string
+          description: The document contents.
+      required:
+      - type
+      - text
+    CompletionUsage:
+      type: object
+      description: Usage statistics for the completion request.
+      properties:
+        queue_time:
+          type: number
+          description: Time the requests was spent queued
+        completion_time:
+          type: number
+          description: Time spent generating tokens
+        completion_tokens:
+          type: integer
+          description: Number of tokens in the generated completion.
+        prompt_time:
+          type: number
+          description: Time spent processing input tokens
+        prompt_tokens:
+          type: integer
+          description: Number of tokens in the prompt.
+        total_time:
+          type: number
+          description: completion time and prompt time combined
+        total_tokens:
+          type: integer
+          description: Total number of tokens used in the request (prompt + completion).
+        prompt_tokens_details:
+          type: object
+          nullable: true
+          description: Breakdown of tokens in the prompt.
+          properties:
+            cached_tokens:
+              type: integer
+              description: Number of tokens that were cached and reused.
+          required:
+          - cached_tokens
+        completion_tokens_details:
+          type: object
+          nullable: true
+          description: Breakdown of tokens in the completion.
+          properties:
+            reasoning_tokens:
+              type: integer
+              description: Number of tokens used for reasoning (for reasoning models).
+          required:
+          - reasoning_tokens
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+    ChatCompletionRequestAssistantMessage:
+      type: object
+      title: Assistant message
+      additionalProperties: false
+      properties:
+        content:
+          title: Assistant message content
+          nullable: true
+          description: 'The contents of the assistant message. Required unless `tool_calls` or `function_call` is specified.
+
+            '
+          oneOf:
+          - type: string
+            title: Text content
+            description: The text contents of the message.
+          - type: array
+            description: An array of content parts with a defined type, only `text` is supported for this message type.
+            title: Array of content parts
+            items:
+              $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartText'
+        reasoning:
+          description: 'The reasoning output by the assistant if reasoning_format was set to ''parsed''.
+
+            This field is supported on [models that support reasoning](https://console.groq.com/docs/reasoning).
+
+            '
+          nullable: true
+          type: string
+        role:
+          type: string
+          enum:
+          - assistant
+          description: The role of the messages author, in this case `assistant`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+        tool_calls:
+          $ref: '#/components/schemas/ChatCompletionMessageToolCalls'
+        function_call:
+          type: object
+          deprecated: true
+          description: Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model.
+          properties:
+            arguments:
+              type: string
+              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+            name:
+              type: string
+              description: The name of the function to call.
+      required:
+      - role
+    ChatCompletionNamedToolChoice:
+      type: object
+      description: Specifies a tool the model should use. Use to force the model to call a specific function.
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+          required:
+          - name
+      required:
+      - type
+      - function
+    ChatCompletionFunctionCallOption:
+      type: object
+      description: 'Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+
+        '
+      properties:
+        name:
+          type: string
+          description: The name of the function to call.
+      required:
+      - name
+    DocumentCitation:
+      type: object
+      description: A citation referencing a specific document that was provided in the request.
+      properties:
+        start_index:
+          type: integer
+          description: The character index in the message content where this citation begins.
+        end_index:
+          type: integer
+          description: The character index in the message content where this citation ends.
+        document_id:
+          type: string
+          description: The ID of the document being cited, corresponding to a document provided in the request.
+      required:
+      - start_index
+      - end_index
+      - document_id
+      additionalProperties: false
+    ChatCompletionMessageExecutedTools:
+      type: array
+      description: A list of tools that were executed during the chat completion for compound AI systems.
+      items:
+        type: object
+        properties:
+          index:
+            type: integer
+            description: The index of the executed tool.
+          type:
+            type: string
+            description: The type of tool that was executed.
+          arguments:
+            type: string
+            description: The arguments passed to the tool in JSON format.
+          output:
+            type: string
+            nullable: true
+            description: The output returned by the tool.
+          search_results:
+            type: object
+            nullable: true
+            description: The search results returned by the tool, if applicable.
+            properties:
+              results:
+                type: array
+                description: List of search results
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: The title of the search result
+                    url:
+                      type: string
+                      description: The URL of the search result
+                    content:
+                      type: string
+                      description: The content of the search result
+                    score:
+                      type: number
+                      format: float
+                      description: The relevance score of the search result
+              images:
+                type: array
+                description: List of image URLs returned by the search
+                items:
+                  type: string
+          code_results:
+            type: array
+            items:
+              $ref: '#/components/schemas/CodeExecutionResult'
+            description: Array of code execution results
+          browser_results:
+            type: array
+            items:
+              $ref: '#/components/schemas/BrowserResult'
+            description: Array of browser results
+        required:
+        - index
+        - type
+        - arguments
+    CreateChatCompletionResponse:
+      type: object
+      description: Represents a chat completion response returned by model, based on the provided input.
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the chat completion.
+        choices:
+          type: array
+          description: A list of chat completion choices. Can be more than one if `n` is greater than 1.
+          items:
+            type: object
+            required:
+            - finish_reason
+            - index
+            - message
+            - logprobs
+            properties:
+              finish_reason:
+                type: string
+                description: 'The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,
+
+                  `length` if the maximum number of tokens specified in the request was reached,
+
+                  `tool_calls` if the model called a tool, or `function_call` (deprecated) if the model called a function.
+
+                  '
+                enum:
+                - stop
+                - length
+                - tool_calls
+                - function_call
+              index:
+                type: integer
+                description: The index of the choice in the list of choices.
+              message:
+                $ref: '#/components/schemas/ChatCompletionResponseMessage'
+              logprobs:
+                description: Log probability information for the choice.
+                type: object
+                nullable: true
+                properties:
+                  content:
+                    description: A list of message content tokens with log probability information.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChatCompletionTokenLogprob'
+                    nullable: true
+                required:
+                - content
+        created:
+          type: integer
+          description: The Unix timestamp (in seconds) of when the chat completion was created.
+        model:
+          type: string
+          description: The model used for the chat completion.
+        system_fingerprint:
+          type: string
+          description: 'This fingerprint represents the backend configuration that the model runs with.
+
+
+            Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.
+
+            '
+        object:
+          type: string
+          description: The object type, which is always `chat.completion`.
+          enum:
+          - chat.completion
+        usage:
+          $ref: '#/components/schemas/CompletionUsage'
+        usage_breakdown:
+          $ref: '#/components/schemas/ChatCompletionUsageBreakdown'
+          description: Detailed usage breakdown by model when multiple models are used in the request for compound AI systems.
+        service_tier:
+          type: string
+          nullable: true
+          description: The service tier used for the request.
+          enum:
+          - auto
+          - on_demand
+          - flex
+          - performance
+          - null
+        mcp_list_tools:
+          type: array
+          nullable: true
+          description: List of discovered MCP tools from connected servers.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for this tool list response.
+              type:
+                type: string
+                description: The type identifier.
+              server_label:
+                type: string
+                description: Human-readable label for the MCP server.
+              tools:
+                type: array
+                description: Array of discovered tools from the server.
+                items:
+                  type: object
+                  properties:
+                    annotations:
+                      description: Additional metadata for the tool.
+                    description:
+                      type: string
+                      description: Description of what the tool does.
+                    input_schema:
+                      type: object
+                      additionalProperties: true
+                      description: JSON Schema describing the tool's input parameters.
+                    name:
+                      type: string
+                      description: The name of the tool.
+        x_groq:
+          $ref: '#/components/schemas/XGroqNonStreaming'
+      required:
+      - choices
+      - created
+      - id
+      - model
+      - object
+    DebugData:
+      type: object
+      description: Debug information including input and output token IDs and strings. Only present when debug=true in the request.
+      properties:
+        input_token_ids:
+          type: array
+          items:
+            type: integer
+          description: Token IDs for the input.
+        input_tokens:
+          type: array
+          items:
+            type: string
+          description: Token strings for the input.
+        output_token_ids:
+          type: array
+          items:
+            type: integer
+          description: Token IDs for the output.
+        output_tokens:
+          type: array
+          items:
+            type: string
+          description: Token strings for the output.
+    ChatCompletionMessageToolCall:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the tool call.
+        type:
+          type: string
+          enum:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
+          type: object
+          description: The function that the model called.
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+            arguments:
+              type: string
+              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+          required:
+          - name
+          - arguments
+      required:
+      - id
+      - type
+      - function
+    ChatCompletionRequestMessage:
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionRequestSystemMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestUserMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestAssistantMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestToolMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestFunctionMessage'
+      discriminator:
+        propertyName: role
+        mapping:
+          system: '#/components/schemas/ChatCompletionRequestSystemMessage'
+          developer: '#/components/schemas/ChatCompletionRequestSystemMessage'
+          user: '#/components/schemas/ChatCompletionRequestUserMessage'
+          assistant: '#/components/schemas/ChatCompletionRequestAssistantMessage'
+          tool: '#/components/schemas/ChatCompletionRequestToolMessage'
+          function: '#/components/schemas/ChatCompletionRequestFunctionMessage'
+    ChatCompletionRequestMessageContentPartDocument:
+      type: object
+      title: Document content part
+      properties:
+        type:
+          type: string
+          enum:
+          - document
+          description: The type of the content part.
+        document:
+          type: object
+          properties:
+            data:
+              type: object
+              description: The JSON document data.
+              additionalProperties: true
+            id:
+              type: string
+              nullable: true
+              description: Optional unique identifier for the document.
+          required:
+          - data
+      required:
+      - type
+      - document
+    ChatCompletionToolChoiceOption:
+      nullable: true
+      description: 'Controls which (if any) tool is called by the model.
+
+        `none` means the model will not call any tool and instead generates a message.
+
+        `auto` means the model can pick between generating a message or calling one or more tools.
+
+        `required` means the model must call one or more tools.
+
+        Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
+
+
+        `none` is the default when no tools are present. `auto` is the default if tools are present.
+
+        '
+      oneOf:
+      - type: string
+        description: '`none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools.
+
+          '
+        enum:
+        - none
+        - auto
+        - required
+      - $ref: '#/components/schemas/ChatCompletionNamedToolChoice'
+      x-groq-meta:
+        validator: ChatCompletionToolChoiceOption
+    ChatCompletionRequestUserMessage:
+      type: object
+      title: User message
+      additionalProperties: false
+      properties:
+        content:
+          title: User message content
+          description: 'The contents of the user message.
+
+            '
+          oneOf:
+          - type: string
+            description: The text contents of the message.
+            title: Text content
+          - type: array
+            description: An array of content parts with a defined type, each can be of type `text` or `image_url` when passing in images. You can pass multiple images by adding multiple `image_url` content parts. Image input is only supported when using the `gpt-4-visual-preview` model.
+            title: Array of content parts
+            items:
+              $ref: '#/components/schemas/ChatCompletionRequestMessageContentPart'
+            minItems: 1
+        role:
+          type: string
+          enum:
+          - user
+          description: The role of the messages author, in this case `user`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+      required:
+      - content
+      - role
+    CodeExecutionResult:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text version of the code execution result
+        png:
+          type: string
+          description: Base64 encoded PNG image output from code execution
+        chart:
+          $ref: '#/components/schemas/Chart'
+        charts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Chart'
+          description: Array of charts from a superchart
+      additionalProperties: false
+    Annotation:
+      type: object
+      description: An annotation that provides citations or references for content in a message.
+      properties:
+        type:
+          type: string
+          description: The type of annotation.
+          enum:
+          - document_citation
+          - function_citation
+        document_citation:
+          $ref: '#/components/schemas/DocumentCitation'
+        function_citation:
+          $ref: '#/components/schemas/FunctionCitation'
+      required:
+      - type
+    ChatCompletionRequestMessageContentPart:
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartText'
+      - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartImage'
+      - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartDocument'
+    ResponseFormatJsonSchemaSchema:
+      type: object
+      title: JSON schema
+      description: 'The schema for the response format, described as a JSON Schema object.
+
+        Learn how to build JSON schemas [here](https://json-schema.org/).
+
+        '
+      additionalProperties: true
+    ChatCompletionRequestToolMessage:
+      type: object
+      title: Tool message
+      additionalProperties: false
+      properties:
+        role:
+          type: string
+          enum:
+          - tool
+          description: The role of the messages author, in this case `tool`.
+        content:
+          description: The contents of the tool message.
+          title: Tool message content
+          oneOf:
+          - type: string
+            description: The text contents of the message.
+            title: Text content
+          - type: array
+            description: An array of content parts with a defined type, each can be of type `text` or `image_url` when passing in images. You can pass multiple images by adding multiple `image_url` content parts. Image input is only supported when using the `gpt-4-visual-preview` model.
+            title: Array of content parts
+            items:
+              $ref: '#/components/schemas/ChatCompletionRequestMessageContentPart'
+            minItems: 1
+        tool_call_id:
+          type: string
+          description: Tool call that this message is responding to.
+      required:
+      - role
+      - content
+      - tool_call_id
+    ChatCompletionResponseMessage:
+      type: object
+      description: A chat completion message generated by the model.
+      properties:
+        content:
+          type: string
+          description: The contents of the message.
+          nullable: true
+        reasoning:
+          type: string
+          description: The model's reasoning for a response. Only available for [models that support reasoning](https://console.groq.com/docs/reasoning) when request parameter reasoning_format has value `parsed`.
+          nullable: true
+        tool_calls:
+          $ref: '#/components/schemas/ChatCompletionMessageToolCalls'
+        executed_tools:
+          $ref: '#/components/schemas/ChatCompletionMessageExecutedTools'
+        role:
+          type: string
+          enum:
+          - assistant
+          description: The role of the author of this message.
+        function_call:
+          type: object
+          deprecated: true
+          description: Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model.
+          properties:
+            arguments:
+              type: string
+              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+            name:
+              type: string
+              description: The name of the function to call.
+          required:
+          - name
+          - arguments
+        annotations:
+          type: array
+          description: A list of annotations providing citations and references for the content in the message.
+          items:
+            $ref: '#/components/schemas/Annotation'
+      required:
+      - role
+      - content
+    ChatCompletionRequestFunctionMessage:
+      type: object
+      title: Function message
+      additionalProperties: false
+      deprecated: true
+      properties:
+        role:
+          type: string
+          enum:
+          - function
+          description: The role of the messages author, in this case `function`.
+        content:
+          nullable: true
+          title: Function message content
+          type: string
+          description: The contents of the function message.
+        name:
+          type: string
+          description: The name of the function to call.
+      required:
+      - role
+      - content
+      - name
+    ResponseFormatJsonObject:
+      type: object
+      title: JSON object
+      description: 'JSON object response format. An older method of generating JSON responses. Using `json_schema` is recommended for models that support it. Note that the model will not generate JSON without a system or user message instructing it to do so.
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of response format being defined. Always `json_object`.
+          enum:
+          - json_object
+          x-stainless-const: true
+      required:
+      - type
+    CreateChatCompletionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        messages:
+          description: A list of messages comprising the conversation so far.
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ChatCompletionRequestMessage'
+        model:
+          description: ID of the model to use. For details on which models are compatible with the Chat API, see available [models](https://console.groq.com/docs/models)
+          example: meta-llama/llama-4-scout-17b-16e-instruct
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - compound-beta
+            - compound-beta-mini
+            - gemma2-9b-it
+            - llama-3.1-8b-instant
+            - llama-3.3-70b-versatile
+            - meta-llama/llama-4-maverick-17b-128e-instruct
+            - meta-llama/llama-4-scout-17b-16e-instruct
+            - meta-llama/llama-guard-4-12b
+            - moonshotai/kimi-k2-instruct
+            - openai/gpt-oss-120b
+            - openai/gpt-oss-20b
+            - qwen/qwen3-32b
+        disable_tool_validation:
+          type: boolean
+          default: false
+          description: 'If set to true, groq will return called tools without validating that the tool is present in request.tools. tool_choice=required/none will still be enforced, but the request cannot require a specific tool be used.
+
+            '
+        frequency_penalty:
+          type: number
+          default: 0
+          minimum: -2
+          maximum: 2
+          nullable: true
+          description: This is not yet supported by any of our models. Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
+        include_reasoning:
+          type: boolean
+          nullable: true
+          description: 'Whether to include reasoning in the response.  If true, the response will include a `reasoning` field. If false, the model''s reasoning will not be included in the response.
+
+            This field is mutually exclusive with `reasoning_format`.
+
+            '
+        logit_bias:
+          type: object
+          default: null
+          nullable: true
+          additionalProperties:
+            type: integer
+          description: 'This is not yet supported by any of our models.
+
+            Modify the likelihood of specified tokens appearing in the completion.
+
+            '
+        logprobs:
+          description: 'This is not yet supported by any of our models.
+
+            Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`.
+
+            '
+          type: boolean
+          default: false
+          nullable: true
+        top_logprobs:
+          description: 'This is not yet supported by any of our models.
+
+            An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.
+
+            '
+          type: integer
+          minimum: 0
+          maximum: 20
+          nullable: true
+        max_tokens:
+          description: 'Deprecated in favor of `max_completion_tokens`.
+
+            The maximum number of tokens that can be generated in the chat completion. The total length of input tokens and generated tokens is limited by the model''s context length.
+
+            '
+          type: integer
+          nullable: true
+          deprecated: true
+        max_completion_tokens:
+          description: The maximum number of tokens that can be generated in the chat completion. The total length of input tokens and generated tokens is limited by the model's context length.
+          type: integer
+          nullable: true
+        n:
+          type: integer
+          minimum: 1
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: How many chat completion choices to generate for each input message. Note that the current moment, only n=1 is supported. Other values will result in a 400 response.
+        presence_penalty:
+          type: number
+          default: 0
+          minimum: -2
+          maximum: 2
+          nullable: true
+          description: This is not yet supported by any of our models. Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
+        response_format:
+          nullable: true
+          description: 'An object specifying the format that the model must output. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. `json_schema` response format is only available on [supported models](https://console.groq.com/docs/structured-outputs#supported-models). Setting to `{ "type": "json_object" }` enables the older JSON mode, which ensures the message the model generates is valid JSON. Using `json_schema` is preferred for models that support it.
+
+            '
+          oneOf:
+          - $ref: '#/components/schemas/ResponseFormatText'
+          - $ref: '#/components/schemas/ResponseFormatJsonSchema'
+          - $ref: '#/components/schemas/ResponseFormatJsonObject'
+        seed:
+          type: integer
+          nullable: true
+          description: 'If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.
+
+            Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.
+
+            '
+        service_tier:
+          type: string
+          nullable: true
+          description: 'The service tier to use for the request. Defaults to `on_demand`.
+
+            - `auto` will automatically select the highest tier available within the rate limits of your organization.
+
+            - `flex` uses the flex tier, which will succeed or fail quickly.
+
+            '
+          enum:
+          - auto
+          - on_demand
+          - flex
+          - performance
+          - null
+        stop:
+          description: 'Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
+
+            '
+          default: null
+          nullable: true
+          oneOf:
+          - type: string
+            example: '
+
+              '
+            nullable: true
+          - type: array
+            minItems: 0
+            maxItems: 4
+            items:
+              type: string
+              example: '["\n"]'
+        reasoning_effort:
+          description: 'qwen3 models support the following values
+
+            Set to ''none'' to disable reasoning.
+
+            Set to ''default'' or null to let Qwen reason.
+
+
+            openai/gpt-oss-20b and openai/gpt-oss-120b support ''low'', ''medium'', or ''high''.
+
+            ''medium'' is the default value.
+
+            '
+          nullable: true
+          default: null
+          type: string
+          enum:
+          - none
+          - default
+          - low
+          - medium
+          - high
+        reasoning_format:
+          description: 'Specifies how to output reasoning tokens
+
+            This field is mutually exclusive with `include_reasoning`.
+
+            '
+          default: null
+          nullable: true
+          type: string
+          enum:
+          - hidden
+          - raw
+          - parsed
+        stream:
+          description: 'If set, partial message deltas will be sent. Tokens will be sent as data-only [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format) as they become available, with the stream terminated by a `data: [DONE]` message. [Example code](/docs/text-chat#streaming-a-chat-completion).
+
+            '
+          type: boolean
+          nullable: true
+          default: false
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          nullable: true
+          description: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or temperature but not both.
+        tools:
+          type: array
+          nullable: true
+          maxItems: 128
+          description: 'A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
+
+            '
+          items:
+            $ref: '#/components/schemas/ChatCompletionTool'
+        tool_choice:
+          $ref: '#/components/schemas/ChatCompletionToolChoiceOption'
+        parallel_tool_calls:
+          description: 'Whether to enable parallel function calling during tool use.
+
+            '
+          type: boolean
+          nullable: true
+          default: true
+        user:
+          type: string
+          description: A unique identifier representing your end-user, which can help us monitor and detect abuse.
+          nullable: true
+        function_call:
+          deprecated: true
+          nullable: true
+          description: 'Deprecated in favor of `tool_choice`.
+
+
+            Controls which (if any) function is called by the model.
+
+            `none` means the model will not call a function and instead generates a message.
+
+            `auto` means the model can pick between generating a message or calling a function.
+
+            Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+
+
+            `none` is the default when no functions are present. `auto` is the default if functions are present.
+
+            '
+          oneOf:
+          - type: string
+            description: '`none` means the model will not call a function and instead generates a message. `auto` means the model can pick between generating a message or calling a function.
+
+              '
+            enum:
+            - none
+            - auto
+            - required
+          - $ref: '#/components/schemas/ChatCompletionFunctionCallOption'
+        functions:
+          deprecated: true
+          nullable: true
+          description: 'Deprecated in favor of `tools`.
+
+
+            A list of functions the model may generate JSON inputs for.
+
+            '
+          type: array
+          minItems: 0
+          maxItems: 128
+          items:
+            $ref: '#/components/schemas/ChatCompletionFunctions'
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: string
+          description: 'This parameter is not currently supported.
+
+            '
+        store:
+          type: boolean
+          nullable: true
+          description: 'This parameter is not currently supported.
+
+            '
+        include_domains:
+          type: array
+          nullable: true
+          deprecated: true
+          description: 'Deprecated: Use search_settings.include_domains instead.
+
+            A list of domains to include in the search results when the model uses a web search tool.
+
+            '
+          items:
+            type: string
+        exclude_domains:
+          type: array
+          nullable: true
+          deprecated: true
+          description: 'Deprecated: Use search_settings.exclude_domains instead.
+
+            A list of domains to exclude from the search results when the model uses a web search tool.
+
+            '
+          items:
+            type: string
+        search_settings:
+          type: object
+          nullable: true
+          description: 'Settings for web search functionality when the model uses a web search tool.
+
+            '
+          properties:
+            include_domains:
+              type: array
+              nullable: true
+              description: A list of domains to include in the search results.
+              items:
+                type: string
+            exclude_domains:
+              type: array
+              nullable: true
+              description: A list of domains to exclude from the search results.
+              items:
+                type: string
+            include_images:
+              type: boolean
+              nullable: true
+              description: Whether to include images in the search results.
+            country:
+              type: string
+              nullable: true
+              description: Name of country to prioritize search results from (e.g., "united states", "germany", "france").
+        compound_custom:
+          type: object
+          nullable: true
+          description: Custom configuration of models and tools for Compound.
+          properties:
+            models:
+              type: object
+              nullable: true
+              properties:
+                reasoning_model:
+                  type: string
+                  nullable: true
+                  description: Custom model to use for reasoning.
+                answering_model:
+                  type: string
+                  nullable: true
+                  description: Custom model to use for answering.
+            tools:
+              type: object
+              nullable: true
+              description: Configuration options for tools available to Compound.
+              properties:
+                enabled_tools:
+                  type: array
+                  nullable: true
+                  description: A list of tool names that are enabled for the request.
+                  items:
+                    type: string
+                wolfram_settings:
+                  type: object
+                  nullable: true
+                  description: Configuration for the Wolfram tool integration.
+                  properties:
+                    authorization:
+                      type: string
+                      nullable: true
+                      description: API key used to authorize requests to Wolfram services.
+        documents:
+          type: array
+          nullable: true
+          description: A list of documents to provide context for the conversation. Each document contains text that can be referenced by the model.
+          items:
+            $ref: '#/components/schemas/ChatCompletionDocument'
+        citation_options:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          nullable: true
+          default: enabled
+          description: Whether to enable citations in the response. When enabled, the model will include citations for information retrieved from provided documents or web searches.
+      required:
+      - model
+      - messages
+    ChatCompletionFunctions:
+      type: object
+      deprecated: true
+      properties:
+        description:
+          type: string
+          description: A description of what the function does, used by the model to choose when and how to call the function.
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+      required:
+      - name
+    ResponseFormatJsonSchema:
+      type: object
+      title: JSON schema
+      description: 'JSON Schema response format. Used to generate structured JSON responses.
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of response format being defined. Always `json_schema`.
+          enum:
+          - json_schema
+          x-stainless-const: true
+        json_schema:
+          type: object
+          title: JSON schema
+          description: 'Structured Outputs configuration options, including a JSON Schema.
+
+            '
+          properties:
+            description:
+              type: string
+              description: 'A description of what the response format is for, used by the model to determine how to respond in the format.
+
+                '
+            name:
+              type: string
+              description: 'The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+
+                '
+            schema:
+              $ref: '#/components/schemas/ResponseFormatJsonSchemaSchema'
+            strict:
+              type: boolean
+              nullable: true
+              default: false
+              description: 'Whether to enable strict schema adherence when generating the output. If set to true, the model will always follow the exact schema defined in the `schema` field. Only a subset of JSON Schema is supported when `strict` is `true`.
+
+                '
+          required:
+          - name
+      required:
+      - type
+      - json_schema
+    FunctionParameters:
+      type: object
+      description: Function parameters defined as a JSON Schema object. Refer to https://json-schema.org/understanding-json-schema/ for schema documentation.
+      additionalProperties: true
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: apiKey
+x-groq-metadata:
+  groups:
+  - id: chat
+    type: endpoints
+    title: Chat
+    description: ''
+    sections:
+    - type: endpoint
+      key: createChatCompletion
+      path: create
+  - id: responses
+    type: endpoints
+    title: Responses (beta)
+    description: ''
+    sections:
+    - type: endpoint
+      key: createResponse
+      path: create
+  - id: audio
+    type: endpoints
+    title: Audio
+    description: ''
+    sections:
+    - type: endpoint
+      key: createTranscription
+      path: transcription
+    - type: endpoint
+      key: createTranslation
+      path: translation
+    - type: endpoint
+      key: createSpeech
+      path: speech
+  - id: models
+    type: endpoints
+    title: Models
+    description: ''
+    sections:
+    - type: endpoint
+      key: listModels
+      path: list
+    - type: endpoint
+      key: retrieveModel
+      path: retrieve
+  - id: batches
+    type: endpoints
+    title: Batches
+    description: ''
+    sections:
+    - type: endpoint
+      key: createBatch
+      path: create
+    - type: endpoint
+      key: retrieveBatch
+      path: retrieve
+    - type: endpoint
+      key: listBatches
+      path: list
+    - type: endpoint
+      key: cancelBatch
+      path: cancel
+  - id: files
+    type: endpoints
+    title: Files
+    description: ''
+    sections:
+    - type: endpoint
+      key: uploadFile
+      path: upload
+    - type: endpoint
+      key: listFiles
+      path: list
+    - type: endpoint
+      key: deleteFile
+      path: delete
+    - type: endpoint
+      key: retrieveFile
+      path: retrieve
+    - type: endpoint
+      key: downloadFile
+      path: download
+  - id: fine-tuning
+    type: endpoints
+    title: Fine Tuning
+    description: ''
+    sections:
+    - type: endpoint
+      key: listFineTunings
+      path: list
+    - type: endpoint
+      key: createFineTuning
+      path: create
+    - type: endpoint
+      key: getFineTuning
+      path: get
+    - type: endpoint
+      key: deleteFineTuning
+      path: delete

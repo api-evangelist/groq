@@ -1,0 +1,519 @@
+openapi: 3.0.1
+info:
+  title: GroqCloud Audio API
+  description: Specification of the Groq cloud API
+  termsOfService: https://groq.com/terms-of-use/
+  contact:
+    name: Groq Support
+    email: support@groq.com
+  version: '2.1'
+servers:
+- url: https://api.groq.com
+security:
+- api_key: []
+tags:
+- name: Audio
+paths:
+  /openai/v1/audio/speech:
+    post:
+      operationId: createSpeech
+      tags:
+      - Audio
+      summary: Generates audio from the input text.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSpeechRequest'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Transfer-Encoding:
+              schema:
+                type: string
+              description: chunked
+          content:
+            audio/wav:
+              schema:
+                type: string
+                format: binary
+      x-groq-metadata:
+        returns: Returns an audio file in `wav` format.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/audio/speech \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"playai-tts\",\n    \"input\": \"I love building and shipping new features for our users!\",\n    \"voice\": \"Fritz-PlayAI\",\n    \"response_format\": \"wav\"\n  }'\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(api_key=os.environ.get(\"GROQ_API_KEY\"))\n\nspeech_file_path = \"speech.wav\"\nmodel = \"playai-tts\"\nvoice = \"Fritz-PlayAI\"\ntext = \"I love building and shipping new features for our users!\"\nresponse_format = \"wav\"\n\nresponse = client.audio.speech.create(\n    model=model,\n    voice=voice,\n    input=text,\n    response_format=response_format\n)\n\nresponse.write_to_file(speech_file_path)\n"
+            js: "import fs from \"fs\";\nimport path from \"path\";\nimport Groq from 'groq-sdk';\n\nconst groq = new Groq({\n  apiKey: process.env.GROQ_API_KEY\n});\n\nconst speechFilePath = \"speech.wav\";\nconst model = \"playai-tts\";\nconst voice = \"Fritz-PlayAI\";\nconst text = \"I love building and shipping new features for our users!\";\nconst responseFormat = \"wav\";\n\nasync function main() {\n  const response = await groq.audio.speech.create({\n    model: model,\n    voice: voice,\n    input: text,\n    response_format: responseFormat\n  });\n\n  const buffer = Buffer.from(await response.arrayBuffer());\n  await fs.promises.writeFile(speechFilePath, buffer);\n}\n\nmain();\n"
+  /openai/v1/audio/transcriptions:
+    post:
+      operationId: createTranscription
+      tags:
+      - Audio
+      summary: Transcribes audio into the input language.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateTranscriptionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTranscriptionResponseJson'
+      x-groq-metadata:
+        returns: Returns an audio transcription object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/audio/transcriptions \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: multipart/form-data\" \\\n  -F file=\"@./sample_audio.m4a\" \\\n  -F model=\"whisper-large-v3\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq()\nfilename = os.path.dirname(__file__) + \"/sample_audio.m4a\"\n\nwith open(filename, \"rb\") as file:\n    transcription = client.audio.transcriptions.create(\n      file=(filename, file.read()),\n      model=\"whisper-large-v3\",\n      prompt=\"Specify context or spelling\",  # Optional\n      response_format=\"json\",  # Optional\n      language=\"en\",  # Optional\n      temperature=0.0  # Optional\n    )\n    print(transcription.text)\n"
+            js: "import fs from \"fs\";\nimport Groq from \"groq-sdk\";\n\nconst groq = new Groq();\nasync function main() {\n  const transcription = await groq.audio.transcriptions.create({\n    file: fs.createReadStream(\"sample_audio.m4a\"),\n    model: \"whisper-large-v3\",\n    prompt: \"Specify context or spelling\", // Optional\n    response_format: \"json\", // Optional\n    language: \"en\", // Optional\n    temperature: 0.0, // Optional\n  });\n  console.log(transcription.text);\n}\nmain();\n"
+          response: "{\n  \"text\": \"Your transcribed text appears here...\",\n  \"x_groq\": {\n    \"id\": \"req_unique_id\"\n  }\n}\n"
+  /openai/v1/audio/translations:
+    post:
+      operationId: createTranslation
+      tags:
+      - Audio
+      summary: Translates audio into English.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateTranslationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTranslationResponseJson'
+      x-groq-metadata:
+        returns: Returns an audio translation object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/audio/translations \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: multipart/form-data\" \\\n  -F file=\"@./sample_audio.m4a\" \\\n  -F model=\"whisper-large-v3\"\n"
+            py: "# Default\nimport os\nfrom groq import Groq\n\nclient = Groq()\nfilename = os.path.dirname(__file__) + \"/sample_audio.m4a\"\n\nwith open(filename, \"rb\") as file:\n    translation = client.audio.translations.create(\n      file=(filename, file.read()),\n      model=\"whisper-large-v3\",\n      prompt=\"Specify context or spelling\",  # Optional\n      response_format=\"json\",  # Optional\n      temperature=0.0  # Optional\n    )\n    print(translation.text)\n"
+            js: "// Default\nimport fs from \"fs\";\nimport Groq from \"groq-sdk\";\n\nconst groq = new Groq();\nasync function main() {\n  const translation = await groq.audio.translations.create({\n    file: fs.createReadStream(\"sample_audio.m4a\"),\n    model: \"whisper-large-v3\",\n    prompt: \"Specify context or spelling\", // Optional\n    response_format: \"json\", // Optional\n    temperature: 0.0, // Optional\n  });\n  console.log(translation.text);\n}\nmain();\n"
+          response: "{\n  \"text\": \"Your translated text appears here...\",\n  \"x_groq\": {\n    \"id\": \"req_unique_id\"\n  }\n}\n"
+components:
+  schemas:
+    CreateTranscriptionResponseJson:
+      type: object
+      description: Represents a transcription response returned by model, based on the provided input.
+      properties:
+        text:
+          type: string
+          description: The transcribed text.
+      required:
+      - text
+    CreateSpeechRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        model:
+          description: 'One of the [available TTS models](/docs/text-to-speech).
+
+            '
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - playai-tts
+            - playai-tts-arabic
+          example: playai-tts
+        input:
+          example: The quick brown fox jumped over the lazy dog
+          type: string
+          description: The text to generate audio for.
+        voice:
+          description: The voice to use when generating the audio. List of voices can be found [here](/docs/text-to-speech).
+          type: string
+          example: Fritz-PlayAI
+        response_format:
+          description: The format of the generated audio. Supported formats are `flac, mp3, mulaw, ogg, wav`.
+          default: mp3
+          type: string
+          enum:
+          - flac
+          - mp3
+          - mulaw
+          - ogg
+          - wav
+        sample_rate:
+          type: integer
+          description: The sample rate for generated audio
+          default: 48000
+          example: 48000
+          enum:
+          - 8000
+          - 16000
+          - 22050
+          - 24000
+          - 32000
+          - 44100
+          - 48000
+        speed:
+          description: The speed of the generated audio.
+          example: 1
+          type: number
+          default: 1
+          minimum: 0.5
+          maximum: 5
+      required:
+      - model
+      - input
+      - voice
+    CreateTranslationResponseJson:
+      type: object
+      properties:
+        text:
+          type: string
+      required:
+      - text
+    CreateTranslationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        file:
+          description: 'The audio file object (not file name) translate, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
+
+            '
+          type: string
+          format: binary
+        url:
+          description: 'The audio URL to translate/transcribe (supports Base64URL). Either file or url must be provided.
+
+            When using the Batch API only url is supported.
+
+            '
+          type: string
+        model:
+          description: 'ID of the model to use. `whisper-large-v3` and `whisper-large-v3-turbo` are currently available.
+
+            '
+          example: whisper-large-v3-turbo
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - whisper-large-v3
+            - whisper-large-v3-turbo
+        prompt:
+          description: 'An optional text to guide the model''s style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text/prompting) should be in English.
+
+            '
+          type: string
+        response_format:
+          description: 'The format of the transcript output, in one of these options: `json`, `text`, or `verbose_json`.
+
+            '
+          type: string
+          enum:
+          - json
+          - text
+          - verbose_json
+          default: json
+        temperature:
+          description: 'The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
+
+            '
+          type: number
+          default: 0
+      oneOf:
+      - required:
+        - file
+      - required:
+        - url
+      required:
+      - model
+    CreateTranscriptionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        file:
+          description: 'The audio file object (not file name) to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
+
+            Either a file or a URL must be provided. Note that the file field is not supported in Batch API requests.
+
+            '
+          type: string
+          format: binary
+        url:
+          description: 'The audio URL to translate/transcribe (supports Base64URL).
+
+            Either a file or a URL must be provided. For Batch API requests, the URL field is required since the file field is not supported.
+
+            '
+          type: string
+        model:
+          description: 'ID of the model to use. `whisper-large-v3` and `whisper-large-v3-turbo` are currently available.
+
+            '
+          example: whisper-large-v3-turbo
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - whisper-large-v3
+            - whisper-large-v3-turbo
+        language:
+          description: 'The language of the input audio. Supplying the input language in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format will improve accuracy and latency.
+
+            '
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - en
+            - zh
+            - de
+            - es
+            - ru
+            - ko
+            - fr
+            - ja
+            - pt
+            - tr
+            - pl
+            - ca
+            - nl
+            - ar
+            - sv
+            - it
+            - id
+            - hi
+            - fi
+            - vi
+            - he
+            - uk
+            - el
+            - ms
+            - cs
+            - ro
+            - da
+            - hu
+            - ta
+            - 'no'
+            - th
+            - ur
+            - hr
+            - bg
+            - lt
+            - la
+            - mi
+            - ml
+            - cy
+            - sk
+            - te
+            - fa
+            - lv
+            - bn
+            - sr
+            - az
+            - sl
+            - kn
+            - et
+            - mk
+            - br
+            - eu
+            - is
+            - hy
+            - ne
+            - mn
+            - bs
+            - kk
+            - sq
+            - sw
+            - gl
+            - mr
+            - pa
+            - si
+            - km
+            - sn
+            - yo
+            - so
+            - af
+            - oc
+            - ka
+            - be
+            - tg
+            - sd
+            - gu
+            - am
+            - yi
+            - lo
+            - uz
+            - fo
+            - ht
+            - ps
+            - tk
+            - nn
+            - mt
+            - sa
+            - lb
+            - my
+            - bo
+            - tl
+            - mg
+            - as
+            - tt
+            - haw
+            - ln
+            - ha
+            - ba
+            - jv
+            - su
+            - yue
+        prompt:
+          description: 'An optional text to guide the model''s style or continue a previous audio segment. The [prompt](/docs/speech-text) should match the audio language.
+
+            '
+          type: string
+        response_format:
+          description: 'The format of the transcript output, in one of these options: `json`, `text`, or `verbose_json`.
+
+            '
+          type: string
+          enum:
+          - json
+          - text
+          - verbose_json
+          default: json
+        temperature:
+          description: 'The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
+
+            '
+          type: number
+          default: 0
+        timestamp_granularities:
+          description: 'The timestamp granularities to populate for this transcription. `response_format` must be set `verbose_json` to use timestamp granularities. Either or both of these options are supported: `word`, or `segment`. Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+
+            '
+          type: array
+          items:
+            type: string
+            enum:
+            - word
+            - segment
+          default:
+          - segment
+      oneOf:
+      - required:
+        - file
+      - required:
+        - url
+      required:
+      - model
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: apiKey
+x-groq-metadata:
+  groups:
+  - id: chat
+    type: endpoints
+    title: Chat
+    description: ''
+    sections:
+    - type: endpoint
+      key: createChatCompletion
+      path: create
+  - id: responses
+    type: endpoints
+    title: Responses (beta)
+    description: ''
+    sections:
+    - type: endpoint
+      key: createResponse
+      path: create
+  - id: audio
+    type: endpoints
+    title: Audio
+    description: ''
+    sections:
+    - type: endpoint
+      key: createTranscription
+      path: transcription
+    - type: endpoint
+      key: createTranslation
+      path: translation
+    - type: endpoint
+      key: createSpeech
+      path: speech
+  - id: models
+    type: endpoints
+    title: Models
+    description: ''
+    sections:
+    - type: endpoint
+      key: listModels
+      path: list
+    - type: endpoint
+      key: retrieveModel
+      path: retrieve
+  - id: batches
+    type: endpoints
+    title: Batches
+    description: ''
+    sections:
+    - type: endpoint
+      key: createBatch
+      path: create
+    - type: endpoint
+      key: retrieveBatch
+      path: retrieve
+    - type: endpoint
+      key: listBatches
+      path: list
+    - type: endpoint
+      key: cancelBatch
+      path: cancel
+  - id: files
+    type: endpoints
+    title: Files
+    description: ''
+    sections:
+    - type: endpoint
+      key: uploadFile
+      path: upload
+    - type: endpoint
+      key: listFiles
+      path: list
+    - type: endpoint
+      key: deleteFile
+      path: delete
+    - type: endpoint
+      key: retrieveFile
+      path: retrieve
+    - type: endpoint
+      key: downloadFile
+      path: download
+  - id: fine-tuning
+    type: endpoints
+    title: Fine Tuning
+    description: ''
+    sections:
+    - type: endpoint
+      key: listFineTunings
+      path: list
+    - type: endpoint
+      key: createFineTuning
+      path: create
+    - type: endpoint
+      key: getFineTuning
+      path: get
+    - type: endpoint
+      key: deleteFineTuning
+      path: delete

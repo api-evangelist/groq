@@ -1,0 +1,343 @@
+openapi: 3.0.1
+info:
+  title: GroqCloud Audio Files API
+  description: Specification of the Groq cloud API
+  termsOfService: https://groq.com/terms-of-use/
+  contact:
+    name: Groq Support
+    email: support@groq.com
+  version: '2.1'
+servers:
+- url: https://api.groq.com
+security:
+- api_key: []
+tags:
+- name: Files
+paths:
+  /openai/v1/files:
+    get:
+      operationId: listFiles
+      tags:
+      - Files
+      summary: Returns a list of files.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFilesResponse'
+      x-groq-metadata:
+        returns: A list of [File](/docs/api-reference#files-upload) objects.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/files \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nfile_list = client.files.list()\nprint(file_list.data)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n  const fileList = await client.files.list();\n  console.log(fileList.data);\n}\n\nmain();\n"
+          response: "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n      \"object\": \"file\",\n      \"bytes\": 966,\n      \"created_at\": 1736472501,\n      \"filename\": \"batch_file.jsonl\",\n      \"purpose\": \"batch\"\n    }\n  ]\n}\n"
+    post:
+      operationId: uploadFile
+      tags:
+      - Files
+      summary: 'Upload a file that can be used across various endpoints.
+
+
+        The Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).
+
+
+        Please contact us if you need to increase these storage limits.
+
+        '
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateFileRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+      x-groq-metadata:
+        returns: The uploaded File object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/files \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -F purpose=\"batch\" \\\n  -F \"file=@batch_file.jsonl\"\n"
+            py: "import os\nimport requests # pip install requests first!\n\ndef upload_file_to_groq(api_key, file_path):\n    url = \"https://api.groq.com/openai/v1/files\"\n\n    headers = {\n        \"Authorization\": f\"Bearer {api_key}\"\n    }\n\n    # Prepare the file and form data\n    files = {\n        \"file\": (\"batch_file.jsonl\", open(file_path, \"rb\"))\n    }\n\n    data = {\n        \"purpose\": \"batch\"\n    }\n\n    # Make the POST request\n    response = requests.post(url, headers=headers, files=files, data=data)\n\n    return response.json()\n\n# Usage example\napi_key = os.environ.get(\"GROQ_API_KEY\")\nfile_path = \"batch_file.jsonl\"  # Path to your JSONL file\n\ntry:\n    result = upload_file_to_groq(api_key, file_path)\n    print(result)\nexcept Exception as e:\n    print(f\"Error: {e}\")\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nconst fileContent = '{\"custom_id\": \"request-1\", \"method\": \"POST\", \"url\": \"/v1/chat/completions\", \"body\": {\"model\": \"llama-3.1-8b-instant\", \"messages\": [{\"role\": \"user\", \"content\": \"Explain the importance of fast language models\"}]}}\\n';\n\nasync function main() {\n  const blob = new Blob([fileContent]);\n  const file = new File([blob], 'batch.jsonl');\n\n  const createdFile = await client.files.create({ file: file, purpose: 'batch' });\n  console.log(createdFile.id);\n}\n\nmain();\n"
+          response: "{\n  \"id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"object\": \"file\",\n  \"bytes\": 966,\n  \"created_at\": 1736472501,\n  \"filename\": \"batch_file.jsonl\",\n  \"purpose\": \"batch\"\n}\n"
+  /openai/v1/files/{file_id}:
+    delete:
+      operationId: deleteFile
+      tags:
+      - Files
+      summary: Delete a file.
+      parameters:
+      - in: path
+        name: file_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the file to use for this request.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteFileResponse'
+      x-groq-metadata:
+        returns: A deleted file response object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl -X DELETE https://api.groq.com/openai/v1/files/file_01jh6x76wtemjr74t1fh0faj5t \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nfile_delete = client.files.delete(\n    \"file_01jh6x76wtemjr74t1fh0faj5t\",\n)\nprint(file_delete)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n  const fileDelete = await client.files.delete(\"file_01jh6x76wtemjr74t1fh0faj5t\");\n  console.log(fileDelete);\n}\n\nmain();\n"
+          response: "{\n  \"id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"object\": \"file\",\n  \"deleted\": true\n}\n"
+    get:
+      operationId: retrieveFile
+      tags:
+      - Files
+      summary: Returns information about a file.
+      parameters:
+      - name: file_id
+        in: path
+        description: The file to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+      x-groq-metadata:
+        returns: A file object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/files/file_01jh6x76wtemjr74t1fh0faj5t \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nfile = client.files.info(\n    \"file_01jh6x76wtemjr74t1fh0faj5t\",\n)\nprint(file)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n    const file = await client.files.info('file_01jh6x76wtemjr74t1fh0faj5t');\n    console.log(file);\n}\n\nmain();\n"
+          response: "{\n  \"id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"object\": \"file\",\n  \"bytes\": 966,\n  \"created_at\": 1736472501,\n  \"filename\": \"batch_file.jsonl\",\n  \"purpose\": \"batch\"\n}\n"
+  /openai/v1/files/{file_id}/content:
+    get:
+      operationId: downloadFile
+      tags:
+      - Files
+      summary: Returns the contents of the specified file.
+      parameters:
+      - in: path
+        name: file_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the file to use for this request.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      x-groq-metadata:
+        returns: The file content
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/files/file_01jh6x76wtemjr74t1fh0faj5t/content \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nresponse = client.files.content(\n    \"file_01jh6x76wtemjr74t1fh0faj5t\",\n)\nprint(response)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n    const response = await client.files.content('file_01jh6x76wtemjr74t1fh0faj5t');\n    console.log(response);\n}\n\nmain();\n"
+components:
+  schemas:
+    DeleteFileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          enum:
+          - file
+          x-stainless-const: true
+        deleted:
+          type: boolean
+      required:
+      - id
+      - object
+      - deleted
+    File:
+      title: File
+      description: The `File` object represents a document that has been uploaded.
+      properties:
+        id:
+          type: string
+          description: The file identifier, which can be referenced in the API endpoints.
+        bytes:
+          type: integer
+          description: The size of the file, in bytes.
+        created_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the file was created.
+        filename:
+          type: string
+          description: The name of the file.
+        object:
+          type: string
+          description: The object type, which is always `file`.
+          enum:
+          - file
+          x-stainless-const: true
+        purpose:
+          type: string
+          description: The intended purpose of the file. Supported values are `batch`, and `batch_output`.
+          enum:
+          - batch
+          - batch_output
+    CreateFileRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        file:
+          description: 'The File object (not file name) to be uploaded.
+
+            '
+          type: string
+          format: binary
+        purpose:
+          description: 'The intended purpose of the uploaded file.
+
+            Use "batch" for [Batch API](/docs/api-reference#batches).
+
+            '
+          type: string
+          enum:
+          - batch
+      required:
+      - file
+      - purpose
+    ListFilesResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+      required:
+      - object
+      - data
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: apiKey
+x-groq-metadata:
+  groups:
+  - id: chat
+    type: endpoints
+    title: Chat
+    description: ''
+    sections:
+    - type: endpoint
+      key: createChatCompletion
+      path: create
+  - id: responses
+    type: endpoints
+    title: Responses (beta)
+    description: ''
+    sections:
+    - type: endpoint
+      key: createResponse
+      path: create
+  - id: audio
+    type: endpoints
+    title: Audio
+    description: ''
+    sections:
+    - type: endpoint
+      key: createTranscription
+      path: transcription
+    - type: endpoint
+      key: createTranslation
+      path: translation
+    - type: endpoint
+      key: createSpeech
+      path: speech
+  - id: models
+    type: endpoints
+    title: Models
+    description: ''
+    sections:
+    - type: endpoint
+      key: listModels
+      path: list
+    - type: endpoint
+      key: retrieveModel
+      path: retrieve
+  - id: batches
+    type: endpoints
+    title: Batches
+    description: ''
+    sections:
+    - type: endpoint
+      key: createBatch
+      path: create
+    - type: endpoint
+      key: retrieveBatch
+      path: retrieve
+    - type: endpoint
+      key: listBatches
+      path: list
+    - type: endpoint
+      key: cancelBatch
+      path: cancel
+  - id: files
+    type: endpoints
+    title: Files
+    description: ''
+    sections:
+    - type: endpoint
+      key: uploadFile
+      path: upload
+    - type: endpoint
+      key: listFiles
+      path: list
+    - type: endpoint
+      key: deleteFile
+      path: delete
+    - type: endpoint
+      key: retrieveFile
+      path: retrieve
+    - type: endpoint
+      key: downloadFile
+      path: download
+  - id: fine-tuning
+    type: endpoints
+    title: Fine Tuning
+    description: ''
+    sections:
+    - type: endpoint
+      key: listFineTunings
+      path: list
+    - type: endpoint
+      key: createFineTuning
+      path: create
+    - type: endpoint
+      key: getFineTuning
+      path: get
+    - type: endpoint
+      key: deleteFineTuning
+      path: delete

@@ -1,0 +1,393 @@
+openapi: 3.0.1
+info:
+  title: GroqCloud Audio Batch API
+  description: Specification of the Groq cloud API
+  termsOfService: https://groq.com/terms-of-use/
+  contact:
+    name: Groq Support
+    email: support@groq.com
+  version: '2.1'
+servers:
+- url: https://api.groq.com
+security:
+- api_key: []
+tags:
+- name: Batch
+paths:
+  /openai/v1/batches:
+    post:
+      summary: Creates and executes a batch from an uploaded file of requests. [Learn more](/docs/batch).
+      operationId: createBatch
+      tags:
+      - Batch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - input_file_id
+              - endpoint
+              - completion_window
+              properties:
+                input_file_id:
+                  type: string
+                  description: 'The ID of an uploaded file that contains requests for the new batch.
+
+
+                    See [upload file](/docs/api-reference#files-upload) for how to upload a file.
+
+
+                    Your input file must be formatted as a [JSONL file](/docs/batch), and must be uploaded with the purpose `batch`. The file can be up to 100 MB in size.
+
+                    '
+                endpoint:
+                  type: string
+                  enum:
+                  - /v1/chat/completions
+                  description: The endpoint to be used for all requests in the batch. Currently `/v1/chat/completions` is supported.
+                completion_window:
+                  type: string
+                  description: The time frame within which the batch should be processed. Durations from `24h` to `7d` are supported.
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Optional custom metadata for the batch.
+                  nullable: true
+      responses:
+        '200':
+          description: Batch created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+      x-groq-metadata:
+        returns: A created batch object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/batches \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n    \"endpoint\": \"/v1/chat/completions\",\n    \"completion_window\": \"24h\"\n  }'\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nbatch = client.batches.create(\n    completion_window=\"24h\",\n    endpoint=\"/v1/chat/completions\",\n    input_file_id=\"file_01jh6x76wtemjr74t1fh0faj5t\",\n)\nprint(batch.id)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n  const batch = await client.batches.create({\n    completion_window: \"24h\",\n    endpoint: \"/v1/chat/completions\",\n    input_file_id: \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  });\n  console.log(batch.id);\n}\n\nmain();\n"
+          response: "{\n  \"id\": \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"completion_window\": \"24h\",\n  \"status\": \"validating\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"finalizing_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 0,\n    \"completed\": 0,\n    \"failed\": 0\n  },\n  \"metadata\": null,\n  \"created_at\": 1736472600,\n  \"expires_at\": 1736559000,\n  \"cancelling_at\": null,\n  \"completed_at\": null,\n  \"in_progress_at\": null\n}\n"
+    get:
+      operationId: listBatches
+      tags:
+      - Batch
+      summary: List your organization's batches.
+      responses:
+        '200':
+          description: Batch listed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBatchesResponse'
+      x-groq-metadata:
+        returns: A list of batches
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/batches \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nbatch_list = client.batches.list()\nprint(batch_list.data)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n  const batchList = await client.batches.list();\n  console.log(batchList.data);\n}\n\nmain();\n"
+          response: "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n      \"object\": \"batch\",\n      \"endpoint\": \"/v1/chat/completions\",\n      \"errors\": null,\n      \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n      \"completion_window\": \"24h\",\n      \"status\": \"validating\",\n      \"output_file_id\": null,\n      \"error_file_id\": null,\n      \"finalizing_at\": null,\n      \"failed_at\": null,\n      \"expired_at\": null,\n      \"cancelled_at\": null,\n      \"request_counts\": {\n        \"total\": 0,\n        \"completed\": 0,\n        \"failed\": 0\n      },\n      \"metadata\": null,\n      \"created_at\": 1736472600,\n      \"expires_at\": 1736559000,\n      \"cancelling_at\": null,\n      \"completed_at\": null,\n      \"in_progress_at\": null\n    }\n  ]\n}\n"
+  /openai/v1/batches/{batch_id}:
+    get:
+      operationId: retrieveBatch
+      tags:
+      - Batch
+      summary: Retrieves a batch.
+      parameters:
+      - in: path
+        name: batch_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the batch to retrieve.
+      responses:
+        '200':
+          description: Batch retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+      x-groq-metadata:
+        returns: A batch object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/openai/v1/batches/batch_01jh6xa7reempvjyh6n3yst2zw \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nbatch = client.batches.retrieve(\n    \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n)\nprint(batch.id)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n  const batch = await client.batches.retrieve(\"batch_01jh6xa7reempvjyh6n3yst2zw\");\n  console.log(batch.id);\n}\n\nmain();\n"
+          response: "{\n  \"id\": \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"completion_window\": \"24h\",\n  \"status\": \"validating\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"finalizing_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 0,\n    \"completed\": 0,\n    \"failed\": 0\n  },\n  \"metadata\": null,\n  \"created_at\": 1736472600,\n  \"expires_at\": 1736559000,\n  \"cancelling_at\": null,\n  \"completed_at\": null,\n  \"in_progress_at\": null\n}\n"
+  /openai/v1/batches/{batch_id}/cancel:
+    post:
+      operationId: cancelBatch
+      tags:
+      - Batch
+      summary: Cancels a batch.
+      parameters:
+      - in: path
+        name: batch_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the batch to cancel.
+      responses:
+        '200':
+          description: Batch cancelled successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+      x-groq-metadata:
+        returns: A batch object.
+        examples:
+        - title: Default
+          request:
+            curl: "curl -X POST https://api.groq.com/openai/v1/batches/batch_01jh6xa7reempvjyh6n3yst2zw/cancel \\\n  -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
+            py: "import os\nfrom groq import Groq\n\nclient = Groq(\n    api_key=os.environ.get(\"GROQ_API_KEY\"),  # This is the default and can be omitted\n)\nbatch = client.batches.cancel(\n    \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n)\nprint(batch.id)\n"
+            js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n  const batch = await client.batches.cancel(\"batch_01jh6xa7reempvjyh6n3yst2zw\");\n  console.log(batch.id);\n}\n\nmain();\n"
+          response: "{\n  \"id\": \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"completion_window\": \"24h\",\n  \"status\": \"cancelling\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"finalizing_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 0,\n    \"completed\": 0,\n    \"failed\": 0\n  },\n  \"metadata\": null,\n  \"created_at\": 1736472600,\n  \"expires_at\": 1736559000,\n  \"cancelling_at\": null,\n  \"completed_at\": null,\n  \"in_progress_at\": null\n}\n"
+components:
+  schemas:
+    ListBatchesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Batch'
+        object:
+          type: string
+          enum:
+          - list
+          x-stainless-const: true
+      required:
+      - object
+      - data
+    Batch:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          enum:
+          - batch
+          description: The object type, which is always `batch`.
+          x-stainless-const: true
+        endpoint:
+          type: string
+          description: The API endpoint used by the batch.
+        errors:
+          type: object
+          properties:
+            object:
+              type: string
+              description: The object type, which is always `list`.
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: An error code identifying the error type.
+                  message:
+                    type: string
+                    description: A human-readable message providing more details about the error.
+                  param:
+                    type: string
+                    description: The name of the parameter that caused the error, if applicable.
+                    nullable: true
+                  line:
+                    type: integer
+                    description: The line number of the input file where the error occurred, if applicable.
+                    nullable: true
+        input_file_id:
+          type: string
+          description: The ID of the input file for the batch.
+        completion_window:
+          type: string
+          description: The time frame within which the batch should be processed.
+        status:
+          type: string
+          description: The current status of the batch.
+          enum:
+          - validating
+          - failed
+          - in_progress
+          - finalizing
+          - completed
+          - expired
+          - cancelling
+          - cancelled
+        output_file_id:
+          type: string
+          description: The ID of the file containing the outputs of successfully executed requests.
+        error_file_id:
+          type: string
+          description: The ID of the file containing the outputs of requests with errors.
+        created_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch was created.
+        in_progress_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch started processing.
+        expires_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch will expire.
+        finalizing_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch started finalizing.
+        completed_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch was completed.
+        failed_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch failed.
+        expired_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch expired.
+        cancelling_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch started cancelling.
+        cancelled_at:
+          type: integer
+          description: The Unix timestamp (in seconds) for when the batch was cancelled.
+        request_counts:
+          type: object
+          properties:
+            total:
+              type: integer
+              description: Total number of requests in the batch.
+            completed:
+              type: integer
+              description: Number of requests that have been completed successfully.
+            failed:
+              type: integer
+              description: Number of requests that have failed.
+          required:
+          - total
+          - completed
+          - failed
+          description: The request counts for different statuses within the batch.
+        metadata:
+          description: 'Set of key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format.
+
+            '
+          type: object
+          nullable: true
+      required:
+      - id
+      - object
+      - endpoint
+      - input_file_id
+      - completion_window
+      - status
+      - created_at
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: apiKey
+x-groq-metadata:
+  groups:
+  - id: chat
+    type: endpoints
+    title: Chat
+    description: ''
+    sections:
+    - type: endpoint
+      key: createChatCompletion
+      path: create
+  - id: responses
+    type: endpoints
+    title: Responses (beta)
+    description: ''
+    sections:
+    - type: endpoint
+      key: createResponse
+      path: create
+  - id: audio
+    type: endpoints
+    title: Audio
+    description: ''
+    sections:
+    - type: endpoint
+      key: createTranscription
+      path: transcription
+    - type: endpoint
+      key: createTranslation
+      path: translation
+    - type: endpoint
+      key: createSpeech
+      path: speech
+  - id: models
+    type: endpoints
+    title: Models
+    description: ''
+    sections:
+    - type: endpoint
+      key: listModels
+      path: list
+    - type: endpoint
+      key: retrieveModel
+      path: retrieve
+  - id: batches
+    type: endpoints
+    title: Batches
+    description: ''
+    sections:
+    - type: endpoint
+      key: createBatch
+      path: create
+    - type: endpoint
+      key: retrieveBatch
+      path: retrieve
+    - type: endpoint
+      key: listBatches
+      path: list
+    - type: endpoint
+      key: cancelBatch
+      path: cancel
+  - id: files
+    type: endpoints
+    title: Files
+    description: ''
+    sections:
+    - type: endpoint
+      key: uploadFile
+      path: upload
+    - type: endpoint
+      key: listFiles
+      path: list
+    - type: endpoint
+      key: deleteFile
+      path: delete
+    - type: endpoint
+      key: retrieveFile
+      path: retrieve
+    - type: endpoint
+      key: downloadFile
+      path: download
+  - id: fine-tuning
+    type: endpoints
+    title: Fine Tuning
+    description: ''
+    sections:
+    - type: endpoint
+      key: listFineTunings
+      path: list
+    - type: endpoint
+      key: createFineTuning
+      path: create
+    - type: endpoint
+      key: getFineTuning
+      path: get
+    - type: endpoint
+      key: deleteFineTuning
+      path: delete

@@ -1,0 +1,345 @@
+openapi: 3.0.1
+info:
+  title: GroqCloud Audio Fine Tuning API
+  description: Specification of the Groq cloud API
+  termsOfService: https://groq.com/terms-of-use/
+  contact:
+    name: Groq Support
+    email: support@groq.com
+  version: '2.1'
+servers:
+- url: https://api.groq.com
+security:
+- api_key: []
+tags:
+- name: Fine Tuning
+paths:
+  /v1/fine_tunings:
+    get:
+      operationId: listFineTunings
+      summary: Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      tags:
+      - Fine Tuning
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFineTuningsResponse'
+      x-groq-metadata:
+        returns: The list of fine tunes
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/v1/fine_tunings -s \\\n    -H \"Content-Type: application/json\" \\\n    -H \"Authorization: Bearer $GROQ_API_KEY\"\n"
+            js: "import Groq from \"groq-sdk\";\n\nconst groq = new Groq({ apiKey: process.env.GROQ_API_KEY });\n\nasync function main() {\n    const fineTunings = await groq.fine_tunings.list();\n    console.log(fineTunings);\n}\n\nmain();\n"
+            py: "import os\n\nfrom groq import Groq\n\nclient = Groq(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"GROQ_API_KEY\"),\n)\n\nfine_tunings = client.fine_tunings.list()\n\nprint(fine_tunings)\n"
+          response: "{\n    \"object\": \"list\",\n    \"data\": [\n        {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"base_model\": \"string\",\n            \"type\": \"string\",\n            \"input_file_id\": \"string\",\n            \"created_at\": 0,\n            \"fine_tuned_model\": \"string\"\n        }\n    ]\n}\n"
+    post:
+      operationId: createFineTuning
+      summary: Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      tags:
+      - Fine Tuning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFineTuningRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadFineTuningResponse'
+      x-groq-metadata:
+        returns: The newly created fine tune
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/v1/fine_tunings -s \\\n    -H \"Content-Type: application/json\" \\\n    -H \"Authorization: Bearer $GROQ_API_KEY\" \\\n    -d '{\n        \"input_file_id\": \"<file-id>\",\n        \"name\": \"test-1\",\n        \"type\": \"lora\",\n        \"base_model\": \"llama-3.1-8b-instant\"\n    }'\n"
+            js: "import Groq from \"groq-sdk\";\n\nconst groq = new Groq({ apiKey: process.env.GROQ_API_KEY });\n\nasync function main() {\n    const fineTunings = await groq.fine_tunings.create({\n        input_file_id: \"<file-id>\",\n        name: \"test-1\",\n        type: \"lora\",\n        base_model: \"llama-3.1-8b-instant\"\n    });\n    console.log(fineTunings);\n}\n\nmain();\n"
+            py: "import os\n\nfrom groq import Groq\n\nclient = Groq(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"GROQ_API_KEY\"),\n)\n\nfine_tunings = client.fine_tunings.create(\n    input_file_id=\"<file-id>\",\n    name=\"test-1\",\n    type=\"lora\",\n    base_model=\"llama-3.1-8b-instant\"\n)\n\nprint(fine_tunings)\n"
+          response: "{\n    \"id\": \"string\",\n    \"object\": \"object\",\n    \"data\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"base_model\": \"string\",\n        \"type\": \"string\",\n        \"input_file_id\": \"string\",\n        \"created_at\": 0,\n        \"fine_tuned_model\": \"string\"\n    }\n}\n"
+  /v1/fine_tunings/{id}:
+    delete:
+      operationId: deleteFineTuning
+      summary: Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      tags:
+      - Fine Tuning
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteFineTuningResponse'
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      x-groq-metadata:
+        returns: A confirmation of the deleted fine tune
+        examples:
+        - title: Default
+          request:
+            curl: "curl -X DELETE https://api.groq.com/v1/fine_tunings/:id -s \\\n    -H \"Content-Type: application/json\" \\\n    -H \"Authorization: Bearer $GROQ_API_KEY\"\n"
+            js: "import Groq from \"groq-sdk\";\n\nconst groq = new Groq({ apiKey: process.env.GROQ_API_KEY });\n\nasync function main() {\n    await groq.fine_tunings.delete({id: \"<id>\"});\n}\n\nmain();\n"
+            py: "import os\n\nfrom groq import Groq\n\nclient = Groq(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"GROQ_API_KEY\"),\n)\n\nclient.fine_tunings.delete(id=\"<id>\")\n"
+          response: "{\n    \"id\": \"string\",\n    \"object\": \"fine_tuning\",\n    \"deleted\": true\n}\n"
+    get:
+      operationId: getFineTuning
+      summary: Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      tags:
+      - Fine Tuning
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadFineTuningResponse'
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      x-groq-metadata:
+        returns: A fine tune metadata object
+        examples:
+        - title: Default
+          request:
+            curl: "curl https://api.groq.com/v1/fine_tunings/:id -s \\\n    -H \"Content-Type: application/json\" \\\n    -H \"Authorization: Bearer $GROQ_API_KEY\"\n"
+            js: "import Groq from \"groq-sdk\";\n\nconst groq = new Groq({ apiKey: process.env.GROQ_API_KEY });\n\nasync function main() {\n    const fineTuning = await groq.fine_tunings.get({id: \"<id>\"});\n    console.log(fineTuning);\n}\n\nmain();\n"
+            py: "import os\n\nfrom groq import Groq\n\nclient = Groq(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"GROQ_API_KEY\"),\n)\n\nfine_tuning = client.fine_tunings.get(id=\"<id>\")\n\nprint(fine_tuning)\n"
+          response: "{\n    \"id\": \"string\",\n    \"object\": \"object\",\n    \"data\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"base_model\": \"string\",\n        \"type\": \"string\",\n        \"input_file_id\": \"string\",\n        \"created_at\": 0,\n        \"fine_tuned_model\": \"string\"\n    }\n}\n"
+components:
+  schemas:
+    DeleteFineTuningResponse:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+        id:
+          type: string
+        object:
+          type: string
+    ReadFineTuningResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            base_model:
+              type: string
+              description: 'BaseModel is the model that the fine tune was originally trained on.
+
+                '
+            created_at:
+              type: number
+              description: 'CreatedAt is the timestamp of when the fine tuned model was created.
+
+                '
+            fine_tuned_model:
+              type: string
+              description: 'FineTunedModel is the final name of the fine tuned model.
+
+                '
+            id:
+              type: string
+              description: 'ID is the unique identifier of a fine tune.
+
+                '
+            input_file_id:
+              type: string
+              description: 'InputFileID is the id of the file that was uploaded via the /files api.
+
+                '
+            name:
+              type: string
+              description: 'Name is the given name to a fine tuned model.
+
+                '
+            type:
+              type: string
+              description: 'Type is the type of fine tuning format such as "lora".
+
+                '
+        id:
+          type: string
+        object:
+          type: string
+    ListFineTuningsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              base_model:
+                type: string
+                description: 'BaseModel is the model that the fine tune was originally trained on.
+
+                  '
+              created_at:
+                type: number
+                description: 'CreatedAt is the timestamp of when the fine tuned model was created.
+
+                  '
+              fine_tuned_model:
+                type: string
+                description: 'FineTunedModel is the final name of the fine tuned model.
+
+                  '
+              id:
+                type: string
+                description: 'ID is the unique identifier of a fine tune.
+
+                  '
+              input_file_id:
+                type: string
+                description: 'InputFileID is the id of the file that was uploaded via the /files api.
+
+                  '
+              name:
+                type: string
+                description: 'Name is the given name to a fine tuned model.
+
+                  '
+              type:
+                type: string
+                description: 'Type is the type of fine tuning format such as "lora".
+
+                  '
+        object:
+          type: string
+    CreateFineTuningRequest:
+      type: object
+      properties:
+        base_model:
+          type: string
+          description: 'BaseModel is the model that the fine tune was originally trained on.
+
+            '
+        input_file_id:
+          type: string
+          description: 'InputFileID is the id of the file that was uploaded via the /files api.
+
+            '
+        name:
+          type: string
+          description: 'Name is the given name to a fine tuned model.
+
+            '
+        type:
+          type: string
+          description: 'Type is the type of fine tuning format such as "lora".
+
+            '
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: apiKey
+x-groq-metadata:
+  groups:
+  - id: chat
+    type: endpoints
+    title: Chat
+    description: ''
+    sections:
+    - type: endpoint
+      key: createChatCompletion
+      path: create
+  - id: responses
+    type: endpoints
+    title: Responses (beta)
+    description: ''
+    sections:
+    - type: endpoint
+      key: createResponse
+      path: create
+  - id: audio
+    type: endpoints
+    title: Audio
+    description: ''
+    sections:
+    - type: endpoint
+      key: createTranscription
+      path: transcription
+    - type: endpoint
+      key: createTranslation
+      path: translation
+    - type: endpoint
+      key: createSpeech
+      path: speech
+  - id: models
+    type: endpoints
+    title: Models
+    description: ''
+    sections:
+    - type: endpoint
+      key: listModels
+      path: list
+    - type: endpoint
+      key: retrieveModel
+      path: retrieve
+  - id: batches
+    type: endpoints
+    title: Batches
+    description: ''
+    sections:
+    - type: endpoint
+      key: createBatch
+      path: create
+    - type: endpoint
+      key: retrieveBatch
+      path: retrieve
+    - type: endpoint
+      key: listBatches
+      path: list
+    - type: endpoint
+      key: cancelBatch
+      path: cancel
+  - id: files
+    type: endpoints
+    title: Files
+    description: ''
+    sections:
+    - type: endpoint
+      key: uploadFile
+      path: upload
+    - type: endpoint
+      key: listFiles
+      path: list
+    - type: endpoint
+      key: deleteFile
+      path: delete
+    - type: endpoint
+      key: retrieveFile
+      path: retrieve
+    - type: endpoint
+      key: downloadFile
+      path: download
+  - id: fine-tuning
+    type: endpoints
+    title: Fine Tuning
+    description: ''
+    sections:
+    - type: endpoint
+      key: listFineTunings
+      path: list
+    - type: endpoint
+      key: createFineTuning
+      path: create
+    - type: endpoint
+      key: getFineTuning
+      path: get
+    - type: endpoint
+      key: deleteFineTuning
+      path: delete
