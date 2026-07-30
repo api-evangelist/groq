@@ -6,7 +6,20 @@ description: Groq builds custom Language Processing Unit (LPU) silicon optimized
   low-latency LLM inference. The GroqCloud API serves popular open models (Llama,
   GPT OSS, Whisper, Orpheus) at industry-leading tokens-per-second with an OpenAI-compatible
   interface.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
 tags:
 - AI
 - LLM
@@ -17,212 +30,384 @@ created: '2026-05-08'
 modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
-- aid: groq:groq-chat-completions-api
-  name: Groq Chat Completions API
-  tags:
-  - Chat
-  - Completions
-  - LLM
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: groq:groq-audio-api
+  name: Groq Audio API
+  description: The Audio API from Groq — 3 operation(s) for audio.
   humanURL: https://console.groq.com/docs/api-reference
   baseURL: https://api.groq.com/openai/v1
-  properties:
-  - url: https://console.groq.com/docs/text-chat
-    type: Documentation
-  - url: https://console.groq.com/docs/api-reference#chat
-    type: APIReference
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  - url: asyncapi/groq-asyncapi.yml
-    type: AsyncAPI
-  - url: graphql/groq-graphql.md
-    type: GraphQL
-  description: OpenAI-compatible chat completions across Llama, GPT OSS, Mixtral,
-    Gemma, and Whisper-family models running on Groq LPU silicon, with streaming,
-    tool use, and structured outputs.
-- aid: groq:groq-reasoning-api
-  name: Groq Reasoning API
   tags:
-  - Reasoning
-  - Chain of Thought
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/reasoning
-  baseURL: https://api.groq.com/openai/v1
-  properties:
-  - url: https://console.groq.com/docs/reasoning
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Reasoning-capable models with explicit chain-of-thought support, surfaced
-    through the chat completions endpoint.
-- aid: groq:groq-vision-api
-  name: Groq Vision API
-  tags:
-  - Vision
-  - OCR
-  - Multimodal
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/vision
-  baseURL: https://api.groq.com/openai/v1
-  properties:
-  - url: https://console.groq.com/docs/vision
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Image and document understanding plus OCR via vision-capable chat models.
-- aid: groq:groq-speech-to-text-api
-  name: Groq Speech-to-Text API
-  tags:
-  - Speech to Text
-  - Transcription
-  - Whisper
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/speech-to-text
-  baseURL: https://api.groq.com/openai/v1
-  properties:
-  - url: https://console.groq.com/docs/speech-to-text
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: OpenAI-compatible audio transcription endpoint serving Whisper-family
-    models on LPU hardware.
-- aid: groq:groq-text-to-speech-api
-  name: Groq Text-to-Speech API
-  tags:
-  - Text to Speech
   - Audio
-  - Orpheus
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/text-to-speech
-  baseURL: https://api.groq.com/openai/v1
   properties:
-  - url: https://console.groq.com/docs/text-to-speech
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Speech synthesis using Orpheus and other TTS models, billed per million
-    characters.
-- aid: groq:groq-content-moderation-api
-  name: Groq Content Moderation API
-  tags:
-  - Moderation
-  - Safety
-  - Llama Guard
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/content-moderation
-  baseURL: https://api.groq.com/openai/v1
-  properties:
-  - url: https://console.groq.com/docs/content-moderation
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Safety classifier endpoint (Llama Guard) for input/output policy compliance.
+  - type: OpenAPI
+    url: openapi/groq-audio-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
 - aid: groq:groq-batch-api
   name: Groq Batch API
+  description: The Batch API from Groq — 3 operation(s) for batch.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
   tags:
   - Batch
-  - Async
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/batch
-  baseURL: https://api.groq.com/openai/v1
   properties:
-  - url: https://console.groq.com/docs/batch
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Asynchronous batch inference at 50% off synchronous rates for non-realtime
-    workloads.
-- aid: groq:groq-flex-processing-api
-  name: Groq Flex Processing API
+  - type: OpenAPI
+    url: openapi/groq-batch-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
+- aid: groq:groq-chat-api
+  name: Groq Chat API
+  description: The Chat API from Groq — 1 operation(s) for chat.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
   tags:
-  - Flex
-  - Service Tier
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/flex-processing
-  baseURL: https://api.groq.com/openai/v1
+  - Chat
   properties:
-  - url: https://console.groq.com/docs/flex-processing
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Flexible service tier offering higher throughput at relaxed latency
-    targets for cost-sensitive workloads.
+  - type: OpenAPI
+    url: openapi/groq-chat-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
+- aid: groq:groq-embeddings-api
+  name: Groq Embeddings API
+  description: The Embeddings API from Groq — 1 operation(s) for embeddings.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
+  tags:
+  - Embeddings
+  properties:
+  - type: OpenAPI
+    url: openapi/groq-embeddings-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
 - aid: groq:groq-files-api
   name: Groq Files API
+  description: The Files API from Groq — 3 operation(s) for files.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
   tags:
   - Files
-  - Storage
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/api-reference#files
-  baseURL: https://api.groq.com/openai/v1
   properties:
-  - url: https://console.groq.com/docs/api-reference#files
-    type: APIReference
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Upload and manage files for batch inputs and other workflows.
+  - type: OpenAPI
+    url: openapi/groq-files-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
+- aid: groq:groq-fine-tuning-api
+  name: Groq Fine Tuning API
+  description: The Fine Tuning API from Groq — 2 operation(s) for fine tuning.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
+  tags:
+  - Fine Tuning
+  properties:
+  - type: OpenAPI
+    url: openapi/groq-fine-tuning-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
 - aid: groq:groq-models-api
   name: Groq Models API
+  description: The Models API from Groq — 2 operation(s) for models.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
   tags:
   - Models
-  - Catalog
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/api-reference#models
-  baseURL: https://api.groq.com/openai/v1
   properties:
-  - url: https://console.groq.com/docs/api-reference#models
-    type: APIReference
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Lists models available on GroqCloud with metadata, context length,
-    and pricing tags.
-- aid: groq:groq-tools-api
-  name: Groq Tools API
+  - type: OpenAPI
+    url: openapi/groq-models-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
+- aid: groq:groq-reranking-api
+  name: Groq Reranking API
+  description: The Reranking API from Groq — 1 operation(s) for reranking.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
   tags:
-  - Tools
-  - Web Search
-  - Code Execution
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/tools
-  baseURL: https://api.groq.com/openai/v1
+  - Reranking
   properties:
-  - url: https://console.groq.com/docs/tools
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Built-in tools - Web Search, Browser Automation, Code Execution, Wolfram
-    Alpha - invocable from chat completions and billed per call or per hour.
-- aid: groq:groq-lora-inference-api
-  name: Groq LoRA Inference API
+  - type: OpenAPI
+    url: openapi/groq-reranking-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
+- aid: groq:groq-responses-api
+  name: Groq Responses API
+  description: The Responses API from Groq — 1 operation(s) for responses.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
   tags:
-  - LoRA
-  - Custom Models
-  - Fine-Tuning
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/lora
-  baseURL: https://api.groq.com/openai/v1
+  - Responses
   properties:
-  - url: https://console.groq.com/docs/lora
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Serves customer LoRA adapters on top of supported base models for low-latency
-    custom inference.
-- aid: groq:groq-prompt-caching-api
-  name: Groq Prompt Caching
-  tags:
-  - Prompt Caching
-  - Optimization
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://console.groq.com/docs/prompt-caching
-  baseURL: https://api.groq.com/openai/v1
-  properties:
-  - url: https://console.groq.com/docs/prompt-caching
-    type: Documentation
-  - url: openapi/groq-openapi.yml
-    type: OpenAPI
-  description: Automatic prompt caching with a 50% discount on cached input tokens
-    and no extra caching fee.
+  - type: OpenAPI
+    url: openapi/groq-responses-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: GraphQL
+    url: graphql/groq-graphql.md
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
 common:
 - type: AgenticAccess
   url: agentic-access/groq-agentic-access.yml
