@@ -1,0 +1,30 @@
+{
+  "provider": "groq",
+  "sources": [
+    "groq-audio-api-openapi.yml",
+    "groq-batch-api-openapi.yml",
+    "groq-chat-api-openapi.yml",
+    "groq-embeddings-api-openapi.yml",
+    "groq-files-api-openapi.yml",
+    "groq-fine-tuning-api-openapi.yml",
+    "groq-models-api-openapi.yml",
+    "groq-reranking-api-openapi.yml",
+    "groq-responses-api-openapi.yml"
+  ],
+  "outputs": [
+    "groq-audio-api-openapi.yml",
+    "groq-batch-api-openapi.yml",
+    "groq-chat-api-openapi.yml",
+    "groq-embeddings-api-openapi.yml",
+    "groq-files-api-openapi.yml",
+    "groq-fine-tuning-api-openapi.yml",
+    "groq-models-api-openapi.yml",
+    "groq-reranking-api-openapi.yml",
+    "groq-responses-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
