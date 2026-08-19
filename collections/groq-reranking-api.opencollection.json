@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GroqCloud Audio Reranking API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reranking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reranks documents based on their relevance to a query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/reranking",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Given a query and a list of documents, returns the documents ranked by their relevance to the query.\nThe documents are scored and sorted in descending order of relevance.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

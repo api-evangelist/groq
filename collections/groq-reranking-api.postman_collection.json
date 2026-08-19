@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "009dc1f5-af30-41ca-996f-daeac9218e1c",
+      "name": "Reranking",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cfc12a84-43f7-4502-abcf-ac1ef128003f",
+          "name": "Reranks documents based on their relevance to a query.",
+          "request": {
+            "name": "Reranks documents based on their relevance to a query.",
+            "description": {
+              "content": "Given a query and a list of documents, returns the documents ranked by their relevance to the query.\nThe documents are scored and sorted in descending order of relevance.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "reranking"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"<string>\",\n  \"docs\": [\n    \"<string>\"\n  ],\n  \"instruction\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d7b382f7-a91f-4226-8923-9d6df211e2ab",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "reranking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"qwen3-reranker-4b\",\n  \"query\": \"artificial intelligence research\",\n  \"docs\": [\n    \"Machine learning is a subset of artificial intelligence\",\n    \"The weather forecast predicts rain tomorrow\",\n    \"Deep learning uses neural networks with multiple layers\"\n  ],\n  \"instruction\": \"Find the most relevant document about AI research\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"doc\": \"Machine learning is a subset of artificial intelligence\",\n      \"score\": 0.92\n    },\n    {\n      \"doc\": \"Machine learning is a subset of artificial intelligence\",\n      \"score\": 0.92\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.groq.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3fb1d600-b0cd-4c7b-8a24-b07b258c5e66",
+    "name": "GroqCloud Audio Reranking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Specification of the Groq cloud API\n\nContact Support:\n Name: Groq Support\n Email: support@groq.com",
+      "type": "text/plain"
+    }
+  }
+}

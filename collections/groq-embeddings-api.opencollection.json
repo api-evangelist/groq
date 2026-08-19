@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GroqCloud Audio Embeddings API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Embeddings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates an embedding vector representing the input text.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/embeddings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an embedding vector representing the input text."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

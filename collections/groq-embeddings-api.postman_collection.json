@@ -1,0 +1,141 @@
+{
+  "item": [
+    {
+      "id": "41f9b318-5265-419f-b444-320518ff9813",
+      "name": "Embeddings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d233977f-39c3-4390-bf72-3316c9105889",
+          "name": "Creates an embedding vector representing the input text.",
+          "request": {
+            "name": "Creates an embedding vector representing the input text.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "embeddings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"\",\n  \"encoding_format\": \"float\",\n  \"user\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dd23ec84-1d21-4267-8c30-2b83a90228cd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "embeddings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"This is a test.\",\n  \"encoding_format\": \"float\",\n  \"user\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"model\": \"string\",\n  \"data\": [\n    {\n      \"index\": 3060,\n      \"object\": \"embedding\",\n      \"embedding\": [\n        2343.917056791096,\n        9492.662858784539\n      ]\n    },\n    {\n      \"index\": 3388,\n      \"object\": \"embedding\",\n      \"embedding\": [\n        6627.554285445236,\n        3201.91688449298\n      ]\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 468,\n    \"total_tokens\": 8202\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.groq.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0002584c-737f-4c26-ac24-d8c472587f87",
+    "name": "GroqCloud Audio Embeddings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Specification of the Groq cloud API\n\nContact Support:\n Name: Groq Support\n Email: support@groq.com",
+      "type": "text/plain"
+    }
+  }
+}

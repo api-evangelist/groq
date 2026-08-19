@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GroqCloud Audio Files API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of files.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/files"
+          },
+          "docs": "Returns a list of files."
+        },
+        {
+          "info": {
+            "name": "Upload a file that can be used across various endpoints.\n\nThe Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).\n\nPlease contact us if you need to increase these storage limits.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/files",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a file that can be used across various endpoints.\n\nThe Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).\n\nPlease contact us if you need to increase these storage limits.\n"
+        },
+        {
+          "info": {
+            "name": "Returns information about a file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns information about a file."
+        },
+        {
+          "info": {
+            "name": "Delete a file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.groq.com/openai/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file to use for this request."
+              }
+            ]
+          },
+          "docs": "Delete a file."
+        },
+        {
+          "info": {
+            "name": "Returns the contents of the specified file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/files/:file_id/content",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file to use for this request."
+              }
+            ]
+          },
+          "docs": "Returns the contents of the specified file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

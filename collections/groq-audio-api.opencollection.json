@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GroqCloud Audio API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generates audio from the input text.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/audio/speech",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates audio from the input text."
+        },
+        {
+          "info": {
+            "name": "Transcribes audio into the input language.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Transcribes audio into the input language."
+        },
+        {
+          "info": {
+            "name": "Translates audio into English.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/openai/v1/audio/translations",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Translates audio into English."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

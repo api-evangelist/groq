@@ -1,0 +1,141 @@
+{
+  "item": [
+    {
+      "id": "eaf9fce2-bac2-4197-9dfa-79ce1a6f6ec9",
+      "name": "Responses",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0fa8c21d-8a0f-4f01-a545-ed57fc77c46f",
+          "name": "Creates a model response for the given input.",
+          "request": {
+            "name": "Creates a model response for the given input.",
+            "description": {},
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "responses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 7596,\n        \"key_1\": true\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": false,\n        \"key_1\": \"string\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"<string>\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"parallel_tool_calls\": true,\n  \"store\": false,\n  \"stream\": false,\n  \"user\": \"<string>\",\n  \"service_tier\": \"auto\",\n  \"truncation\": \"disabled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2c9e1ee0-6187-40d2-a799-dbb8b3681760",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openai",
+                    "v1",
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"<string>\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"parallel_tool_calls\": true,\n  \"store\": false,\n  \"stream\": false,\n  \"user\": \"user-1234\",\n  \"service_tier\": \"auto\",\n  \"truncation\": \"disabled\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"response\",\n  \"status\": \"in_progress\",\n  \"created_at\": 6361,\n  \"output\": [\n    {\n      \"type\": \"message\",\n      \"id\": \"string\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"status\": \"in_progress\"\n    },\n    {\n      \"type\": \"message\",\n      \"id\": \"string\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"status\": \"completed\"\n    }\n  ],\n  \"model\": \"string\",\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 8772,\n        \"key_1\": 3854,\n        \"key_2\": 2424.14611145191\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 2986,\n        \"key_1\": true,\n        \"key_2\": 2756\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"truncation\": \"disabled\",\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"temperature\": 2010.7153946325595,\n  \"top_p\": 4190.227650572173,\n  \"service_tier\": \"default\",\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"incomplete_details\": {\n    \"reason\": \"string\"\n  },\n  \"parallel_tool_calls\": true,\n  \"store\": true,\n  \"previous_response_id\": \"string\",\n  \"reasoning\": {\n    \"effort\": \"high\",\n    \"summary\": \"string\"\n  },\n  \"max_output_tokens\": 2104,\n  \"instructions\": \"string\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"<string>\"\n    }\n  },\n  \"user\": \"string\",\n  \"usage\": {\n    \"input_tokens\": 3521,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 504,\n      \"reasoning_tokens\": 1885\n    },\n    \"output_tokens\": 8130,\n    \"output_tokens_details\": {\n      \"cached_tokens\": 3714,\n      \"reasoning_tokens\": 8861\n    },\n    \"total_tokens\": 4712\n  },\n  \"background\": false,\n  \"top_logprobs\": 0,\n  \"max_tool_calls\": 6759\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.groq.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5676338a-9492-4368-a8ef-9b79aa014284",
+    "name": "GroqCloud Audio Responses API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Specification of the Groq cloud API\n\nContact Support:\n Name: Groq Support\n Email: support@groq.com",
+      "type": "text/plain"
+    }
+  }
+}

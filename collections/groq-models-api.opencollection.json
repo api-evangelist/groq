@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GroqCloud Audio Models API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all available [models](https://console.groq.com/docs/models).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/models"
+          },
+          "docs": "get all available models"
+        },
+        {
+          "info": {
+            "name": "Get detailed information about a [model](https://console.groq.com/docs/models).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/openai/v1/models/:model",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "path",
+                "description": "The model to get"
+              }
+            ]
+          },
+          "docs": "Get a specific model"
+        },
+        {
+          "info": {
+            "name": "Delete model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.groq.com/openai/v1/models/:model",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "path",
+                "description": "The model to delete"
+              }
+            ]
+          },
+          "docs": "Delete a model"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

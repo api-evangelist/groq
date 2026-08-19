@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GroqCloud Audio Fine Tuning API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fine Tuning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/v1/fine_tunings"
+          },
+          "docs": "Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        },
+        {
+          "info": {
+            "name": "Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.groq.com/v1/fine_tunings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.groq.com/v1/fine_tunings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        },
+        {
+          "info": {
+            "name": "Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.groq.com/v1/fine_tunings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
