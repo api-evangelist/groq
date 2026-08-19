@@ -28,7 +28,7 @@ tags:
 - Low Latency
 created: '2026-05-08'
 modified: '2026-05-29'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: groq:groq-audio-api
   name: Groq Audio API
