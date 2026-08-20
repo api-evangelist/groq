@@ -21,6 +21,12 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
 tags:
+- Artificial Intelligence
+- LLM
+- Inference
+- LPU
+- Low Latency
+tags_raw:
 - AI
 - LLM
 - Inference
@@ -204,6 +210,8 @@ apis:
   humanURL: https://console.groq.com/docs/api-reference
   baseURL: https://api.groq.com/openai/v1
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -246,6 +254,8 @@ apis:
   humanURL: https://console.groq.com/docs/api-reference
   baseURL: https://api.groq.com/openai/v1
   tags:
+  - Fine-Tuning
+  tags_raw:
   - Fine Tuning
   properties:
   - type: OpenAPI
