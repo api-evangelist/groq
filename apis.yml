@@ -6,6 +6,18 @@ description: Groq builds custom Language Processing Unit (LPU) silicon optimized
   low-latency LLM inference. The GroqCloud API serves popular open models (Llama,
   GPT OSS, Whisper, Orpheus) at industry-leading tokens-per-second with an OpenAI-compatible
   interface.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
