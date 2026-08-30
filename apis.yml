@@ -266,7 +266,7 @@ apis:
   humanURL: https://console.groq.com/docs/api-reference
   baseURL: https://api.groq.com/openai/v1
   tags:
-  - Fine-Tuning
+  - Fine Tuning
   tags_raw:
   - Fine Tuning
   properties:
