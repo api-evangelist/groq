@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GroqCloud Audio Batch API
+  title: GroqCloud Batch API
   description: Specification of the Groq cloud API
   termsOfService: https://groq.com/terms-of-use/
   contact:
@@ -16,7 +16,7 @@ tags:
 paths:
   /openai/v1/batches:
     post:
-      summary: Creates and executes a batch from an uploaded file of requests. [Learn more](/docs/batch).
+      summary: Creates and executes a batch from an uploaded file of requests. Learn more
       operationId: createBatch
       tags:
       - Batch
@@ -51,11 +51,12 @@ paths:
                   type: string
                   description: The time frame within which the batch should be processed. Durations from `24h` to `7d` are supported.
                 metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   additionalProperties:
                     type: string
                   description: Optional custom metadata for the batch.
-                  nullable: true
       responses:
         '200':
           description: Batch created successfully.
@@ -76,7 +77,7 @@ paths:
       operationId: listBatches
       tags:
       - Batch
-      summary: List your organization's batches.
+      summary: List your organization's batches
       responses:
         '200':
           description: Batch listed successfully.
@@ -98,7 +99,7 @@ paths:
       operationId: retrieveBatch
       tags:
       - Batch
-      summary: Retrieves a batch.
+      summary: Retrieves a batch
       parameters:
       - in: path
         name: batch_id
@@ -127,7 +128,7 @@ paths:
       operationId: cancelBatch
       tags:
       - Batch
-      summary: Cancels a batch.
+      summary: Cancels a batch
       parameters:
       - in: path
         name: batch_id
@@ -153,21 +154,6 @@ paths:
           response: "{\n  \"id\": \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"completion_window\": \"24h\",\n  \"status\": \"cancelling\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"finalizing_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 0,\n    \"completed\": 0,\n    \"failed\": 0\n  },\n  \"metadata\": null,\n  \"created_at\": 1736472600,\n  \"expires_at\": 1736559000,\n  \"cancelling_at\": null,\n  \"completed_at\": null,\n  \"in_progress_at\": null\n}\n"
 components:
   schemas:
-    ListBatchesResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Batch'
-        object:
-          type: string
-          enum:
-          - list
-          x-stainless-const: true
-      required:
-      - object
-      - data
     Batch:
       type: object
       properties:
@@ -200,13 +186,15 @@ components:
                     type: string
                     description: A human-readable message providing more details about the error.
                   param:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     description: The name of the parameter that caused the error, if applicable.
-                    nullable: true
                   line:
-                    type: integer
+                    type:
+                    - integer
+                    - 'null'
                     description: The line number of the input file where the error occurred, if applicable.
-                    nullable: true
         input_file_id:
           type: string
           description: The ID of the input file for the batch.
@@ -279,8 +267,9 @@ components:
           description: 'Set of key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format.
 
             '
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
       required:
       - id
       - object
@@ -289,6 +278,21 @@ components:
       - completion_window
       - status
       - created_at
+    ListBatchesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Batch'
+        object:
+          type: string
+          enum:
+          - list
+          x-stainless-const: true
+      required:
+      - object
+      - data
   securitySchemes:
     api_key:
       type: http

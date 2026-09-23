@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: GroqCloud Audio API
   description: Specification of the Groq cloud API
@@ -19,7 +19,7 @@ paths:
       operationId: createSpeech
       tags:
       - Audio
-      summary: Generates audio from the input text.
+      summary: Generates audio from the input text
       requestBody:
         required: true
         content:
@@ -52,7 +52,7 @@ paths:
       operationId: createTranscription
       tags:
       - Audio
-      summary: Transcribes audio into the input language.
+      summary: Transcribes audio into the input language
       requestBody:
         required: true
         content:
@@ -80,7 +80,7 @@ paths:
       operationId: createTranslation
       tags:
       - Audio
-      summary: Translates audio into English.
+      summary: Translates audio into English
       requestBody:
         required: true
         content:
@@ -108,135 +108,6 @@ paths:
           response: "{\n  \"text\": \"Your translated text appears here...\",\n  \"x_groq\": {\n    \"id\": \"req_unique_id\"\n  }\n}\n"
 components:
   schemas:
-    CreateTranscriptionResponseJson:
-      type: object
-      description: Represents a transcription response returned by model, based on the provided input.
-      properties:
-        text:
-          type: string
-          description: The transcribed text.
-      required:
-      - text
-    CreateSpeechRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        model:
-          description: 'One of the [available TTS models](/docs/text-to-speech).
-
-            '
-          anyOf:
-          - type: string
-          - type: string
-            enum:
-            - playai-tts
-            - playai-tts-arabic
-          example: playai-tts
-        input:
-          example: The quick brown fox jumped over the lazy dog
-          type: string
-          description: The text to generate audio for.
-        voice:
-          description: The voice to use when generating the audio. List of voices can be found [here](/docs/text-to-speech).
-          type: string
-          example: Fritz-PlayAI
-        response_format:
-          description: The format of the generated audio. Supported formats are `flac, mp3, mulaw, ogg, wav`.
-          default: mp3
-          type: string
-          enum:
-          - flac
-          - mp3
-          - mulaw
-          - ogg
-          - wav
-        sample_rate:
-          type: integer
-          description: The sample rate for generated audio
-          default: 48000
-          example: 48000
-          enum:
-          - 8000
-          - 16000
-          - 22050
-          - 24000
-          - 32000
-          - 44100
-          - 48000
-        speed:
-          description: The speed of the generated audio.
-          example: 1
-          type: number
-          default: 1
-          minimum: 0.5
-          maximum: 5
-      required:
-      - model
-      - input
-      - voice
-    CreateTranslationResponseJson:
-      type: object
-      properties:
-        text:
-          type: string
-      required:
-      - text
-    CreateTranslationRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        file:
-          description: 'The audio file object (not file name) translate, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
-
-            '
-          type: string
-          format: binary
-        url:
-          description: 'The audio URL to translate/transcribe (supports Base64URL). Either file or url must be provided.
-
-            When using the Batch API only url is supported.
-
-            '
-          type: string
-        model:
-          description: 'ID of the model to use. `whisper-large-v3` and `whisper-large-v3-turbo` are currently available.
-
-            '
-          example: whisper-large-v3-turbo
-          anyOf:
-          - type: string
-          - type: string
-            enum:
-            - whisper-large-v3
-            - whisper-large-v3-turbo
-        prompt:
-          description: 'An optional text to guide the model''s style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text/prompting) should be in English.
-
-            '
-          type: string
-        response_format:
-          description: 'The format of the transcript output, in one of these options: `json`, `text`, or `verbose_json`.
-
-            '
-          type: string
-          enum:
-          - json
-          - text
-          - verbose_json
-          default: json
-        temperature:
-          description: 'The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
-
-            '
-          type: number
-          default: 0
-      oneOf:
-      - required:
-        - file
-      - required:
-        - url
-      required:
-      - model
     CreateTranscriptionRequest:
       type: object
       additionalProperties: false
@@ -415,6 +286,135 @@ components:
         - url
       required:
       - model
+    CreateTranslationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        file:
+          description: 'The audio file object (not file name) translate, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
+
+            '
+          type: string
+          format: binary
+        url:
+          description: 'The audio URL to translate/transcribe (supports Base64URL). Either file or url must be provided.
+
+            When using the Batch API only url is supported.
+
+            '
+          type: string
+        model:
+          description: 'ID of the model to use. `whisper-large-v3` and `whisper-large-v3-turbo` are currently available.
+
+            '
+          example: whisper-large-v3-turbo
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - whisper-large-v3
+            - whisper-large-v3-turbo
+        prompt:
+          description: 'An optional text to guide the model''s style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text/prompting) should be in English.
+
+            '
+          type: string
+        response_format:
+          description: 'The format of the transcript output, in one of these options: `json`, `text`, or `verbose_json`.
+
+            '
+          type: string
+          enum:
+          - json
+          - text
+          - verbose_json
+          default: json
+        temperature:
+          description: 'The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
+
+            '
+          type: number
+          default: 0
+      oneOf:
+      - required:
+        - file
+      - required:
+        - url
+      required:
+      - model
+    CreateTranscriptionResponseJson:
+      type: object
+      description: Represents a transcription response returned by model, based on the provided input.
+      properties:
+        text:
+          type: string
+          description: The transcribed text.
+      required:
+      - text
+    CreateTranslationResponseJson:
+      type: object
+      properties:
+        text:
+          type: string
+      required:
+      - text
+    CreateSpeechRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        model:
+          description: 'One of the [available TTS models](/docs/text-to-speech).
+
+            '
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - playai-tts
+            - playai-tts-arabic
+          example: playai-tts
+        input:
+          example: The quick brown fox jumped over the lazy dog
+          type: string
+          description: The text to generate audio for.
+        voice:
+          description: The voice to use when generating the audio. List of voices can be found [here](/docs/text-to-speech).
+          type: string
+          example: Fritz-PlayAI
+        response_format:
+          description: The format of the generated audio. Supported formats are `flac, mp3, mulaw, ogg, wav`.
+          default: mp3
+          type: string
+          enum:
+          - flac
+          - mp3
+          - mulaw
+          - ogg
+          - wav
+        sample_rate:
+          type: integer
+          description: The sample rate for generated audio
+          default: 48000
+          example: 48000
+          enum:
+          - 8000
+          - 16000
+          - 22050
+          - 24000
+          - 32000
+          - 44100
+          - 48000
+        speed:
+          description: The speed of the generated audio.
+          example: 1
+          type: number
+          default: 1
+          minimum: 0.5
+          maximum: 5
+      required:
+      - model
+      - input
+      - voice
   securitySchemes:
     api_key:
       type: http

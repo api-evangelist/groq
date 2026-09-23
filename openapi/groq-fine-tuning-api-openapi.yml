@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GroqCloud Audio Fine Tuning API
+  title: GroqCloud Fine Tuning API
   description: Specification of the Groq cloud API
   termsOfService: https://groq.com/terms-of-use/
   contact:
@@ -17,7 +17,7 @@ paths:
   /v1/fine_tunings:
     get:
       operationId: listFineTunings
-      summary: Lists all previously created fine tunings. This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      summary: Lists all previously created fine tunings.
       tags:
       - Fine Tuning
       responses:
@@ -38,7 +38,7 @@ paths:
           response: "{\n    \"object\": \"list\",\n    \"data\": [\n        {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"base_model\": \"string\",\n            \"type\": \"string\",\n            \"input_file_id\": \"string\",\n            \"created_at\": 0,\n            \"fine_tuned_model\": \"string\"\n        }\n    ]\n}\n"
     post:
       operationId: createFineTuning
-      summary: Creates a new fine tuning for the already uploaded files This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      summary: Creates a new fine tuning for the already uploaded files This endpoint is in…
       tags:
       - Fine Tuning
       requestBody:
@@ -65,7 +65,7 @@ paths:
   /v1/fine_tunings/{id}:
     delete:
       operationId: deleteFineTuning
-      summary: Deletes an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      summary: Deletes an existing fine tuning by id This endpoint is in closed beta.
       tags:
       - Fine Tuning
       responses:
@@ -92,7 +92,7 @@ paths:
           response: "{\n    \"id\": \"string\",\n    \"object\": \"fine_tuning\",\n    \"deleted\": true\n}\n"
     get:
       operationId: getFineTuning
-      summary: Retrieves an existing fine tuning by id This endpoint is in closed beta. [Contact us](https://groq.com/contact) for more information.
+      summary: Retrieves an existing fine tuning by id This endpoint is in closed beta.
       tags:
       - Fine Tuning
       responses:
@@ -119,6 +119,51 @@ paths:
           response: "{\n    \"id\": \"string\",\n    \"object\": \"object\",\n    \"data\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"base_model\": \"string\",\n        \"type\": \"string\",\n        \"input_file_id\": \"string\",\n        \"created_at\": 0,\n        \"fine_tuned_model\": \"string\"\n    }\n}\n"
 components:
   schemas:
+    ListFineTuningsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              base_model:
+                type: string
+                description: 'BaseModel is the model that the fine tune was originally trained on.
+
+                  '
+              created_at:
+                type: number
+                description: 'CreatedAt is the timestamp of when the fine tuned model was created.
+
+                  '
+              fine_tuned_model:
+                type: string
+                description: 'FineTunedModel is the final name of the fine tuned model.
+
+                  '
+              id:
+                type: string
+                description: 'ID is the unique identifier of a fine tune.
+
+                  '
+              input_file_id:
+                type: string
+                description: 'InputFileID is the id of the file that was uploaded via the /files api.
+
+                  '
+              name:
+                type: string
+                description: 'Name is the given name to a fine tuned model.
+
+                  '
+              type:
+                type: string
+                description: 'Type is the type of fine tuning format such as "lora".
+
+                  '
+        object:
+          type: string
     DeleteFineTuningResponse:
       type: object
       properties:
@@ -171,51 +216,6 @@ components:
                 '
         id:
           type: string
-        object:
-          type: string
-    ListFineTuningsResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              base_model:
-                type: string
-                description: 'BaseModel is the model that the fine tune was originally trained on.
-
-                  '
-              created_at:
-                type: number
-                description: 'CreatedAt is the timestamp of when the fine tuned model was created.
-
-                  '
-              fine_tuned_model:
-                type: string
-                description: 'FineTunedModel is the final name of the fine tuned model.
-
-                  '
-              id:
-                type: string
-                description: 'ID is the unique identifier of a fine tune.
-
-                  '
-              input_file_id:
-                type: string
-                description: 'InputFileID is the id of the file that was uploaded via the /files api.
-
-                  '
-              name:
-                type: string
-                description: 'Name is the given name to a fine tuned model.
-
-                  '
-              type:
-                type: string
-                description: 'Type is the type of fine tuning format such as "lora".
-
-                  '
         object:
           type: string
     CreateFineTuningRequest:

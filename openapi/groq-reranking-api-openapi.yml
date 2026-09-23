@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GroqCloud Audio Reranking API
+  title: GroqCloud Reranking API
   description: Specification of the Groq cloud API
   termsOfService: https://groq.com/terms-of-use/
   contact:
@@ -19,12 +19,10 @@ paths:
       operationId: createReranking
       tags:
       - Reranking
-      summary: Reranks documents based on their relevance to a query.
+      summary: Reranks documents based on their relevance to a query
       description: 'Given a query and a list of documents, returns the documents ranked by their relevance to the query.
 
-        The documents are scored and sorted in descending order of relevance.
-
-        '
+        The documents are scored and sorted in descending order of relevance.'
       requestBody:
         required: true
         content:
@@ -53,23 +51,6 @@ paths:
           response: "{\n  \"results\": [\n    {\n      \"doc\": \"Global warming causes sea level rise\",\n      \"score\": 0.95\n    },\n    {\n      \"doc\": \"Electric cars reduce emissions\",\n      \"score\": 0.78\n    },\n    {\n      \"doc\": \"Renewable energy is growing fast\",\n      \"score\": 0.65\n    }\n  ]\n}\n"
 components:
   schemas:
-    RerankingResult:
-      type: object
-      properties:
-        doc:
-          type: string
-          description: The original document text.
-          example: Machine learning is a subset of artificial intelligence
-        score:
-          type: number
-          format: float
-          minimum: 0
-          maximum: 1
-          description: "Relevance score between 0.0 and 1.0, where higher scores indicate \ngreater relevance to the query.\n"
-          example: 0.92
-      required:
-      - doc
-      - score
     RerankingRequest:
       type: object
       additionalProperties: false
@@ -105,12 +86,30 @@ components:
         instruction:
           description: "Optional instruction to guide the reranking process. If not provided, \na default instruction will be used.\n"
           example: Find the most relevant document about AI research
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - model
       - query
       - docs
+    RerankingResult:
+      type: object
+      properties:
+        doc:
+          type: string
+          description: The original document text.
+          example: Machine learning is a subset of artificial intelligence
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: "Relevance score between 0.0 and 1.0, where higher scores indicate \ngreater relevance to the query.\n"
+          example: 0.92
+      required:
+      - doc
+      - score
     RerankingResponse:
       type: object
       properties:

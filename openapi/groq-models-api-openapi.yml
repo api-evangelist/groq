@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GroqCloud Audio Models API
+  title: GroqCloud Models API
   description: Specification of the Groq cloud API
   termsOfService: https://groq.com/terms-of-use/
   contact:
@@ -19,7 +19,7 @@ paths:
       operationId: listModels
       tags:
       - Models
-      summary: List all available [models](https://console.groq.com/docs/models).
+      summary: List all available models
       description: get all available models
       responses:
         '200':
@@ -46,7 +46,7 @@ paths:
       operationId: retrieveModel
       tags:
       - Models
-      summary: Get detailed information about a [model](https://console.groq.com/docs/models).
+      summary: Get detailed information about a model
       description: Get a specific model
       parameters:
       - name: model
@@ -97,19 +97,6 @@ paths:
                 $ref: '#/components/schemas/DeleteModelResponse'
 components:
   schemas:
-    DeleteModelResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        deleted:
-          type: boolean
-        object:
-          type: string
-      required:
-      - id
-      - object
-      - deleted
     ListModelsResponse:
       type: object
       properties:
@@ -124,6 +111,19 @@ components:
       required:
       - object
       - data
+    DeleteModelResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
+        object:
+          type: string
+      required:
+      - id
+      - object
+      - deleted
     Model:
       title: Model
       description: Describes an OpenAI model offering that can be used with the API.

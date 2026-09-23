@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GroqCloud Audio Embeddings API
+  title: GroqCloud Embeddings API
   description: Specification of the Groq cloud API
   termsOfService: https://groq.com/terms-of-use/
   contact:
@@ -19,7 +19,7 @@ paths:
       operationId: createEmbedding
       tags:
       - Embeddings
-      summary: Creates an embedding vector representing the input text.
+      summary: Creates an embedding vector representing the input text
       requestBody:
         required: true
         content:
@@ -144,9 +144,10 @@ components:
           - float
           - base64
         user:
-          type: string
+          type:
+          - string
+          - 'null'
           description: A unique identifier representing your end-user, which can help us monitor and detect abuse.
-          nullable: true
       required:
       - model
       - input

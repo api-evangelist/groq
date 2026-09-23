@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GroqCloud Audio Files API
+  title: GroqCloud Files API
   description: Specification of the Groq cloud API
   termsOfService: https://groq.com/terms-of-use/
   contact:
@@ -19,7 +19,7 @@ paths:
       operationId: listFiles
       tags:
       - Files
-      summary: Returns a list of files.
+      summary: Returns a list of files
       responses:
         '200':
           description: OK
@@ -40,15 +40,7 @@ paths:
       operationId: uploadFile
       tags:
       - Files
-      summary: 'Upload a file that can be used across various endpoints.
-
-
-        The Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](/docs/batch).
-
-
-        Please contact us if you need to increase these storage limits.
-
-        '
+      summary: Upload a file that can be used across various endpoints.
       requestBody:
         required: true
         content:
@@ -76,7 +68,7 @@ paths:
       operationId: deleteFile
       tags:
       - Files
-      summary: Delete a file.
+      summary: Delete a file
       parameters:
       - in: path
         name: file_id
@@ -104,7 +96,7 @@ paths:
       operationId: retrieveFile
       tags:
       - Files
-      summary: Returns information about a file.
+      summary: Returns information about a file
       parameters:
       - name: file_id
         in: path
@@ -133,7 +125,7 @@ paths:
       operationId: downloadFile
       tags:
       - Files
-      summary: Returns the contents of the specified file.
+      summary: Returns the contents of the specified file
       parameters:
       - in: path
         name: file_id
@@ -159,22 +151,28 @@ paths:
             js: "import Groq from 'groq-sdk';\n\nconst client = new Groq({\n  apiKey: process.env['GROQ_API_KEY'], // This is the default and can be omitted\n});\n\nasync function main() {\n    const response = await client.files.content('file_01jh6x76wtemjr74t1fh0faj5t');\n    console.log(response);\n}\n\nmain();\n"
 components:
   schemas:
-    DeleteFileResponse:
+    CreateFileRequest:
       type: object
+      additionalProperties: false
       properties:
-        id:
+        file:
+          description: 'The File object (not file name) to be uploaded.
+
+            '
           type: string
-        object:
+          format: binary
+        purpose:
+          description: 'The intended purpose of the uploaded file.
+
+            Use "batch" for [Batch API](/docs/api-reference#batches).
+
+            '
           type: string
           enum:
-          - file
-          x-stainless-const: true
-        deleted:
-          type: boolean
+          - batch
       required:
-      - id
-      - object
-      - deleted
+      - file
+      - purpose
     File:
       title: File
       description: The `File` object represents a document that has been uploaded.
@@ -203,28 +201,6 @@ components:
           enum:
           - batch
           - batch_output
-    CreateFileRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        file:
-          description: 'The File object (not file name) to be uploaded.
-
-            '
-          type: string
-          format: binary
-        purpose:
-          description: 'The intended purpose of the uploaded file.
-
-            Use "batch" for [Batch API](/docs/api-reference#batches).
-
-            '
-          type: string
-          enum:
-          - batch
-      required:
-      - file
-      - purpose
     ListFilesResponse:
       type: object
       properties:
@@ -239,6 +215,22 @@ components:
       required:
       - object
       - data
+    DeleteFileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          enum:
+          - file
+          x-stainless-const: true
+        deleted:
+          type: boolean
+      required:
+      - id
+      - object
+      - deleted
   securitySchemes:
     api_key:
       type: http

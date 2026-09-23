@@ -1,15 +1,7 @@
 {
   "provider": "groq",
   "sources": [
-    "groq-audio-api-openapi.yml",
-    "groq-batch-api-openapi.yml",
-    "groq-chat-api-openapi.yml",
-    "groq-embeddings-api-openapi.yml",
-    "groq-files-api-openapi.yml",
-    "groq-fine-tuning-api-openapi.yml",
-    "groq-models-api-openapi.yml",
-    "groq-reranking-api-openapi.yml",
-    "groq-responses-api-openapi.yml"
+    "_original/groq-openapi.yml"
   ],
   "outputs": [
     "groq-audio-api-openapi.yml",
@@ -25,6 +17,29 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "groq-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "groq-openapi.yml: declared missing tag: Audio",
+    "groq-openapi.yml: declared missing tag: Batch",
+    "groq-openapi.yml: declared missing tag: Chat",
+    "groq-openapi.yml: declared missing tag: Embeddings",
+    "groq-openapi.yml: declared missing tag: Files",
+    "groq-openapi.yml: declared missing tag: Fine Tuning",
+    "groq-openapi.yml: declared missing tag: Models",
+    "groq-openapi.yml: declared missing tag: Reranking",
+    "groq-openapi.yml: declared missing tag: Responses",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "groq-audio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-batch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-fine-tuning-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-reranking-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "groq-responses-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
