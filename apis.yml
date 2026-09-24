@@ -39,12 +39,14 @@ tags:
 - Inference
 - LPU
 - Low Latency
+- Real-Time
 tags_raw:
 - AI
 - LLM
 - Inference
 - LPU
 - Low Latency
+- Real-Time
 created: '2026-05-08'
 modified: '2026-05-29'
 specificationVersion: '0.23'
@@ -65,8 +67,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -107,8 +107,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -149,8 +147,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -191,8 +187,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -235,8 +229,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -279,8 +271,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -321,8 +311,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -363,8 +351,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
@@ -405,8 +391,6 @@ apis:
     url: https://console.groq.com/docs/api-reference#chat
   - type: AsyncAPI
     url: asyncapi/groq-asyncapi.yml
-  - type: GraphQL
-    url: graphql/groq-graphql.md
   - type: Documentation
     url: https://console.groq.com/docs/reasoning
   - type: Documentation
