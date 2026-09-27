@@ -51,6 +51,37 @@ paths:
           response: "{\n  \"results\": [\n    {\n      \"doc\": \"Global warming causes sea level rise\",\n      \"score\": 0.95\n    },\n    {\n      \"doc\": \"Electric cars reduce emissions\",\n      \"score\": 0.78\n    },\n    {\n      \"doc\": \"Renewable energy is growing fast\",\n      \"score\": 0.65\n    }\n  ]\n}\n"
 components:
   schemas:
+    RerankingResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          description: 'List of documents sorted by relevance score in descending order.
+
+            Each result contains the original document text and its relevance score.
+
+            '
+          items:
+            $ref: '#/components/schemas/RerankingResult'
+      required:
+      - results
+    RerankingResult:
+      type: object
+      properties:
+        doc:
+          type: string
+          description: The original document text.
+          example: Machine learning is a subset of artificial intelligence
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: "Relevance score between 0.0 and 1.0, where higher scores indicate \ngreater relevance to the query.\n"
+          example: 0.92
+      required:
+      - doc
+      - score
     RerankingRequest:
       type: object
       additionalProperties: false
@@ -93,37 +124,6 @@ components:
       - model
       - query
       - docs
-    RerankingResult:
-      type: object
-      properties:
-        doc:
-          type: string
-          description: The original document text.
-          example: Machine learning is a subset of artificial intelligence
-        score:
-          type: number
-          format: float
-          minimum: 0
-          maximum: 1
-          description: "Relevance score between 0.0 and 1.0, where higher scores indicate \ngreater relevance to the query.\n"
-          example: 0.92
-      required:
-      - doc
-      - score
-    RerankingResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          description: 'List of documents sorted by relevance score in descending order.
-
-            Each result contains the original document text and its relevance score.
-
-            '
-          items:
-            $ref: '#/components/schemas/RerankingResult'
-      required:
-      - results
   securitySchemes:
     api_key:
       type: http

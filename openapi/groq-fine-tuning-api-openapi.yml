@@ -164,6 +164,29 @@ components:
                   '
         object:
           type: string
+    CreateFineTuningRequest:
+      type: object
+      properties:
+        base_model:
+          type: string
+          description: 'BaseModel is the model that the fine tune was originally trained on.
+
+            '
+        input_file_id:
+          type: string
+          description: 'InputFileID is the id of the file that was uploaded via the /files api.
+
+            '
+        name:
+          type: string
+          description: 'Name is the given name to a fine tuned model.
+
+            '
+        type:
+          type: string
+          description: 'Type is the type of fine tuning format such as "lora".
+
+            '
     DeleteFineTuningResponse:
       type: object
       properties:
@@ -218,29 +241,6 @@ components:
           type: string
         object:
           type: string
-    CreateFineTuningRequest:
-      type: object
-      properties:
-        base_model:
-          type: string
-          description: 'BaseModel is the model that the fine tune was originally trained on.
-
-            '
-        input_file_id:
-          type: string
-          description: 'InputFileID is the id of the file that was uploaded via the /files api.
-
-            '
-        name:
-          type: string
-          description: 'Name is the given name to a fine tuned model.
-
-            '
-        type:
-          type: string
-          description: 'Type is the type of fine tuning format such as "lora".
-
-            '
   securitySchemes:
     api_key:
       type: http
