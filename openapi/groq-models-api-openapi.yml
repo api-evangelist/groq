@@ -97,20 +97,6 @@ paths:
                 $ref: '#/components/schemas/DeleteModelResponse'
 components:
   schemas:
-    ListModelsResponse:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - list
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Model'
-      required:
-      - object
-      - data
     Model:
       title: Model
       description: Describes an OpenAI model offering that can be used with the API.
@@ -147,6 +133,20 @@ components:
       - id
       - object
       - deleted
+    ListModelsResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+      required:
+      - object
+      - data
   securitySchemes:
     api_key:
       type: http
