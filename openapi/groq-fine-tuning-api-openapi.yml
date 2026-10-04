@@ -119,74 +119,6 @@ paths:
           response: "{\n    \"id\": \"string\",\n    \"object\": \"object\",\n    \"data\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"base_model\": \"string\",\n        \"type\": \"string\",\n        \"input_file_id\": \"string\",\n        \"created_at\": 0,\n        \"fine_tuned_model\": \"string\"\n    }\n}\n"
 components:
   schemas:
-    ListFineTuningsResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              base_model:
-                type: string
-                description: 'BaseModel is the model that the fine tune was originally trained on.
-
-                  '
-              created_at:
-                type: number
-                description: 'CreatedAt is the timestamp of when the fine tuned model was created.
-
-                  '
-              fine_tuned_model:
-                type: string
-                description: 'FineTunedModel is the final name of the fine tuned model.
-
-                  '
-              id:
-                type: string
-                description: 'ID is the unique identifier of a fine tune.
-
-                  '
-              input_file_id:
-                type: string
-                description: 'InputFileID is the id of the file that was uploaded via the /files api.
-
-                  '
-              name:
-                type: string
-                description: 'Name is the given name to a fine tuned model.
-
-                  '
-              type:
-                type: string
-                description: 'Type is the type of fine tuning format such as "lora".
-
-                  '
-        object:
-          type: string
-    CreateFineTuningRequest:
-      type: object
-      properties:
-        base_model:
-          type: string
-          description: 'BaseModel is the model that the fine tune was originally trained on.
-
-            '
-        input_file_id:
-          type: string
-          description: 'InputFileID is the id of the file that was uploaded via the /files api.
-
-            '
-        name:
-          type: string
-          description: 'Name is the given name to a fine tuned model.
-
-            '
-        type:
-          type: string
-          description: 'Type is the type of fine tuning format such as "lora".
-
-            '
     DeleteFineTuningResponse:
       type: object
       properties:
@@ -239,6 +171,74 @@ components:
                 '
         id:
           type: string
+        object:
+          type: string
+    CreateFineTuningRequest:
+      type: object
+      properties:
+        base_model:
+          type: string
+          description: 'BaseModel is the model that the fine tune was originally trained on.
+
+            '
+        input_file_id:
+          type: string
+          description: 'InputFileID is the id of the file that was uploaded via the /files api.
+
+            '
+        name:
+          type: string
+          description: 'Name is the given name to a fine tuned model.
+
+            '
+        type:
+          type: string
+          description: 'Type is the type of fine tuning format such as "lora".
+
+            '
+    ListFineTuningsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              base_model:
+                type: string
+                description: 'BaseModel is the model that the fine tune was originally trained on.
+
+                  '
+              created_at:
+                type: number
+                description: 'CreatedAt is the timestamp of when the fine tuned model was created.
+
+                  '
+              fine_tuned_model:
+                type: string
+                description: 'FineTunedModel is the final name of the fine tuned model.
+
+                  '
+              id:
+                type: string
+                description: 'ID is the unique identifier of a fine tune.
+
+                  '
+              input_file_id:
+                type: string
+                description: 'InputFileID is the id of the file that was uploaded via the /files api.
+
+                  '
+              name:
+                type: string
+                description: 'Name is the given name to a fine tuned model.
+
+                  '
+              type:
+                type: string
+                description: 'Type is the type of fine tuning format such as "lora".
+
+                  '
         object:
           type: string
   securitySchemes:

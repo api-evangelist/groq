@@ -131,46 +131,6 @@ apis:
     url: https://console.groq.com/docs/lora
   - type: Documentation
     url: https://console.groq.com/docs/prompt-caching
-- aid: groq:groq-chat-api
-  name: Groq Chat API
-  description: The Chat API from Groq — 1 operation(s) for chat.
-  humanURL: https://console.groq.com/docs/api-reference
-  baseURL: https://api.groq.com/openai/v1
-  tags:
-  - Chat
-  properties:
-  - type: OpenAPI
-    url: openapi/groq-chat-api-openapi.yml
-  - type: Documentation
-    url: https://console.groq.com/docs/text-chat
-  - type: APIReference
-    url: https://console.groq.com/docs/api-reference#chat
-  - type: AsyncAPI
-    url: asyncapi/groq-asyncapi.yml
-  - type: Documentation
-    url: https://console.groq.com/docs/reasoning
-  - type: Documentation
-    url: https://console.groq.com/docs/vision
-  - type: Documentation
-    url: https://console.groq.com/docs/speech-to-text
-  - type: Documentation
-    url: https://console.groq.com/docs/text-to-speech
-  - type: Documentation
-    url: https://console.groq.com/docs/content-moderation
-  - type: Documentation
-    url: https://console.groq.com/docs/batch
-  - type: Documentation
-    url: https://console.groq.com/docs/flex-processing
-  - type: APIReference
-    url: https://console.groq.com/docs/api-reference#files
-  - type: APIReference
-    url: https://console.groq.com/docs/api-reference#models
-  - type: Documentation
-    url: https://console.groq.com/docs/tools
-  - type: Documentation
-    url: https://console.groq.com/docs/lora
-  - type: Documentation
-    url: https://console.groq.com/docs/prompt-caching
 - aid: groq:groq-embeddings-api
   name: Groq Embeddings API
   description: The Embeddings API from Groq — 1 operation(s) for embeddings.
@@ -385,6 +345,46 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/groq-responses-api-openapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/text-chat
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#chat
+  - type: AsyncAPI
+    url: asyncapi/groq-asyncapi.yml
+  - type: Documentation
+    url: https://console.groq.com/docs/reasoning
+  - type: Documentation
+    url: https://console.groq.com/docs/vision
+  - type: Documentation
+    url: https://console.groq.com/docs/speech-to-text
+  - type: Documentation
+    url: https://console.groq.com/docs/text-to-speech
+  - type: Documentation
+    url: https://console.groq.com/docs/content-moderation
+  - type: Documentation
+    url: https://console.groq.com/docs/batch
+  - type: Documentation
+    url: https://console.groq.com/docs/flex-processing
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#files
+  - type: APIReference
+    url: https://console.groq.com/docs/api-reference#models
+  - type: Documentation
+    url: https://console.groq.com/docs/tools
+  - type: Documentation
+    url: https://console.groq.com/docs/lora
+  - type: Documentation
+    url: https://console.groq.com/docs/prompt-caching
+- aid: groq:groq-chat-completions-api
+  name: Groq Chat Completions API
+  description: The Chat Completions API from Groq — 1 operation(s) for chat completions.
+  humanURL: https://console.groq.com/docs/api-reference
+  baseURL: https://api.groq.com/openai/v1
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/groq-chat-completions-api-openapi.yml
   - type: Documentation
     url: https://console.groq.com/docs/text-chat
   - type: APIReference

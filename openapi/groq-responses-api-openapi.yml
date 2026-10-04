@@ -43,554 +43,15 @@ paths:
           response: "{\n  \"id\": \"resp_01k1x6w9ane6d8rfxm05cb45yk\",\n  \"object\": \"response\",\n  \"status\": \"completed\",\n  \"created_at\": 1754400695,\n  \"output\": [\n    {\n      \"type\": \"message\",\n      \"id\": \"msg_01k1x6w9ane6eb0650crhawwyy\",\n      \"status\": \"completed\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"text\": \"When the stars blinked awake, Luna the unicorn curled her mane and whispered wishes to the sleeping pine trees. She galloped through a field of moonlit daisies, gathering dew like tiny silver pearls. With a gentle sigh, she tucked her hooves beneath a silver cloud so the world slept softly, dreaming of her gentle hooves until the morning.\",\n          \"annotations\": []\n        }\n      ]\n    }\n  ],\n  \"previous_response_id\": null,\n  \"model\": \"llama-3.3-70b-versatile\",\n  \"reasoning\": {\n    \"effort\": null,\n    \"summary\": null\n  },\n  \"max_output_tokens\": null,\n  \"instructions\": null,\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"tools\": [],\n  \"tool_choice\": \"auto\",\n  \"truncation\": \"disabled\",\n  \"metadata\": {},\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"user\": null,\n  \"service_tier\": \"default\",\n  \"error\": null,\n  \"incomplete_details\": null,\n  \"usage\": {\n    \"input_tokens\": 82,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 0\n    },\n    \"output_tokens\": 266,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 0\n    },\n    \"total_tokens\": 348\n  },\n  \"parallel_tool_calls\": true,\n  \"store\": false\n}\n"
 components:
   schemas:
-    ResponseInputItem:
+    ResponseAnnotation:
       oneOf:
-      - $ref: '#/components/schemas/ResponseEasyInputMessage'
-      - $ref: '#/components/schemas/ResponseInputMessage'
-      - $ref: '#/components/schemas/ResponseItemReference'
-      - $ref: '#/components/schemas/ResponseFunctionCall'
-      - $ref: '#/components/schemas/ResponseFunctionCallOutput'
+      - $ref: '#/components/schemas/ResponseFileCitation'
+      - $ref: '#/components/schemas/ResponseUrlCitation'
       discriminator:
         propertyName: type
         mapping:
-          message: '#/components/schemas/ResponseInputMessage'
-          item_reference: '#/components/schemas/ResponseItemReference'
-          function_call: '#/components/schemas/ResponseFunctionCall'
-          function_call_output: '#/components/schemas/ResponseFunctionCallOutput'
-    ResponseOutputMessage:
-      type: object
-      title: Output message
-      description: An output message from the model.
-      properties:
-        type:
-          type: string
-          description: The type of the output message. Always `message`.
-          enum:
-          - message
-          x-stainless-const: true
-        id:
-          type: string
-          description: The unique ID of the output message.
-        status:
-          type: string
-          description: The status of the message.
-          enum:
-          - in_progress
-          - completed
-          - incomplete
-        role:
-          type: string
-          description: The role of the output message. Always `assistant`.
-          enum:
-          - assistant
-          x-stainless-const: true
-        content:
-          type: array
-          description: The content of the output message.
-          items:
-            $ref: '#/components/schemas/ResponseOutputContent'
-      required:
-      - type
-      - id
-      - role
-      - content
-    ResponseOutputTextContent:
-      type: object
-      title: Output text
-      description: A text output from the model.
-      properties:
-        type:
-          type: string
-          enum:
-          - output_text
-          description: The type of the output text. Always `output_text`.
-          x-stainless-const: true
-        text:
-          type: string
-          description: The text output from the model.
-        annotations:
-          type: array
-          description: The annotations of the text output.
-          items:
-            $ref: '#/components/schemas/ResponseAnnotation'
-        logprobs:
-          type:
-          - array
-          - 'null'
-          description: Log probability information for the output.
-          items:
-            type: string
-      required:
-      - type
-      - text
-      - annotations
-    ResponseFormatConfiguration:
-      description: 'An object specifying the format that the model must output.
-
-        '
-      oneOf:
-      - $ref: '#/components/schemas/ResponseFormatText'
-      - $ref: '#/components/schemas/ResponseFormatJsonObject'
-      - $ref: '#/components/schemas/TextResponseFormatJsonSchema'
-    ResponseInputTextContent:
-      type: object
-      title: Input text
-      description: A text input to the model.
-      properties:
-        type:
-          type: string
-          enum:
-          - input_text
-          description: The type of the input item. Always `input_text`.
-          x-stainless-const: true
-        text:
-          type: string
-          description: The text input to the model.
-      required:
-      - type
-      - text
-    CreateResponseRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        model:
-          description: ID of the model to use. For details on which models are compatible with the Responses API, see available [models](https://console.groq.com/docs/models)
-          example: llama-3.3-70b-versatile
-          anyOf:
-          - type: string
-          - type: string
-            enum:
-            - gemma2-9b-it
-            - llama-3.3-70b-versatile
-            - llama-3.1-8b-instant
-            - llama-guard-3-8b
-            - llama3-70b-8192
-            - llama3-8b-8192
-        input:
-          description: 'Text input to the model, used to generate a response.
-
-            '
-          oneOf:
-          - type: string
-            title: Text input
-            description: A text input to the model, equivalent to a text input with the `user` role.
-          - type: array
-            title: Input item list
-            description: A list of one or many input items to the model, containing different content types.
-            items:
-              $ref: '#/components/schemas/ResponseInputItem'
-        instructions:
-          type:
-          - string
-          - 'null'
-          description: 'Inserts a system (or developer) message as the first item in the model''s context.
-
-            '
-        max_output_tokens:
-          description: 'An upper bound for the number of tokens that can be generated for a response, including visible output tokens and reasoning tokens.
-
-            '
-          type:
-          - integer
-          - 'null'
-        temperature:
-          type:
-          - number
-          - 'null'
-          minimum: 0
-          maximum: 2
-          default: 1
-          example: 1
-          description: 'Controls randomness in the response generation. Range: 0 to 2. Lower values produce more deterministic outputs, higher values increase variety and creativity.
-
-            '
-        top_p:
-          type:
-          - number
-          - 'null'
-          minimum: 0
-          maximum: 1
-          default: 1
-          example: 1
-          description: 'Nucleus sampling parameter that controls the cumulative probability cutoff. Range: 0 to 1. A value of 0.1 restricts sampling to tokens within the top 10% probability mass.
-
-            '
-        tools:
-          type:
-          - array
-          - 'null'
-          maxItems: 128
-          description: 'List of tools available to the model. Currently supports function definitions only. Maximum of 128 functions.
-
-            '
-          items:
-            $ref: '#/components/schemas/ResponseTool'
-        tool_choice:
-          $ref: '#/components/schemas/ResponseToolChoiceOption'
-        text:
-          type: object
-          description: 'Response format configuration. Supports plain text or structured JSON output.
-
-            '
-          properties:
-            format:
-              $ref: '#/components/schemas/ResponseFormatConfiguration'
-        reasoning:
-          type:
-          - object
-          - 'null'
-          description: 'Configuration for reasoning capabilities when using [models that support reasoning](https://console.groq.com/docs/reasoning).
-
-            '
-          properties:
-            effort:
-              type:
-              - string
-              - 'null'
-              enum:
-              - low
-              - medium
-              - high
-              default: medium
-              description: 'Level of reasoning effort. Supported values: `low`, `medium`, `high`. Lower values provide faster responses with less reasoning depth.
-
-                '
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: 'Custom key-value pairs for storing additional information. Maximum of 16 pairs.
-
-            '
-        parallel_tool_calls:
-          type:
-          - boolean
-          - 'null'
-          description: 'Enable parallel execution of multiple tool calls.
-
-            '
-          default: true
-        store:
-          type:
-          - boolean
-          - 'null'
-          description: 'Response storage flag. Note: Currently only supports false or null values.
-
-            '
-          default: false
-        stream:
-          description: 'Enable streaming mode to receive response data as server-sent events.
-
-            '
-          type:
-          - boolean
-          - 'null'
-          default: false
-        user:
-          type: string
-          example: user-1234
-          description: 'Optional identifier for tracking end-user requests. Useful for usage monitoring and compliance.
-
-            '
-        service_tier:
-          type:
-          - string
-          - 'null'
-          description: 'Specifies the latency tier to use for processing the request.
-
-            '
-          enum:
-          - auto
-          - default
-          - flex
-          default: auto
-        truncation:
-          type:
-          - string
-          - 'null'
-          description: 'Context truncation strategy. Supported values: `auto` or `disabled`.
-
-            '
-          enum:
-          - auto
-          - disabled
-          default: disabled
-      required:
-      - model
-      - input
-    ResponseOutputContent:
-      oneOf:
-      - $ref: '#/components/schemas/ResponseOutputTextContent'
-      discriminator:
-        propertyName: type
-        mapping:
-          output_text: '#/components/schemas/ResponseOutputTextContent'
-    ResponseFunctionCall:
-      type: object
-      title: Function call
-      description: A function call generated by the model.
-      properties:
-        type:
-          type: string
-          enum:
-          - function_call
-          description: The type of the function call. Always `function_call`.
-          x-stainless-const: true
-        id:
-          type: string
-          description: The unique ID of the function tool call.
-        call_id:
-          type: string
-          description: The unique ID of the function tool call generated by the model.
-        name:
-          type: string
-          description: The name of the function to call.
-        arguments:
-          type: string
-          description: A JSON string of the arguments to pass to the function.
-        status:
-          type: string
-          description: The status of the item.
-          enum:
-          - in_progress
-          - completed
-          - incomplete
-      required:
-      - type
-      - call_id
-      - name
-      - arguments
-    ResponseOutputFunctionCall:
-      type: object
-      title: Function call
-      description: A function call generated by the model.
-      properties:
-        type:
-          type: string
-          enum:
-          - function_call
-          description: The type of the function call. Always `function_call`.
-          x-stainless-const: true
-        id:
-          type: string
-          description: The unique ID of the function tool call.
-        status:
-          type: string
-          description: The status of the function call.
-          enum:
-          - in_progress
-          - completed
-          - incomplete
-        call_id:
-          type: string
-          description: The unique ID of the function tool call generated by the model.
-        name:
-          type: string
-          description: The name of the function to call.
-        arguments:
-          type: string
-          description: A JSON string of the arguments to pass to the function.
-      required:
-      - type
-      - id
-      - call_id
-      - name
-      - arguments
-    ResponseUsage:
-      type: object
-      description: Usage statistics for the response request.
-      properties:
-        input_tokens:
-          type: integer
-          description: Number of tokens in the input.
-        input_tokens_details:
-          type: object
-          description: Breakdown of input tokens.
-          properties:
-            cached_tokens:
-              type: integer
-              description: Number of cached tokens.
-            reasoning_tokens:
-              type: integer
-              description: Number of reasoning tokens.
-          required:
-          - cached_tokens
-        output_tokens:
-          type: integer
-          description: Number of tokens in the generated output.
-        output_tokens_details:
-          type: object
-          description: Breakdown of output tokens.
-          properties:
-            cached_tokens:
-              type: integer
-              description: Number of cached tokens.
-            reasoning_tokens:
-              type: integer
-              description: Number of reasoning tokens.
-          required:
-          - cached_tokens
-          - reasoning_tokens
-        total_tokens:
-          type: integer
-          description: Total number of tokens used in the request (input + output).
-      required:
-      - input_tokens
-      - input_tokens_details
-      - output_tokens
-      - output_tokens_details
-      - total_tokens
-    TextResponseFormatJsonSchema:
-      type: object
-      title: JSON schema
-      description: 'JSON Schema response format. Used to generate structured JSON responses.
-
-        '
-      properties:
-        type:
-          type: string
-          description: The type of response format being defined. Always `json_schema`.
-          enum:
-          - json_schema
-          x-stainless-const: true
-        name:
-          type: string
-          description: 'The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-
-            '
-        description:
-          type: string
-          description: 'A description of what the response format is for, used by the model to determine how to respond in the format.
-
-            '
-        schema:
-          type: object
-          description: 'The schema for the response format, described as a JSON Schema object.
-
-            '
-          additionalProperties: true
-        strict:
-          type:
-          - boolean
-          - 'null'
-          default: false
-          description: 'Whether to enable strict schema adherence when generating the output.
-
-            '
-      required:
-      - type
-      - name
-      - schema
-    ResponseInputMessage:
-      type: object
-      title: Input message
-      description: 'A message input to the model with explicit type field.
-
-        '
-      properties:
-        type:
-          type: string
-          description: The type of the message input. Always set to `message`.
-          enum:
-          - message
-          x-stainless-const: true
-        role:
-          type: string
-          description: 'The role of the message input. One of `user`, `system`, or `developer`. Note: assistant role is not supported with explicit type.
-
-            '
-          enum:
-          - user
-          - system
-          - developer
-        content:
-          type: array
-          description: A list of one or many input content items.
-          items:
-            $ref: '#/components/schemas/ResponseInputContent'
-        status:
-          type: string
-          description: The status of item. Populated when items are returned via API.
-          enum:
-          - in_progress
-          - completed
-          - incomplete
-      required:
-      - type
-      - role
-      - content
-    ResponseOutputItem:
-      oneOf:
-      - $ref: '#/components/schemas/ResponseOutputMessage'
-      - $ref: '#/components/schemas/ResponseOutputFunctionCall'
-      - $ref: '#/components/schemas/ResponseOutputReasoning'
-      discriminator:
-        propertyName: type
-        mapping:
-          message: '#/components/schemas/ResponseOutputMessage'
-          function_call: '#/components/schemas/ResponseOutputFunctionCall'
-          reasoning: '#/components/schemas/ResponseOutputReasoning'
-    ResponseUrlCitation:
-      type: object
-      title: URL citation
-      description: A citation for a web resource.
-      properties:
-        type:
-          type: string
-          enum:
-          - url_citation
-          description: The type of the annotation. Always `url_citation`.
-          x-stainless-const: true
-        url:
-          type: string
-          description: The URL of the web resource.
-        start_index:
-          type: integer
-          description: The index of the first character of the URL citation in the message.
-        end_index:
-          type: integer
-          description: The index of the last character of the URL citation in the message.
-        title:
-          type: string
-          description: The title of the web resource.
-      required:
-      - type
-      - url
-    ResponseEasyInputMessage:
-      type: object
-      title: Easy input message
-      description: 'A message input to the model with a role indicating instruction following hierarchy.
-
-        '
-      properties:
-        role:
-          type: string
-          description: 'The role of the message input. One of `user`, `assistant`, `system`, or `developer`.
-
-            '
-          enum:
-          - user
-          - assistant
-          - system
-          - developer
-        content:
-          description: 'Text input to the model.
-
-            '
-          oneOf:
-          - type: string
-            title: Text input
-            description: A text input to the model.
-          - type: array
-            title: Content array
-            description: An array of content parts.
-            items:
-              $ref: '#/components/schemas/ResponseInputContent'
-      required:
-      - role
-      - content
+          file_citation: '#/components/schemas/ResponseFileCitation'
+          url_citation: '#/components/schemas/ResponseUrlCitation'
     ResponseOutputReasoning:
       type: object
       title: Reasoning
@@ -614,41 +75,6 @@ components:
       - type
       - id
       - summary
-    ResponseInputContent:
-      oneOf:
-      - $ref: '#/components/schemas/ResponseInputTextContent'
-      discriminator:
-        propertyName: type
-        mapping:
-          input_text: '#/components/schemas/ResponseInputTextContent'
-    ResponseFormatText:
-      type: object
-      title: Text
-      description: 'Default response format. Used to generate text responses.
-
-        '
-      properties:
-        type:
-          type: string
-          description: The type of response format being defined. Always `text`.
-          enum:
-          - text
-          x-stainless-const: true
-      required:
-      - type
-    FunctionParameters:
-      type: object
-      description: Function parameters defined as a JSON Schema object. Refer to https://json-schema.org/understanding-json-schema/ for schema documentation.
-      additionalProperties: true
-    ResponseAnnotation:
-      oneOf:
-      - $ref: '#/components/schemas/ResponseFileCitation'
-      - $ref: '#/components/schemas/ResponseUrlCitation'
-      discriminator:
-        propertyName: type
-        mapping:
-          file_citation: '#/components/schemas/ResponseFileCitation'
-          url_citation: '#/components/schemas/ResponseUrlCitation'
     CreateResponseResponse:
       type: object
       description: Represents a response returned by model, based on the provided input.
@@ -824,87 +250,79 @@ components:
       - incomplete_details
       - parallel_tool_calls
       - store
-    ResponseItemReference:
+    ResponseOutputMessage:
       type: object
-      title: Item reference
-      description: An internal identifier for an item to reference.
+      title: Output message
+      description: An output message from the model.
       properties:
         type:
           type: string
+          description: The type of the output message. Always `message`.
           enum:
-          - item_reference
-          description: The type of item to reference. Always `item_reference`.
+          - message
           x-stainless-const: true
         id:
           type: string
-          description: The ID of the item to reference.
+          description: The unique ID of the output message.
+        status:
+          type: string
+          description: The status of the message.
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+        role:
+          type: string
+          description: The role of the output message. Always `assistant`.
+          enum:
+          - assistant
+          x-stainless-const: true
+        content:
+          type: array
+          description: The content of the output message.
+          items:
+            $ref: '#/components/schemas/ResponseOutputContent'
       required:
       - type
       - id
-    ResponseFileCitation:
+      - role
+      - content
+    ResponseOutputFunctionCall:
       type: object
-      title: File citation
-      description: A citation to a file.
+      title: Function call
+      description: A function call generated by the model.
       properties:
         type:
           type: string
           enum:
-          - file_citation
-          description: The type of the annotation. Always `file_citation`.
+          - function_call
+          description: The type of the function call. Always `function_call`.
           x-stainless-const: true
-        file_id:
+        id:
           type: string
-          description: The ID of the file.
-        index:
-          type: integer
-          description: The index of the citation in the text.
-      required:
-      - type
-      - file_id
-    ResponseTool:
-      type: object
-      properties:
-        type:
+          description: The unique ID of the function tool call.
+        status:
           type: string
+          description: The status of the function call.
           enum:
-          - function
-          description: The type of the tool. Currently, only `function` is supported.
+          - in_progress
+          - completed
+          - incomplete
+        call_id:
+          type: string
+          description: The unique ID of the function tool call generated by the model.
         name:
           type: string
-          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-        description:
+          description: The name of the function to call.
+        arguments:
           type: string
-          description: Describes the function's purpose. The model uses this to determine when to invoke the function.
-        parameters:
-          $ref: '#/components/schemas/FunctionParameters'
-        strict:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to enable strict schema adherence when generating the function call.
+          description: A JSON string of the arguments to pass to the function.
       required:
       - type
+      - id
+      - call_id
       - name
-    ResponseNamedToolChoice:
-      type: object
-      description: Specifies a tool the model should use. Use to force the model to call a specific function.
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-          description: The type of the tool. Currently, only `function` is supported.
-        function:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the function to call.
-          required:
-          - name
-      required:
-      - type
-      - function
+      - arguments
     ResponseFormatJsonObject:
       type: object
       title: JSON object
@@ -920,6 +338,220 @@ components:
           x-stainless-const: true
       required:
       - type
+    ResponseFunctionCall:
+      type: object
+      title: Function call
+      description: A function call generated by the model.
+      properties:
+        type:
+          type: string
+          enum:
+          - function_call
+          description: The type of the function call. Always `function_call`.
+          x-stainless-const: true
+        id:
+          type: string
+          description: The unique ID of the function tool call.
+        call_id:
+          type: string
+          description: The unique ID of the function tool call generated by the model.
+        name:
+          type: string
+          description: The name of the function to call.
+        arguments:
+          type: string
+          description: A JSON string of the arguments to pass to the function.
+        status:
+          type: string
+          description: The status of the item.
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+      required:
+      - type
+      - call_id
+      - name
+      - arguments
+    CreateResponseRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        model:
+          description: ID of the model to use. For details on which models are compatible with the Responses API, see available [models](https://console.groq.com/docs/models)
+          example: llama-3.3-70b-versatile
+          anyOf:
+          - type: string
+          - type: string
+            enum:
+            - gemma2-9b-it
+            - llama-3.3-70b-versatile
+            - llama-3.1-8b-instant
+            - llama-guard-3-8b
+            - llama3-70b-8192
+            - llama3-8b-8192
+        input:
+          description: 'Text input to the model, used to generate a response.
+
+            '
+          oneOf:
+          - type: string
+            title: Text input
+            description: A text input to the model, equivalent to a text input with the `user` role.
+          - type: array
+            title: Input item list
+            description: A list of one or many input items to the model, containing different content types.
+            items:
+              $ref: '#/components/schemas/ResponseInputItem'
+        instructions:
+          type:
+          - string
+          - 'null'
+          description: 'Inserts a system (or developer) message as the first item in the model''s context.
+
+            '
+        max_output_tokens:
+          description: 'An upper bound for the number of tokens that can be generated for a response, including visible output tokens and reasoning tokens.
+
+            '
+          type:
+          - integer
+          - 'null'
+        temperature:
+          type:
+          - number
+          - 'null'
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          description: 'Controls randomness in the response generation. Range: 0 to 2. Lower values produce more deterministic outputs, higher values increase variety and creativity.
+
+            '
+        top_p:
+          type:
+          - number
+          - 'null'
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          description: 'Nucleus sampling parameter that controls the cumulative probability cutoff. Range: 0 to 1. A value of 0.1 restricts sampling to tokens within the top 10% probability mass.
+
+            '
+        tools:
+          type:
+          - array
+          - 'null'
+          maxItems: 128
+          description: 'List of tools available to the model. Currently supports function definitions only. Maximum of 128 functions.
+
+            '
+          items:
+            $ref: '#/components/schemas/ResponseTool'
+        tool_choice:
+          $ref: '#/components/schemas/ResponseToolChoiceOption'
+        text:
+          type: object
+          description: 'Response format configuration. Supports plain text or structured JSON output.
+
+            '
+          properties:
+            format:
+              $ref: '#/components/schemas/ResponseFormatConfiguration'
+        reasoning:
+          type:
+          - object
+          - 'null'
+          description: 'Configuration for reasoning capabilities when using [models that support reasoning](https://console.groq.com/docs/reasoning).
+
+            '
+          properties:
+            effort:
+              type:
+              - string
+              - 'null'
+              enum:
+              - low
+              - medium
+              - high
+              default: medium
+              description: 'Level of reasoning effort. Supported values: `low`, `medium`, `high`. Lower values provide faster responses with less reasoning depth.
+
+                '
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: 'Custom key-value pairs for storing additional information. Maximum of 16 pairs.
+
+            '
+        parallel_tool_calls:
+          type:
+          - boolean
+          - 'null'
+          description: 'Enable parallel execution of multiple tool calls.
+
+            '
+          default: true
+        store:
+          type:
+          - boolean
+          - 'null'
+          description: 'Response storage flag. Note: Currently only supports false or null values.
+
+            '
+          default: false
+        stream:
+          description: 'Enable streaming mode to receive response data as server-sent events.
+
+            '
+          type:
+          - boolean
+          - 'null'
+          default: false
+        user:
+          type: string
+          example: user-1234
+          description: 'Optional identifier for tracking end-user requests. Useful for usage monitoring and compliance.
+
+            '
+        service_tier:
+          type:
+          - string
+          - 'null'
+          description: 'Specifies the latency tier to use for processing the request.
+
+            '
+          enum:
+          - auto
+          - default
+          - flex
+          default: auto
+        truncation:
+          type:
+          - string
+          - 'null'
+          description: 'Context truncation strategy. Supported values: `auto` or `disabled`.
+
+            '
+          enum:
+          - auto
+          - disabled
+          default: disabled
+      required:
+      - model
+      - input
+    ResponseFormatConfiguration:
+      description: 'An object specifying the format that the model must output.
+
+        '
+      oneOf:
+      - $ref: '#/components/schemas/ResponseFormatText'
+      - $ref: '#/components/schemas/ResponseFormatJsonObject'
+      - $ref: '#/components/schemas/TextResponseFormatJsonSchema'
     ResponseFunctionCallOutput:
       type: object
       title: Function call output
@@ -951,6 +583,311 @@ components:
       - type
       - call_id
       - output
+    ResponseInputItem:
+      oneOf:
+      - $ref: '#/components/schemas/ResponseEasyInputMessage'
+      - $ref: '#/components/schemas/ResponseInputMessage'
+      - $ref: '#/components/schemas/ResponseItemReference'
+      - $ref: '#/components/schemas/ResponseFunctionCall'
+      - $ref: '#/components/schemas/ResponseFunctionCallOutput'
+      discriminator:
+        propertyName: type
+        mapping:
+          message: '#/components/schemas/ResponseInputMessage'
+          item_reference: '#/components/schemas/ResponseItemReference'
+          function_call: '#/components/schemas/ResponseFunctionCall'
+          function_call_output: '#/components/schemas/ResponseFunctionCallOutput'
+    ResponseFileCitation:
+      type: object
+      title: File citation
+      description: A citation to a file.
+      properties:
+        type:
+          type: string
+          enum:
+          - file_citation
+          description: The type of the annotation. Always `file_citation`.
+          x-stainless-const: true
+        file_id:
+          type: string
+          description: The ID of the file.
+        index:
+          type: integer
+          description: The index of the citation in the text.
+      required:
+      - type
+      - file_id
+    ResponseInputContent:
+      oneOf:
+      - $ref: '#/components/schemas/ResponseInputTextContent'
+      discriminator:
+        propertyName: type
+        mapping:
+          input_text: '#/components/schemas/ResponseInputTextContent'
+    ResponseUsage:
+      type: object
+      description: Usage statistics for the response request.
+      properties:
+        input_tokens:
+          type: integer
+          description: Number of tokens in the input.
+        input_tokens_details:
+          type: object
+          description: Breakdown of input tokens.
+          properties:
+            cached_tokens:
+              type: integer
+              description: Number of cached tokens.
+            reasoning_tokens:
+              type: integer
+              description: Number of reasoning tokens.
+          required:
+          - cached_tokens
+        output_tokens:
+          type: integer
+          description: Number of tokens in the generated output.
+        output_tokens_details:
+          type: object
+          description: Breakdown of output tokens.
+          properties:
+            cached_tokens:
+              type: integer
+              description: Number of cached tokens.
+            reasoning_tokens:
+              type: integer
+              description: Number of reasoning tokens.
+          required:
+          - cached_tokens
+          - reasoning_tokens
+        total_tokens:
+          type: integer
+          description: Total number of tokens used in the request (input + output).
+      required:
+      - input_tokens
+      - input_tokens_details
+      - output_tokens
+      - output_tokens_details
+      - total_tokens
+    FunctionParameters:
+      type: object
+      description: Function parameters defined as a JSON Schema object. Refer to https://json-schema.org/understanding-json-schema/ for schema documentation.
+      additionalProperties: true
+    ResponseItemReference:
+      type: object
+      title: Item reference
+      description: An internal identifier for an item to reference.
+      properties:
+        type:
+          type: string
+          enum:
+          - item_reference
+          description: The type of item to reference. Always `item_reference`.
+          x-stainless-const: true
+        id:
+          type: string
+          description: The ID of the item to reference.
+      required:
+      - type
+      - id
+    ResponseNamedToolChoice:
+      type: object
+      description: Specifies a tool the model should use. Use to force the model to call a specific function.
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+          required:
+          - name
+      required:
+      - type
+      - function
+    ResponseOutputItem:
+      oneOf:
+      - $ref: '#/components/schemas/ResponseOutputMessage'
+      - $ref: '#/components/schemas/ResponseOutputFunctionCall'
+      - $ref: '#/components/schemas/ResponseOutputReasoning'
+      discriminator:
+        propertyName: type
+        mapping:
+          message: '#/components/schemas/ResponseOutputMessage'
+          function_call: '#/components/schemas/ResponseOutputFunctionCall'
+          reasoning: '#/components/schemas/ResponseOutputReasoning'
+    ResponseInputTextContent:
+      type: object
+      title: Input text
+      description: A text input to the model.
+      properties:
+        type:
+          type: string
+          enum:
+          - input_text
+          description: The type of the input item. Always `input_text`.
+          x-stainless-const: true
+        text:
+          type: string
+          description: The text input to the model.
+      required:
+      - type
+      - text
+    ResponseOutputContent:
+      oneOf:
+      - $ref: '#/components/schemas/ResponseOutputTextContent'
+      discriminator:
+        propertyName: type
+        mapping:
+          output_text: '#/components/schemas/ResponseOutputTextContent'
+    ResponseFormatText:
+      type: object
+      title: Text
+      description: 'Default response format. Used to generate text responses.
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of response format being defined. Always `text`.
+          enum:
+          - text
+          x-stainless-const: true
+      required:
+      - type
+    ResponseInputMessage:
+      type: object
+      title: Input message
+      description: 'A message input to the model with explicit type field.
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of the message input. Always set to `message`.
+          enum:
+          - message
+          x-stainless-const: true
+        role:
+          type: string
+          description: 'The role of the message input. One of `user`, `system`, or `developer`. Note: assistant role is not supported with explicit type.
+
+            '
+          enum:
+          - user
+          - system
+          - developer
+        content:
+          type: array
+          description: A list of one or many input content items.
+          items:
+            $ref: '#/components/schemas/ResponseInputContent'
+        status:
+          type: string
+          description: The status of item. Populated when items are returned via API.
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+      required:
+      - type
+      - role
+      - content
+    TextResponseFormatJsonSchema:
+      type: object
+      title: JSON schema
+      description: 'JSON Schema response format. Used to generate structured JSON responses.
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of response format being defined. Always `json_schema`.
+          enum:
+          - json_schema
+          x-stainless-const: true
+        name:
+          type: string
+          description: 'The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+
+            '
+        description:
+          type: string
+          description: 'A description of what the response format is for, used by the model to determine how to respond in the format.
+
+            '
+        schema:
+          type: object
+          description: 'The schema for the response format, described as a JSON Schema object.
+
+            '
+          additionalProperties: true
+        strict:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: 'Whether to enable strict schema adherence when generating the output.
+
+            '
+      required:
+      - type
+      - name
+      - schema
+    ResponseUrlCitation:
+      type: object
+      title: URL citation
+      description: A citation for a web resource.
+      properties:
+        type:
+          type: string
+          enum:
+          - url_citation
+          description: The type of the annotation. Always `url_citation`.
+          x-stainless-const: true
+        url:
+          type: string
+          description: The URL of the web resource.
+        start_index:
+          type: integer
+          description: The index of the first character of the URL citation in the message.
+        end_index:
+          type: integer
+          description: The index of the last character of the URL citation in the message.
+        title:
+          type: string
+          description: The title of the web resource.
+      required:
+      - type
+      - url
+    ResponseTool:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        description:
+          type: string
+          description: Describes the function's purpose. The model uses this to determine when to invoke the function.
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+        strict:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to enable strict schema adherence when generating the function call.
+      required:
+      - type
+      - name
     ResponseToolChoiceOption:
       description: 'Controls which (if any) tool is called by the model.
 
@@ -976,6 +913,69 @@ components:
         - auto
         - required
       - $ref: '#/components/schemas/ResponseNamedToolChoice'
+    ResponseEasyInputMessage:
+      type: object
+      title: Easy input message
+      description: 'A message input to the model with a role indicating instruction following hierarchy.
+
+        '
+      properties:
+        role:
+          type: string
+          description: 'The role of the message input. One of `user`, `assistant`, `system`, or `developer`.
+
+            '
+          enum:
+          - user
+          - assistant
+          - system
+          - developer
+        content:
+          description: 'Text input to the model.
+
+            '
+          oneOf:
+          - type: string
+            title: Text input
+            description: A text input to the model.
+          - type: array
+            title: Content array
+            description: An array of content parts.
+            items:
+              $ref: '#/components/schemas/ResponseInputContent'
+      required:
+      - role
+      - content
+    ResponseOutputTextContent:
+      type: object
+      title: Output text
+      description: A text output from the model.
+      properties:
+        type:
+          type: string
+          enum:
+          - output_text
+          description: The type of the output text. Always `output_text`.
+          x-stainless-const: true
+        text:
+          type: string
+          description: The text output from the model.
+        annotations:
+          type: array
+          description: The annotations of the text output.
+          items:
+            $ref: '#/components/schemas/ResponseAnnotation'
+        logprobs:
+          type:
+          - array
+          - 'null'
+          description: Log probability information for the output.
+          items:
+            type: string
+      required:
+      - type
+      - text
+      - annotations
   securitySchemes:
     api_key:
       type: http

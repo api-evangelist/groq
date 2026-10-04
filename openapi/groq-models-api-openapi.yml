@@ -97,29 +97,6 @@ paths:
                 $ref: '#/components/schemas/DeleteModelResponse'
 components:
   schemas:
-    Model:
-      title: Model
-      description: Describes an OpenAI model offering that can be used with the API.
-      properties:
-        id:
-          type: string
-          description: The model identifier, which can be referenced in the API endpoints.
-        created:
-          type: integer
-          description: The Unix timestamp (in seconds) when the model was created.
-        object:
-          type: string
-          description: The object type, which is always "model".
-          enum:
-          - model
-        owned_by:
-          type: string
-          description: The organization that owns the model.
-      required:
-      - id
-      - object
-      - created
-      - owned_by
     DeleteModelResponse:
       type: object
       properties:
@@ -147,6 +124,29 @@ components:
       required:
       - object
       - data
+    Model:
+      title: Model
+      description: Describes an OpenAI model offering that can be used with the API.
+      properties:
+        id:
+          type: string
+          description: The model identifier, which can be referenced in the API endpoints.
+        created:
+          type: integer
+          description: The Unix timestamp (in seconds) when the model was created.
+        object:
+          type: string
+          description: The object type, which is always "model".
+          enum:
+          - model
+        owned_by:
+          type: string
+          description: The organization that owns the model.
+      required:
+      - id
+      - object
+      - created
+      - owned_by
   securitySchemes:
     api_key:
       type: http
