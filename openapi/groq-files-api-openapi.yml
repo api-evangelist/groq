@@ -40,7 +40,7 @@ paths:
       operationId: uploadFile
       tags:
       - Files
-      summary: Upload a file that can be used across various endpoints.
+      summary: Upload a file that can be used across various endpoints
       requestBody:
         required: true
         content:

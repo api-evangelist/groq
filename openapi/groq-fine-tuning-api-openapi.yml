@@ -17,7 +17,7 @@ paths:
   /v1/fine_tunings:
     get:
       operationId: listFineTunings
-      summary: Lists all previously created fine tunings.
+      summary: Lists all previously created fine tunings
       tags:
       - Fine Tuning
       responses:
@@ -65,7 +65,7 @@ paths:
   /v1/fine_tunings/{id}:
     delete:
       operationId: deleteFineTuning
-      summary: Deletes an existing fine tuning by id This endpoint is in closed beta.
+      summary: Deletes an existing fine tuning by id This endpoint is in closed beta
       tags:
       - Fine Tuning
       responses:
@@ -92,7 +92,7 @@ paths:
           response: "{\n    \"id\": \"string\",\n    \"object\": \"fine_tuning\",\n    \"deleted\": true\n}\n"
     get:
       operationId: getFineTuning
-      summary: Retrieves an existing fine tuning by id This endpoint is in closed beta.
+      summary: Retrieves an existing fine tuning by id This endpoint is in closed beta
       tags:
       - Fine Tuning
       responses:
