@@ -1,0 +1,105 @@
+edges:
+- partner_name: OpenRouter
+  partner: openrouter
+  partner_match: router
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://openrouter.ai/api/v1/models
+  coverage_role:
+  - inference-host
+  router_signals:
+    inference-host:
+      models: 6
+      router_ids:
+      - Groq
+      tools_share: 1.0
+      structured_output_share: 0.83
+  matched_by: verified-token-table
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+- partner_name: LiteLLM
+  partner: litellm
+  partner_match: router
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json
+  coverage_role:
+  - provider
+  router_signals:
+    provider:
+      models: 11
+      router_ids:
+      - groq
+      tools_share: 0.57
+      structured_output_share: 0.57
+  matched_by: verified-token-table
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+- partner_name: LLM Gateway
+  partner: llmgateway-io
+  partner_match: router
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://api.llmgateway.io/v1/models
+  coverage_role:
+  - provider
+  router_signals:
+    provider:
+      models: 3
+      router_ids:
+      - groq
+      tools_share: 1.0
+      structured_output_share: 0.67
+  matched_by: verified-token-table
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+- partner_name: Portkey
+  partner: portkey
+  partner_match: router
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://github.com/Portkey-AI/gateway/tree/main/src/providers/groq
+  coverage_role:
+  - provider
+  router_signals:
+    provider:
+      models: null
+      router_ids:
+      - groq
+  matched_by: verified-token-table
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+- partner_name: Cloudflare AI Gateway
+  partner: cloudflare-ai-gateway
+  partner_match: router
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/ai-gateway/usage/providers/groq.mdx
+  coverage_role:
+  - provider
+  router_signals:
+    provider:
+      models: null
+      router_ids:
+      - groq
+  matched_by: verified-token-table
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+generated: '2026-10-13'
+method: searched
+checked:
+- https://api.llmgateway.io/v1/models
+- https://developers.cloudflare.com/ai-gateway/usage/providers/
+- https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json
+- https://github.com/Portkey-AI/gateway/tree/main/src/providers
+- https://openrouter.ai/api/v1/models
