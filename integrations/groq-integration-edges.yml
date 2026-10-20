@@ -1,4 +1,44 @@
 edges:
+- partner_name: Pipecat
+  partner: pipecat-ai
+  partner_match: framework
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services/groq
+  coverage_role:
+  - stt
+  - tts
+  framework_signals:
+    packages:
+    - groq
+    roles:
+    - stt
+    - tts
+    vendor_domain: groq.com
+  matched_by: verified-domain-table
+  detected_by: sweep-voice-ai.py
+  first_seen: '2026-10-15'
+- partner_name: LiveKit Agents
+  partner: livekit
+  partner_match: framework
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://github.com/livekit/agents/tree/main/livekit-plugins/livekit-plugins-groq
+  coverage_role:
+  - tts
+  framework_signals:
+    packages:
+    - livekit-plugins-groq
+    roles:
+    - tts
+    vendor_domain: groq.com
+  matched_by: verified-domain-table
+  detected_by: sweep-voice-ai.py
+  first_seen: '2026-10-15'
 - partner_name: OpenRouter
   partner: openrouter
   partner_match: router
@@ -95,46 +135,6 @@ edges:
   matched_by: verified-token-table
   detected_by: sweep-model-routing.py
   first_seen: '2026-10-13'
-- partner_name: Pipecat
-  partner: pipecat-ai
-  partner_match: framework
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: system-coverage
-  evidence: https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services/groq
-  coverage_role:
-  - stt
-  - tts
-  framework_signals:
-    packages:
-    - groq
-    roles:
-    - stt
-    - tts
-    vendor_domain: groq.com
-  matched_by: verified-domain-table
-  detected_by: sweep-voice-ai.py
-  first_seen: '2026-10-15'
-- partner_name: LiveKit Agents
-  partner: livekit
-  partner_match: framework
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: system-coverage
-  evidence: https://github.com/livekit/agents/tree/main/livekit-plugins/livekit-plugins-groq
-  coverage_role:
-  - tts
-  framework_signals:
-    packages:
-    - livekit-plugins-groq
-    roles:
-    - tts
-    vendor_domain: groq.com
-  matched_by: verified-domain-table
-  detected_by: sweep-voice-ai.py
-  first_seen: '2026-10-15'
 - partner_name: Zapier
   partner: zapier
   partner_match: aggregator
@@ -168,7 +168,7 @@ edges:
   channel: open-source-node
   relationship: ipaas-bridge
   direction: third-party
-  evidence: https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/groqcloud
+  evidence: https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/groqcloud
   category: null
   contract_reference:
     register: Pipedream components (PipedreamHQ/pipedream components/)
@@ -193,6 +193,7 @@ checked:
 - https://developers.cloudflare.com/ai-gateway/usage/providers/
 - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
+- https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
 - https://github.com/Portkey-AI/gateway/tree/main/src/providers
 - https://github.com/livekit/agents/tree/main/livekit-plugins
 - https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services
