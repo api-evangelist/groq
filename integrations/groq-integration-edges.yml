@@ -323,6 +323,35 @@ edges:
   - Nebi Chat
   - Note Improver
   - Untitled Auto Title
+- partner_name: Hugging Face (hugging-face-hub)
+  partner: hugging-face
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: hugging-face-hub
+  evidence: https://huggingface.co/Groq
+  mirror_of: hugging-face/integrations/hugging-face-integration-edges.yml
+  apps:
+  - Groq/LiveCodeBench-CodeGeneration
+  - Groq/mtob
+  - Groq/open-source-throughput-detailed
+  - Groq/math-for-mcp
+  - Groq/open-source-throughput
+  - Groq/Llama-3-Groq-8B-Tool-Use
+  - Groq/Llama-3-Groq-70B-Tool-Use
+  - Groq/demo-groq-tool-use
+  - Groq/groq-gradio-voice-assistant
+  - Groq/mlagility
+  - Groq/image-moderation
+  listing_count: 3
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Hugging Face Hub datasets
+  badges:
+  - Verified publisher (Hugging Face verified organisation)
 generated: '2026-10-13'
 method: searched
 checked:
@@ -350,6 +379,7 @@ checked:
 - https://raw.githubusercontent.com/<repo>/HEAD/manifest.json
 - https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugin-stats.json
 - https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugins.json
+- hugging-face/integrations/hugging-face-integration-edges.yml
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://zapier.com/api/v4/apps/
