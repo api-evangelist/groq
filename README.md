@@ -1,4 +1,4 @@
-# Groq (groq)
+# Groq
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,290 +66,158 @@
 
 Groq builds custom Language Processing Unit (LPU) silicon optimized for low-latency LLM inference. The GroqCloud API serves popular open models (Llama, GPT OSS, Whisper, Orpheus) at industry-leading tokens-per-second with an OpenAI-compatible interface.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/groq/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/groq/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · LLM · Inference · LPU · Low Latency · Real-Time
 
-## Tags
+## Groq on APIs.io
 
-- AI
-- LLM
-- Inference
-- LPU
-- Low Latency
+Everything profiled for Groq is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/groq/](https://apis.io/providers/groq/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (9)
 
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-29
+- [Groq Audio API](https://apis.io/apis/groq/groq-audio-api/) — The Audio API from Groq — 3 operation(s) for audio.
+- [Groq Batch API](https://apis.io/apis/groq/groq-batch-api/) — The Batch API from Groq — 3 operation(s) for batch.
+- [Groq Embeddings API](https://apis.io/apis/groq/groq-embeddings-api/) — The Embeddings API from Groq — 1 operation(s) for embeddings.
+- [Groq Files API](https://apis.io/apis/groq/groq-files-api/) — The Files API from Groq — 3 operation(s) for files.
+- [Groq Fine Tuning API](https://apis.io/apis/groq/groq-fine-tuning-api/) — The Fine Tuning API from Groq — 2 operation(s) for fine tuning.
+- [Groq Models API](https://apis.io/apis/groq/groq-models-api/) — The Models API from Groq — 2 operation(s) for models.
+- [Groq Reranking API](https://apis.io/apis/groq/groq-reranking-api/) — The Reranking API from Groq — 1 operation(s) for reranking.
+- [Groq Responses API](https://apis.io/apis/groq/groq-responses-api/) — The Responses API from Groq — 1 operation(s) for responses.
+- [Groq Chat Completions API](https://apis.io/apis/groq/groq-chat-completions-api/) — The Chat Completions API from Groq — 1 operation(s) for chat completions.
 
-## APIs
+### Published properties
 
-### Groq Chat Completions API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-OpenAI-compatible chat completions across Llama, GPT OSS, Mixtral, Gemma, and Whisper-family models running on Groq LPU silicon, with streaming, tool use, and structured outputs.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://console.groq.com/docs/api-reference](https://console.groq.com/docs/api-reference)
-- **Base URL:** `https://api.groq.com/openai/v1`
+Event-driven and webhook contracts.
 
-#### Tags
+- [Groq Chat Completions Streaming (HTTP + SSE)](https://apis.io/asyncapis/groq/groq-asyncapi/)
 
-- Chat
-- Completions
-- LLM
+#### Event channels (1)
 
-#### Properties
+Individual events and webhooks the provider emits.
 
-- [Documentation](https://console.groq.com/docs/text-chat)
-- [API Reference](https://console.groq.com/docs/api-reference#chat)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](asyncapi/groq-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
+- [/chat/completions](https://apis.io/channels/groq/chat-completions/)
 
-### Groq Reasoning API
+#### GraphQL (1)
 
-Reasoning-capable models with explicit chain-of-thought support, surfaced through the chat completions endpoint.
+GraphQL schemas.
 
-- **Human URL:** [https://console.groq.com/docs/reasoning](https://console.groq.com/docs/reasoning)
-- **Base URL:** `https://api.groq.com/openai/v1`
+- [Moved to /providers/groq/](https://apis.io/graphqls/groq/groq-graphql/)
 
-#### Tags
+#### Agentic access (1)
 
-- Reasoning
-- Chain of Thought
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Properties
+- [Groq Agentic Access](https://apis.io/agentic-access/groq/groq-agentic-access/)
 
-- [Documentation](https://console.groq.com/docs/reasoning)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Collections (10)
 
-### Groq Vision API
+Postman and Open Collection request collections.
 
-Image and document understanding plus OCR via vision-capable chat models.
+- [GroqCloud API](https://apis.io/collections/groq/open-groq/)
+- [GroqCloud Audio API](https://apis.io/collections/groq/open-groq-audio-api/)
+- [GroqCloud Audio Batch API](https://apis.io/collections/groq/open-groq-batch-api/)
+- [GroqCloud Audio Chat API](https://apis.io/collections/groq/open-groq-chat-api/)
+- [GroqCloud Audio Embeddings API](https://apis.io/collections/groq/open-groq-embeddings-api/)
+- [GroqCloud Audio Files API](https://apis.io/collections/groq/open-groq-files-api/)
+- [GroqCloud Audio Fine Tuning API](https://apis.io/collections/groq/open-groq-fine-tuning-api/)
+- [GroqCloud Audio Models API](https://apis.io/collections/groq/open-groq-models-api/)
+- [GroqCloud Audio Reranking API](https://apis.io/collections/groq/open-groq-reranking-api/)
+- [GroqCloud Audio Responses API](https://apis.io/collections/groq/open-groq-responses-api/)
 
-- **Human URL:** [https://console.groq.com/docs/vision](https://console.groq.com/docs/vision)
-- **Base URL:** `https://api.groq.com/openai/v1`
+#### Governance rules (1)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Vision
-- OCR
-- Multimodal
+- [Groq — asyncapi rules](https://apis.io/rules/groq/groq-asyncapi-spectral-rules/)
 
-#### Properties
+#### Security (4)
 
-- [Documentation](https://console.groq.com/docs/vision)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Groq Speech-to-Text API
+- [Groq Authentication](https://apis.io/security/groq/groq-authentication/)
+- [Groq Domain Security](https://apis.io/security/groq/groq-domain-security/)
+- [Groq Trust Center](https://apis.io/security/groq/groq-trust-center/)
+- [Groq Vulnerability Disclosure](https://apis.io/security/groq/groq-vulnerability-disclosure/)
 
-OpenAI-compatible audio transcription endpoint serving Whisper-family models on LPU hardware.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://console.groq.com/docs/speech-to-text](https://console.groq.com/docs/speech-to-text)
-- **Base URL:** `https://api.groq.com/openai/v1`
+Published plans, tiers and prices.
 
-#### Tags
+- [Groq Plans Pricing](https://apis.io/plans/groq/groq-plans-pricing/)
 
-- Speech to Text
-- Transcription
-- Whisper
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://console.groq.com/docs/speech-to-text)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Groq Rate Limits](https://apis.io/rate-limits/groq/groq-rate-limits/)
 
-### Groq Text-to-Speech API
+#### FinOps (1)
 
-Speech synthesis using Orpheus and other TTS models, billed per million characters.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://console.groq.com/docs/text-to-speech](https://console.groq.com/docs/text-to-speech)
-- **Base URL:** `https://api.groq.com/openai/v1`
+- [Groq Finops](https://apis.io/finops/groq/groq-finops/)
 
-#### Tags
+## Where to find this API
 
-- Text to Speech
-- Audio
-- Orpheus
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://console.groq.com/docs/text-to-speech)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq Content Moderation API
-
-Safety classifier endpoint (Llama Guard) for input/output policy compliance.
-
-- **Human URL:** [https://console.groq.com/docs/content-moderation](https://console.groq.com/docs/content-moderation)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- Moderation
-- Safety
-- Llama Guard
-
-#### Properties
-
-- [Documentation](https://console.groq.com/docs/content-moderation)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq Batch API
-
-Asynchronous batch inference at 50% off synchronous rates for non-realtime workloads.
-
-- **Human URL:** [https://console.groq.com/docs/batch](https://console.groq.com/docs/batch)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- Batch
-- Async
-
-#### Properties
-
-- [Documentation](https://console.groq.com/docs/batch)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq Flex Processing API
-
-Flexible service tier offering higher throughput at relaxed latency targets for cost-sensitive workloads.
-
-- **Human URL:** [https://console.groq.com/docs/flex-processing](https://console.groq.com/docs/flex-processing)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- Flex
-- Service Tier
-
-#### Properties
-
-- [Documentation](https://console.groq.com/docs/flex-processing)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq Files API
-
-Upload and manage files for batch inputs and other workflows.
-
-- **Human URL:** [https://console.groq.com/docs/api-reference#files](https://console.groq.com/docs/api-reference#files)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- Files
-- Storage
-
-#### Properties
-
-- [API Reference](https://console.groq.com/docs/api-reference#files)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq Models API
-
-Lists models available on GroqCloud with metadata, context length, and pricing tags.
-
-- **Human URL:** [https://console.groq.com/docs/api-reference#models](https://console.groq.com/docs/api-reference#models)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- Models
-- Catalog
-
-#### Properties
-
-- [API Reference](https://console.groq.com/docs/api-reference#models)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq Tools API
-
-Built-in tools - Web Search, Browser Automation, Code Execution, Wolfram Alpha - invocable from chat completions and billed per call or per hour.
-
-- **Human URL:** [https://console.groq.com/docs/tools](https://console.groq.com/docs/tools)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- Tools
-- Web Search
-- Code Execution
-
-#### Properties
-
-- [Documentation](https://console.groq.com/docs/tools)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq LoRA Inference API
-
-Serves customer LoRA adapters on top of supported base models for low-latency custom inference.
-
-- **Human URL:** [https://console.groq.com/docs/lora](https://console.groq.com/docs/lora)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- LoRA
-- Custom Models
-- Fine-Tuning
-
-#### Properties
-
-- [Documentation](https://console.groq.com/docs/lora)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Groq Prompt Caching
-
-Automatic prompt caching with a 50% discount on cached input tokens and no extra caching fee.
-
-- **Human URL:** [https://console.groq.com/docs/prompt-caching](https://console.groq.com/docs/prompt-caching)
-- **Base URL:** `https://api.groq.com/openai/v1`
-
-#### Tags
-
-- Prompt Caching
-- Optimization
-
-#### Properties
-
-- [Documentation](https://console.groq.com/docs/prompt-caching)
-- [OpenAPI](openapi/groq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/groq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/groq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/groq)
-- [LinkedIn](https://www.linkedin.com/company/groq)
 - [Website](https://groq.com/)
 - [Documentation](https://console.groq.com/docs)
-- [Plans](plans/groq-plans-pricing.yml)
-- [Rate Limits](rate-limits/groq-rate-limits.yml)
-- [Fin Ops](finops/groq-finops.yml)
+- [Blog](https://groq.com/blog)
+- [GitHub](https://github.com/groq)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 31.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 50.5 |
+| Contract governance | 11.4 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 15.8 |
+
+**Agent readiness 20.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 20.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/groq/](https://apis.io/providers/groq/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Groq: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/groq/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
